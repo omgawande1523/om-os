@@ -1,0 +1,389 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 43% 96%;
+    --foreground: 0 0% 12%;
+    --card: 40 43% 96%;
+    --card-foreground: 0 0% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 12%;
+    --primary: 0 0% 12%;
+    --primary-foreground: 40 43% 96%;
+    --secondary: 0 0% 77%;
+    --secondary-foreground: 0 0% 12%;
+    --muted: 0 0% 77%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 12%;
+    --accent-foreground: 40 43% 96%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 12%;
+    --input: 0 0% 12%;
+    --ring: 0 0% 12%;
+    --radius: 0rem;
+    --sidebar-background: 40 43% 96%;
+    --sidebar-foreground: 0 0% 12%;
+    --sidebar-primary: 0 0% 12%;
+    --sidebar-primary-foreground: 40 43% 96%;
+    --sidebar-accent: 0 0% 77%;
+    --sidebar-accent-foreground: 0 0% 12%;
+    --sidebar-border: 0 0% 12%;
+    --sidebar-ring: 0 0% 12%;
+
+    --off-white: #FAF6EE;
+    --deep-charcoal: #1F1F1F;
+    --silver: #8A8A8A;
+
+    --neo-bg: #FAF6EE;
+    --neo-surface: #FFFDF9;
+    --neo-text: #111111;
+    --neo-border: #000000;
+    --neo-shadow: #1F1F1F;
+  }
+
+  .dark {
+    --background: 0 0% 7%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 7%;
+    --secondary: 0 0% 20%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 0 0% 100%;
+    --accent-foreground: 0 0% 7%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 100%;
+    --input: 0 0% 100%;
+    --ring: 0 0% 100%;
+    --sidebar-background: 0 0% 10%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 0 0% 7%;
+    --sidebar-accent: 0 0% 20%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 100%;
+    --sidebar-ring: 0 0% 100%;
+
+    --off-white: #111111;
+    --deep-charcoal: #FFFFFF;
+    --silver: #8A8A8A;
+
+    --neo-bg: #111111;
+    --neo-surface: #1A1A1A;
+    --neo-text: #FFFFFF;
+    --neo-border: #FFFFFF;
+    --neo-shadow: #8A8A8A;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--neo-bg);
+    color: var(--neo-text);
+    overflow-x: hidden;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Dark mode overrides for borders and text and background */
+  .dark .border-black {
+    border-color: #FFFFFF !important;
+  }
+  .dark .border-b-black {
+    border-bottom-color: #FFFFFF !important;
+  }
+  .dark .border-r-black {
+    border-right-color: #FFFFFF !important;
+  }
+  .dark .border-t-black {
+    border-top-color: #FFFFFF !important;
+  }
+  .dark .border-l-black {
+    border-left-color: #FFFFFF !important;
+  }
+  .dark .text-black {
+    color: #FFFFFF !important;
+  }
+  .dark .text-black\/60 {
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
+  .dark .text-black\/70 {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+  .dark .text-black\/75 {
+    color: rgba(255, 255, 255, 0.75) !important;
+  }
+  .dark .text-black\/80 {
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
+  .dark .text-black\/85 {
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+  .dark .bg-black {
+    background-color: #FFFFFF !important;
+    color: #111111 !important;
+  }
+  .dark .bg-black\/5 {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+  }
+  .dark .hover\:bg-black:hover {
+    background-color: #FFFFFF !important;
+    color: #111111 !important;
+  }
+  .dark .hover\:text-black:hover {
+    color: #111111 !important;
+  }
+  .dark .hover\:text-\[\#FAF6EE\]:hover {
+    color: #111111 !important;
+  }
+  .dark .hover\:bg-neo-bg:hover {
+    background-color: var(--neo-bg) !important;
+    color: var(--neo-text) !important;
+  }
+  .dark .hover\:text-neo-text:hover {
+    color: var(--neo-text) !important;
+  }
+  .dark .hover\:text-neo-bg:hover {
+    color: var(--neo-bg) !important;
+  }
+  .dark .bg-\[\#FAF6EE\] {
+    background-color: #111111 !important;
+  }
+  .dark .bg-\[\#FFFDF9\] {
+    background-color: #1A1A1A !important;
+  }
+  .dark .border-white\/10 {
+    border-color: rgba(255, 255, 255, 0.15) !important;
+  }
+  .dark .border-black\/10 {
+    border-color: rgba(255, 255, 255, 0.15) !important;
+  }
+  .dark .border-black\/15 {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
+  .dark .text-silver {
+    color: #A0A0A0 !important;
+  }
+  .dark .bg-white\/5 {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  /* Ensure text and icons inside neon brutalist colorful backgrounds stay black in dark mode */
+  .dark .bg-neo-mint,
+  .dark .bg-neo-blue,
+  .dark .bg-neo-pink,
+  .dark .bg-neo-orange,
+  .dark .bg-neo-yellow,
+  .dark .os-window-header,
+  .dark .os-window-header-accent,
+  .dark .os-window-header-pink,
+  .dark .os-window-header-blue,
+  .dark [class*="bg-neo-mint"],
+  .dark [class*="bg-neo-blue"],
+  .dark [class*="bg-neo-pink"],
+  .dark [class*="bg-neo-orange"],
+  .dark [class*="bg-neo-yellow"] {
+    color: #111111 !important;
+    border-color: #000000 !important;
+  }
+
+  .dark .bg-neo-mint *,
+  .dark .bg-neo-blue *,
+  .dark .bg-neo-pink *,
+  .dark .bg-neo-orange *,
+  .dark .bg-neo-yellow *,
+  .dark .os-window-header *,
+  .dark .os-window-header-accent *,
+  .dark .os-window-header-pink *,
+  .dark .os-window-header-blue *,
+  .dark [class*="bg-neo-mint"] *,
+  .dark [class*="bg-neo-blue"] *,
+  .dark [class*="bg-neo-pink"] *,
+  .dark [class*="bg-neo-orange"] *,
+  .dark [class*="bg-neo-yellow"] * {
+    color: #111111 !important;
+    border-color: #000000 !important;
+  }
+
+  /* Specificity override for .text-black class inside colored backgrounds in dark mode */
+  .dark .bg-neo-mint .text-black,
+  .dark .bg-neo-blue .text-black,
+  .dark .bg-neo-pink .text-black,
+  .dark .bg-neo-orange .text-black,
+  .dark .bg-neo-yellow .text-black,
+  .dark .os-window-header .text-black,
+  .dark .os-window-header-accent .text-black,
+  .dark .os-window-header-pink .text-black,
+  .dark .os-window-header-blue .text-black,
+  .dark [class*="bg-neo-mint"] .text-black,
+  .dark [class*="bg-neo-blue"] .text-black,
+  .dark [class*="bg-neo-pink"] .text-black,
+  .dark [class*="bg-neo-orange"] .text-black,
+  .dark [class*="bg-neo-yellow"] .text-black {
+    color: #111111 !important;
+  }
+
+  .dark .bg-neo-mint svg,
+  .dark .bg-neo-blue svg,
+  .dark .bg-neo-pink svg,
+  .dark .bg-neo-orange svg,
+  .dark .bg-neo-yellow svg,
+  .dark .os-window-header svg,
+  .dark .os-window-header-accent svg,
+  .dark .os-window-header-pink svg,
+  .dark .os-window-header-blue svg {
+    stroke: #111111 !important;
+  }
+
+  /* Ensure correct contrast for hovered social icons in dark mode */
+  .dark .hover\:bg-neo-blue:hover,
+  .dark .hover\:bg-neo-pink:hover,
+  .dark .hover\:bg-neo-yellow:hover,
+  .dark .hover\:bg-neo-mint:hover,
+  .dark .hover\:bg-neo-orange:hover {
+    color: #111111 !important;
+  }
+  
+  .dark .hover\:bg-neo-blue:hover *,
+  .dark .hover\:bg-neo-pink:hover *,
+  .dark .hover\:bg-neo-yellow:hover *,
+  .dark .hover\:bg-neo-mint:hover *,
+  .dark .hover\:bg-neo-orange:hover * {
+    color: #111111 !important;
+    stroke: #111111 !important;
+  }
+}
+
+@layer components {
+  .bento-card {
+    @apply border-[2.5px] border-[#1F1F1F] bg-[#FFFDF9] transition-all duration-200;
+    box-shadow: 4px 4px 0px #1F1F1F;
+  }
+
+  .bento-card:hover {
+    box-shadow: 8px 8px 0px #1F1F1F;
+    transform: translate(-4px, -4px);
+  }
+
+  .bento-card-dark {
+    @apply border-[2.5px] border-[#1F1F1F] bg-[#1F1F1F] text-[#FAF6EE] transition-all duration-200;
+    box-shadow: 4px 4px 0px #8A8A8A;
+  }
+
+  .bento-card-dark:hover {
+    box-shadow: 8px 8px 0px #8A8A8A;
+    transform: translate(-4px, -4px);
+  }
+
+  .neo-border {
+    border: 2.5px solid #1F1F1F;
+  }
+
+  .neo-shadow {
+    box-shadow: 4px 4px 0px #1F1F1F;
+  }
+
+  .neo-shadow-silver {
+    box-shadow: 4px 4px 0px #8A8A8A;
+  }
+
+  .text-display {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .text-body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .text-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* OS Window Elements */
+  .os-window {
+    @apply border-[2.5px] border-black bg-neo-surface shadow-neo md:shadow-neo-md transition-all duration-200 overflow-hidden;
+  }
+  
+  .os-window-header {
+    @apply border-b-[2.5px] border-black bg-neo-mint py-2 px-4 flex items-center justify-between font-mono text-sm font-bold select-none;
+    color: #111111;
+  }
+  
+  .os-window-header-accent {
+    @apply border-b-[2.5px] border-black bg-neo-yellow py-2 px-4 flex items-center justify-between font-mono text-sm font-bold select-none;
+    color: #111111;
+  }
+
+  .os-window-header-pink {
+    @apply border-b-[2.5px] border-black bg-neo-pink py-2 px-4 flex items-center justify-between font-mono text-sm font-bold select-none;
+    color: #111111;
+  }
+
+  .os-window-header-blue {
+    @apply border-b-[2.5px] border-black bg-neo-blue py-2 px-4 flex items-center justify-between font-mono text-sm font-bold select-none;
+    color: #111111;
+  }
+
+  .os-window-header-dark {
+    @apply border-b-[2.5px] border-black bg-black py-2 px-4 flex items-center justify-between font-mono text-sm font-bold text-neo-bg select-none;
+  }
+
+  .window-dots {
+    @apply flex items-center gap-1.5;
+  }
+
+  .window-dot {
+    @apply w-3 h-3 rounded-full border border-black;
+  }
+}
+
+@layer utilities {
+  .custom-cursor {
+    cursor: none;
+  }
+
+  .cursor-none * {
+    cursor: none !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F7F7F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1F1F1F;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333333;
+}
