@@ -8,37 +8,35 @@ gsap.registerPlugin(ScrollTrigger);
 const directoryData = {
   work: [
     {
-      id: 'rnr_innotech',
-      fileName: 'RNR_Innotech_Internship.cfg',
-      type: 'work',
-      title: 'AI Development Intern',
-      org: 'RNR Innotech',
-      location: 'Nagpur, India (Hybrid)',
-      period: 'Nov 2024 - Jan 2025',
-      description:
-        'Developed and optimized AI-enabled ERP system modules, integrating automated intelligent workflows to streamline business processes.',
-      highlights: [
-        'Designed and implemented ERP automation modules to streamline data input workflows',
-        'Integrated AI capabilities into ERP systems to enable intelligent business decision flows',
-        'Optimized business process workflows reducing manual document classification overheads',
-        'Collaborated on building smart data pipelines that automate backend record transactions',
-      ],
-    },
-    {
       id: 'acube_ai',
       fileName: 'Acube_AI_Internship.cfg',
       type: 'work',
-      title: 'Machine Learning Intern',
+      title: 'Data Analytics and AI Engineering Intern',
       org: 'Acube AI',
-      location: 'Nagpur, India (Remote)',
-      period: 'Feb 2025 - Apr 2025',
+      location: 'Nagpur, India',
+      period: 'Feb 2025 - Present',
       description:
-        'Gained hands-on training and worked on applied AI solution projects, design workflows, and machine learning pipelines.',
+        'Developed AI-powered applications by integrating machine learning models, LLMs, and backend APIs into production-ready systems.',
       highlights: [
-        'Participated in the research and development of custom AI solution projects',
-        'Designed and optimized machine learning workflows for data processing pipelines',
-        'Studied and implemented applied AI models for practical business applications',
-        'Assisted in benchmarking deep learning models on server infrastructures',
+        'Developed AI-powered applications by integrating machine learning models, LLMs, and backend APIs into production-ready systems',
+        'Designed prompt engineering workflows, automated business processes, and collaborated on end-to-end AI solution deployment',
+        'Developed AI modules for enterprise ERP applications, including machine learning pipelines, NLP workflows, and intelligent business automation features',
+        'Worked with cross-functional teams to design, implement, test, and deploy scalable AI solutions for real-world business use cases',
+      ],
+    },
+    {
+      id: 'rnr_innotech',
+      fileName: 'RNR_Innotech_Internship.cfg',
+      type: 'work',
+      title: 'AI and ERP Solution Intern',
+      org: 'RNR',
+      location: 'Nagpur, India (Hybrid)',
+      period: 'Nov 2024 - Jan 2025',
+      description:
+        'Developed AI modules for enterprise ERP applications, including machine learning pipelines, NLP workflows, and intelligent business automation features.',
+      highlights: [
+        'Developed AI modules for enterprise ERP applications, including machine learning pipelines, NLP workflows, and intelligent business automation features',
+        'Worked with cross-functional teams to design, implement, test, and deploy scalable AI solutions for real-world business use cases',
       ],
     },
   ],
@@ -47,14 +45,14 @@ const directoryData = {
       id: 'edu_btech',
       fileName: 'BTech_AI_SVPCET.cfg',
       type: 'education',
-      title: 'B.Tech in Artificial Intelligence',
-      org: 'St. Vincent Pallotti College of Engineering and Technology',
+      title: 'B.Tech in Artificial Intelligence (2027)',
+      org: 'St. Vincent Pallotti College of Engineering and Technology, Nagpur',
       location: 'Nagpur, Maharashtra',
       period: '2023 - 2027',
       description:
         'Focusing on artificial intelligence models, deep neural networks, natural language processing, model optimization, and statistical modeling.',
       highlights: [
-        'Current Cumulative CGPA: 8.58 / 10.00',
+        'Current Cumulative CGPA: 8.68 / 10.00',
         'Advanced Coursework: Computer Vision, Deep Learning, Edge Computing',
         'Active Lead and President of the AI Prabodha Student Forum',
       ],

@@ -102,7 +102,7 @@ export default function ResumeViewer() {
                 <div className="border-y border-black/15 py-4 font-mono text-xs text-black/60 space-y-2">
                   <p className="flex justify-between">
                     <span>File size:</span>
-                    <span className="font-bold text-black">77.6 KB</span>
+                    <span className="font-bold text-black">78.2 KB</span>
                   </p>
                   <p className="flex justify-between">
                     <span>Target position:</span>
@@ -110,7 +110,7 @@ export default function ResumeViewer() {
                   </p>
                   <p className="flex justify-between">
                     <span>Updates logs:</span>
-                    <span className="font-bold text-black">Jun 2026</span>
+                    <span className="font-bold text-black">Jul 2026</span>
                   </p>
                 </div>
               </div>

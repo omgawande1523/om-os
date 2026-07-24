@@ -35,11 +35,11 @@ export default function Hero() {
   }, []);
 
   const metrics = [
-    { label: 'Academic Standing', value: '8.58 CGPA', detail: 'B.Tech AI Class of 2027', color: 'bg-neo-yellow' },
+    { label: 'Academic Standing', value: '8.68 CGPA', detail: 'B.Tech AI Class of 2027', color: 'bg-neo-yellow' },
     { label: 'AI Student Forum', value: 'President', detail: 'AI Prabodha Student Forum', color: 'bg-neo-mint' },
     { label: 'Elected Leadership', value: '3-Year CR', detail: 'Class Representative', color: 'bg-neo-blue' },
-    { label: 'Industry Internship', value: 'RNR Innotech', detail: 'AI-Enabled ERP Modules', color: 'bg-neo-pink' },
-    { label: 'Industry Internship', value: 'Acube AI', detail: 'Applied AI & ML Systems', color: 'bg-neo-orange' },
+    { label: 'Industry Internship', value: 'Acube AI', detail: 'Data Analytics & AI Engineering', color: 'bg-neo-pink' },
+    { label: 'Industry Internship', value: 'RNR', detail: 'AI & ERP Solution Intern', color: 'bg-neo-orange' },
     { label: 'Projects Built', value: '15+ Built', detail: 'AI Solutions & Workflows', color: 'bg-neo-yellow' },
     { label: 'GitHub Ecosystem', value: '15+ Repos', detail: 'Verified Public Repos', color: 'bg-neo-mint' },
     { label: 'Leadership Roles', value: '3 Major', detail: 'Forum, CR, Organizer', color: 'bg-neo-blue' },
@@ -104,7 +104,7 @@ export default function Hero() {
                 </div>
                 
                 <p className="text-sm !text-[#FAF6EE]/85 leading-relaxed font-sans">
-                  B.Tech Artificial Intelligence student passionate about designing and building intelligent systems that solve real-world problems. Specializing in machine learning models, custom AI workflows, full-stack integration, and community leadership. President of the AI Prabodha Student Forum and experienced AI/ML intern at RNR Innotech and Acube AI. Bridging the gap between applied AI research and robust production systems.
+                  B.Tech Artificial Intelligence student with practical experience in building real-world computer vision and NLP systems. Specializing in custom object detection models, local LLM-based agentic pipelines, embedded AI deployment, and delivering end-to-end AI solutions from dataset preparation to production deployment. President of the AI Prabodha Student Forum and experienced AI intern at Acube AI and RNR. Interested in applied AI, computer vision, and scalable intelligent systems.
                 </p>
 
                 <div className="flex flex-wrap gap-3 pt-2 text-xs">
@@ -118,7 +118,7 @@ export default function Hero() {
                   </span>
                   <span className="inline-flex items-center gap-1.5 border border-white/20 px-2.5 py-1 !bg-white/5 !text-[#FAF6EE]">
                     <Briefcase size={11} className="text-neo-yellow" />
-                    Interned @ RNR Innotech & Acube AI
+                    Interned @ Acube AI & RNR
                   </span>
                 </div>
               </div>

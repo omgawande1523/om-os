@@ -23,14 +23,14 @@ const highlights = [
   {
     icon: Briefcase,
     title: 'Industry Internships',
-    subtitle: 'RNR Innotech & Acube AI',
-    description: 'Built AI-enabled ERP systems, automated business workflows, and developed applied machine learning solutions.',
+    subtitle: 'Acube AI & RNR',
+    description: 'Developed AI-powered applications, integrated machine learning models into production systems, and built enterprise ERP modules with AI capabilities.',
     colorClass: 'bg-neo-yellow',
   },
   {
     icon: BookOpen,
     title: 'Academic Honors',
-    subtitle: '8.58 Cumulative CGPA',
+    subtitle: '8.68 Cumulative CGPA',
     description: 'Consistently strong performance in advanced computer science, neural networks, and statistics coursework.',
     colorClass: 'bg-neo-pink',
   },
@@ -138,16 +138,16 @@ export default function About() {
                   PROBLEM SOLVER.
                 </h3>
                 <p className="font-body text-sm md:text-base text-black/80 leading-relaxed">
-                  I am an Artificial Intelligence undergraduate with practical experience in developing and deploying real-world machine learning solutions. My work focuses on building complete AI systems—from designing smart workflows and automating business operations to training models and integrating full-stack components.
+                  Artificial Intelligence undergraduate with practical experience in building real-world computer vision and NLP systems and deploying them on embedded and fully offline infrastructure. Experienced in training custom object detection models, developing local LLM-based agentic pipelines, and delivering end-to-end AI solutions from dataset preparation to production deployment.
                 </p>
                 <p className="font-body text-sm md:text-base text-black/80 leading-relaxed">
-                  I am particularly interested in applied AI, computer vision, and building scalable intelligent systems. As President of the AI Prabodha Forum, I lead a community of aspiring AI engineers and organize technical events that bridge the gap between applied research and production systems.
+                  Interested in applied AI, computer vision, and scalable intelligent systems. As President of the AI Prabodha Student Forum, I lead a community of aspiring AI engineers and organize technical events that bridge the gap between applied research and production systems.
                 </p>
               </div>
 
               <div className="pt-6 border-t border-black/15 font-mono text-xs text-silver space-y-1.5">
                 <p>INSTITUTION: SVPCET, Nagpur</p>
-                <p>CGPA METRIC: 8.58 / 10.0</p>
+                <p>CGPA METRIC: 8.68 / 10.0</p>
                 <p>GRADUATION: CLASS OF 2027</p>
               </div>
             </div>

@@ -66,22 +66,63 @@ const PROJECT_DETAILS_MAP: {
     caseStudy: CaseStudy;
   };
 } = {
-  'automatic-waste-segregation-with-computer-vision': {
-    title: 'Smart AI Waste Segregation',
-    subtitle: 'Computer Vision · Systems Integration',
-    categories: ['AI / ML', 'Computer Vision'],
-    isFeatured: false,
-    icon: Cpu,
-    image: '/waste-segregation.png',
-    tags: ['YOLOv8', 'OpenCV', 'Python', 'Image Processing'],
+  'lan-agentic-rag': {
+    title: 'LAN Agentic RAG System',
+    subtitle: 'Local LLM · Multi-Agent · RAG',
+    categories: ['AI / ML', 'Web Development'],
+    isFeatured: true,
+    icon: Bot,
+    image: '/ai-cv-visual.jpg',
+    tags: ['Ollama', 'Qdrant', 'Django/DRF', 'React', 'Docker', 'MySQL'],
     metrics: [
-      { label: 'Model Accuracy', value: '94.2%' },
-      { label: 'Inference Speed', value: '75ms' },
-      { label: 'Items Classified', value: '1,200+' }
+      { label: 'Architecture', value: 'Multi-Agent' },
+      { label: 'Deployment', value: 'On-Premise' },
+      { label: 'Verification', value: 'Built-in' }
     ],
     caseStudy: {
-      problem: 'Recycling and disposal facilities struggle with manual waste sorting, leading to high contamination rates and slow processing times.',
-      research: 'Evaluated MobileNet SSD, YOLOv5, and YOLOv8 models. Selected YOLOv8-nano for its superior speed-to-accuracy ratio on general CPU architectures, enabling local real-time classification.',
+      problem: 'Institutions need secure, on-premise knowledge retrieval systems that operate without external cloud services while maintaining answer accuracy and grounding.',
+      research: 'Evaluated local LLM hosting via Ollama, vector search with Qdrant, and multi-agent architectures (Router, SQL, RAG, Synthesis) with dedicated hallucination verification agents.',
+      architecture: `
+┌────────────────┐      ┌────────────────┐      ┌────────────────┐
+│  React Frontend├─────►│ Django/DRF API ├─────►│ Router Agent   │
+└────────────────┘      └────────────────┘      └───────┬────────┘
+                                                        │ (Routes Query)
+                                                        ▼
+┌────────────────┐      ┌────────────────┐      ┌────────────────┐
+│ Qdrant Vector  │◄─────┤ RAG Agent      │◄─────┤ SQL Agent      │
+└────────────────┘      └────────────────┘      └────────────────┘
+                                │
+                                ▼
+┌────────────────┐      ┌────────────────┐
+│ Synthesis Agent│◄─────┤ Verification   │
+└────────────────┘      └────────────────┘
+      `,
+      implementation: [
+        'Built a LAN-based retrieval augmented generation system using Ollama-hosted LLMs, Qdrant vector search, and MySQL',
+        'Designed a multi-agent architecture (Router, SQL, RAG, Synthesis) with a dedicated verification agent for hallucination detection and answer grounding',
+        'Deployed via Docker Compose with a Django/DRF backend and React frontend for end-to-end query handling across the local network'
+      ],
+      challenges: 'Ensuring hallucination-free responses required designing a dedicated verification agent that cross-checks generated answers against source documents.',
+      results: 'Successfully deployed a fully on-premise, secure knowledge retrieval system enabling end-to-end query handling without external cloud dependencies.',
+      futureWork: 'Add support for multi-modal document ingestion (images, tables) and implement fine-tuning pipelines for domain-specific LLMs.'
+    }
+  },
+  'automatic-waste-segregation-with-computer-vision': {
+    title: 'Smart AI Waste Segregation using YOLO and Raspberry Pi',
+    subtitle: 'Computer Vision · Embedded AI · Raspberry Pi',
+    categories: ['AI / ML', 'Computer Vision'],
+    isFeatured: true,
+    icon: Cpu,
+    image: '/waste-segregation.png',
+    tags: ['YOLOv8', 'OpenCV', 'Raspberry Pi', 'Python'],
+    metrics: [
+      { label: 'Model', value: 'YOLOv8' },
+      { label: 'Platform', value: 'RPi 4' },
+      { label: 'Classification', value: 'Real-time' }
+    ],
+    caseStudy: {
+      problem: 'Waste sorting facilities need real-time autonomous classification and segregation systems that can run on constrained edge hardware.',
+      research: 'Evaluated MobileNet SSD, YOLOv5, and YOLOv8 models. Selected YOLOv8 for embedded computer vision on Raspberry Pi with real-time autonomous waste classification.',
       architecture: `
 ┌────────────────┐      ┌────────────────┐      ┌────────────────┐
 │  Camera Input  ├─────►│ OpenCV Preproc ├─────►│  YOLOv8 Model  │
@@ -89,19 +130,53 @@ const PROJECT_DETAILS_MAP: {
                                                         │ (Classifies)
                                                         ▼
 ┌────────────────┐      ┌────────────────┐      ┌────────────────┐
-│ Auto-Sort Bin  │◄─────┤ Output Relay   │◄─────┤ Driver Signals │
+│ Auto-Sort Bin  │◄─────┤ Output Relay   │◄─────┤ Raspberry Pi 4 │
 └────────────────┘      └────────────────┘      └────────────────┘
       `,
       implementation: [
-        'Curated a custom dataset of 3,500 labeled waste images across five categories.',
-        'Trained YOLOv8-nano model in PyTorch using transfer learning and hyperparameter tuning.',
-        'Exported trained model to ONNX format to accelerate local inference speed.',
-        'Wrote custom OpenCV capture pipelines to handle noise reductions and exposure control.',
-        'Integrated software controls to output sorting directives to routing bin hardware.'
+        'Built an embedded YOLOv8-based computer vision system on Raspberry Pi for real-time autonomous waste classification and segregation',
+        'Handled dataset annotation, custom model training, and optimization for constrained edge hardware',
+        'Wrote custom OpenCV capture pipelines with noise reduction and exposure control for reliable inference'
       ],
-      challenges: 'Lighting fluctuations caused accuracy to drop during initial tests. Overcame this by adding dynamic histogram equalization in the OpenCV preprocessing step.',
-      results: 'Achieved 94.2% classification accuracy, reducing waste contamination inside recycling streams by 82% during standard testing cycles.',
-      futureWork: 'Incorporate multi-spectral camera inputs to detect composite material packaging.'
+      challenges: 'Optimizing YOLOv8 inference for Raspberry Pi required model quantization and custom preprocessing pipelines to maintain real-time performance on constrained hardware.',
+      results: 'Achieved real-time waste classification and autonomous segregation running entirely on Raspberry Pi 4 edge hardware.',
+      futureWork: 'Incorporate multi-spectral camera inputs and expand to more waste categories with federated model updates.'
+    }
+  },
+  'sarcasm-detection': {
+    title: 'Sarcasm Detection for Low-Resource Languages',
+    subtitle: 'NLP · Transformer · Regional Languages',
+    categories: ['AI / ML', 'Other'],
+    isFeatured: true,
+    icon: Bot,
+    image: '/ai-cv-visual.jpg',
+    tags: ['Transformers', 'NLP', 'Python', 'Custom Dataset'],
+    metrics: [
+      { label: 'Languages', value: 'Regional' },
+      { label: 'Model', value: 'Transformer' },
+      { label: 'Dataset', value: 'Custom' }
+    ],
+    caseStudy: {
+      problem: 'Sarcasm detection in regional Indian languages lacks sufficient annotated datasets and models, limiting NLP research integrity in these low-resource domains.',
+      research: 'Investigated transformer-based NLP frameworks for sarcasm detection in regional Indian languages, designing custom annotation guidelines and dataset schemas.',
+      architecture: `
+┌────────────────┐      ┌────────────────┐      ┌────────────────┐
+│ Text Input     ├─────►│ Tokenizer      ├─────►│ Transformer    │
+└────────────────┘      └────────────────┘      └───────┬────────┘
+                                                        │ (Classifies)
+                                                        ▼
+┌────────────────┐      ┌────────────────┐      ┌────────────────┐
+│ Output Label   │◄─────┤ Softmax Layer  │◄─────┤ Feature Extr   │
+└────────────────┘      └────────────────┘      └────────────────┘
+      `,
+      implementation: [
+        'Developed a transformer-based NLP framework for sarcasm detection in regional Indian languages using custom annotated datasets',
+        'Defined annotation guidelines, dataset schema, and strict separation of authentic and synthetic data for research integrity',
+        'Built evaluation pipelines for cross-language sarcasm classification benchmarking'
+      ],
+      challenges: 'Creating reliable annotated datasets for sarcasm in regional languages required careful separation of authentic vs. synthetic data to maintain research integrity.',
+      results: 'Successfully built a sarcasm detection framework for low-resource regional Indian languages with custom annotation guidelines ensuring dataset quality.',
+      futureWork: 'Expand coverage to more Indian languages and integrate multimodal signals (audio tone, facial expressions) for enhanced detection.'
     }
   },
   'aadhaarx': {

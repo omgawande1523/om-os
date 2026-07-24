@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 const leadershipRoles = [
   {
     icon: Flag,
-    role: 'Founder & President',
+    role: 'President (prev. Secretary & Founding Member)',
     org: 'AI Prabodha Student Forum',
     period: '2023 - Present',
     details: [

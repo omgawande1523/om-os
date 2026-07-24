@@ -17,37 +17,53 @@ gsap.registerPlugin(ScrollTrigger);
 
 const skillCategories = [
   {
-    id: 'ai-ml',
-    title: 'AI / ML',
-    icon: Brain,
-    colorClass: 'bg-neo-mint',
-    skills: ['Machine Learning', 'Deep Learning', 'Computer Vision', 'NLP', 'LLMs'],
-    description: 'End-to-end artificial intelligence development, including custom model training, vector databases, dataset pipelines, and computer vision deployment.'
-  },
-  {
     id: 'programming',
-    title: 'Programming',
+    title: 'Programming Languages',
     icon: Code2,
     colorClass: 'bg-neo-blue',
-    skills: ['Python', 'Java', 'JavaScript', 'C++'],
-    description: 'Core languages for algorithm construction, neural network training, backend system scripts, and logic implementations.'
+    skills: ['Python', 'SQL'],
+    description: 'Core languages for algorithm construction, neural network training, data engineering pipelines, and backend system scripting.'
   },
   {
-    id: 'web',
-    title: 'Web',
+    id: 'deep-learning',
+    title: 'Deep Learning',
+    icon: Brain,
+    colorClass: 'bg-neo-mint',
+    skills: ['CNNs', 'YOLO Object Detection', 'Transfer Learning', 'Custom Model Training', 'TensorFlow', 'Keras'],
+    description: 'End-to-end deep learning development including custom model training, object detection, transfer learning, and neural network optimization.'
+  },
+  {
+    id: 'computer-vision',
+    title: 'Computer Vision',
     icon: Globe,
     colorClass: 'bg-neo-pink',
-    skills: ['React', 'Next.js', 'Node.js'],
-    description: 'Full-stack application structures, interactive user dashboards, and API gateway routing using TypeScript ecosystems.'
+    skills: ['OpenCV', 'Image Preprocessing', 'Dataset Annotation', 'Real-time Detection', 'Camera Integration'],
+    description: 'Real-time computer vision systems using OpenCV for image preprocessing, dataset annotation, object detection, and camera module integration.'
   },
   {
-    id: 'tools',
-    title: 'Tools',
-    icon: Wrench,
+    id: 'generative-ai',
+    title: 'Generative AI',
+    icon: Brain,
     colorClass: 'bg-neo-yellow',
-    skills: ['Git', 'Docker', 'Linux', 'VS Code'],
-    description: 'System utilities, package compilation systems, version control logs, environment virtualization, and IDE configurations.'
-  }
+    skills: ['LLM Applications', 'RAG Pipelines', 'Ollama', 'Vector Databases (Qdrant)', 'Prompt Engineering', 'Agentic Workflow Design'],
+    description: 'Building LLM applications, RAG pipelines, vector databases with Qdrant, prompt engineering, and agentic workflow design using local and cloud models.'
+  },
+  {
+    id: 'libraries-tools',
+    title: 'Libraries & Tools',
+    icon: Wrench,
+    colorClass: 'bg-neo-orange',
+    skills: ['NumPy', 'Pandas', 'Matplotlib', 'Scikit-learn', 'Docker', 'Google Colab', 'Git', 'GitHub'],
+    description: 'Data science and ML toolchain including NumPy, Pandas, Matplotlib, Scikit-learn, Docker containerization, and version control with Git.'
+  },
+  {
+    id: 'embedded-hardware',
+    title: 'Embedded AI & Hardware',
+    icon: Wrench,
+    colorClass: 'bg-neo-surface',
+    skills: ['Raspberry Pi 4', 'Camera Module Integration', 'IoT'],
+    description: 'Deploying AI models on embedded hardware like Raspberry Pi 4, camera module integration, and IoT edge computing systems.'
+  },
 ];
 
 export default function Skills() {
@@ -98,7 +114,7 @@ export default function Skills() {
         {/* Skills Bento Grid - 4 Columns */}
         <div
           ref={gridRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {skillCategories.map((category) => {
             const Icon = category.icon;

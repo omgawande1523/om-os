@@ -25,18 +25,9 @@ const certificationsData = [
     colorClass: 'bg-neo-blue',
   },
   {
-    id: 'mcp_course',
-    fileName: 'Model_Context_Protocol.crt',
-    name: 'Model Context Protocol (MCP) Course Completion',
-    issuer: 'MCP Academy',
-    credentialInfo: 'Gained knowledge of AI agents, tool integration, context management, and MCP-based application architecture.',
-    skills: ['AI Agents', 'Tool Integration', 'Context Management', 'MCP Architecture'],
-    colorClass: 'bg-neo-pink',
-  },
-  {
     id: 'cloud_data',
     fileName: 'Cloud_Data_Engineering.crt',
-    name: 'Data Engineering in Cloud Environment Training (50 Hours)',
+    name: 'Data Engineering in Cloud Environment Training',
     issuer: 'Cloud Data Academy',
     credentialInfo: 'Acquired practical experience in cloud-based data pipelines, data processing, and modern data engineering workflows.',
     skills: ['Cloud Pipelines', 'Data Processing', 'Data Engineering Workflows'],
@@ -51,42 +42,6 @@ const certificationsData = [
     skills: ['Generative AI', 'DevOps Methodologies', 'Automation', 'AI Development'],
     colorClass: 'bg-neo-orange',
   },
-  {
-    id: 'prompt_eng',
-    fileName: 'Prompt_Engineering.crt',
-    name: 'Prompt Engineering & AI Tools Workshop',
-    issuer: 'AI Productivity Workshop',
-    credentialInfo: 'Developed skills in prompt engineering and effective utilization of modern AI productivity tools.',
-    skills: ['Prompt Engineering', 'AI Productivity Tools', 'LLMs Context'],
-    colorClass: 'bg-neo-mint',
-  },
-  {
-    id: 'ai_image_video',
-    fileName: 'AI_Image_Video_Generation.crt',
-    name: 'AI Image & Video Generation Workshop',
-    issuer: 'Multimodal AI Workshop',
-    credentialInfo: 'Learned practical techniques for AI-driven image generation, video creation, and multimodal content development.',
-    skills: ['AI Image Generation', 'Video Creation', 'Multimodal Content'],
-    colorClass: 'bg-neo-blue',
-  },
-  {
-    id: 'data_analytics',
-    fileName: 'Data_Analytics_Workshop.crt',
-    name: 'Data Analytics & AI Applications Workshop',
-    issuer: 'AI & Data Workshop',
-    credentialInfo: 'Explored data analytics methodologies and real-world applications of artificial intelligence.',
-    skills: ['Data Analytics', 'AI Applications', 'Statistical Models'],
-    colorClass: 'bg-neo-pink',
-  },
-  {
-    id: 'cloud_computing',
-    fileName: 'Cloud_Computing_Fundamentals.crt',
-    name: 'Cloud Computing Fundamentals Training',
-    issuer: 'Cloud Computing Center',
-    credentialInfo: 'Gained foundational knowledge of cloud infrastructure, services, and deployment concepts.',
-    skills: ['Cloud Infrastructure', 'Cloud Services', 'Deployment Concepts'],
-    colorClass: 'bg-neo-yellow',
-  }
 ];
 
 export default function Certifications() {
