@@ -110,7 +110,7 @@ export default function ResumeViewer() {
                   </p>
                   <p className="flex justify-between">
                     <span>Updates logs:</span>
-                    <span className="font-bold text-black">Jul 2026</span>
+                    <span className="font-bold text-black">Aug 2026</span>
                   </p>
                 </div>
               </div>

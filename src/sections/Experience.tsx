@@ -8,6 +8,22 @@ gsap.registerPlugin(ScrollTrigger);
 const directoryData = {
   work: [
     {
+      id: 'mrsac',
+      fileName: 'MRSAC_Internship.cfg',
+      type: 'work',
+      title: 'Research and Development Intern',
+      org: 'Maharashtra Remote Sensing Application Centre (MRSAC)',
+      location: 'Nagpur, Maharashtra',
+      period: 'Aug 2026',
+      description:
+        'Contributed to a multi-hazard digital twin initiative under Maharashtra’s climate resilience program, building a flood nowcasting module for Kolhapur city. Applied AI to real-world scenarios with incomplete and inconsistently available satellite & geospatial data.',
+      highlights: [
+        'Contributed to a multi-hazard digital twin initiative under Maharashtra’s climate resilience program, building a flood nowcasting module for Kolhapur city',
+        'Applied AI to a real-world scenario with incomplete and inconsistently available data, integrating satellite and geospatial datasets into a working nowcasting pipeline',
+        'Integrated open Sentinel-1/2 satellite imagery with MRSAC’s LULC and DEM datasets for automated flood risk visualization',
+      ],
+    },
+    {
       id: 'acube_ai',
       fileName: 'Acube_AI_Internship.cfg',
       type: 'work',
@@ -20,8 +36,6 @@ const directoryData = {
       highlights: [
         'Developed AI-powered applications by integrating machine learning models, LLMs, and backend APIs into production-ready systems',
         'Designed prompt engineering workflows, automated business processes, and collaborated on end-to-end AI solution deployment',
-        'Developed AI modules for enterprise ERP applications, including machine learning pipelines, NLP workflows, and intelligent business automation features',
-        'Worked with cross-functional teams to design, implement, test, and deploy scalable AI solutions for real-world business use cases',
       ],
     },
     {
@@ -68,7 +82,7 @@ export default function Experience() {
   const windowRef = useRef<HTMLDivElement>(null);
 
   const [activeFolder, setActiveFolder] = useState<'work' | 'education'>('work');
-  const [selectedFileId, setSelectedFileId] = useState<string>('rnr_innotech');
+  const [selectedFileId, setSelectedFileId] = useState<string>('mrsac');
 
   useEffect(() => {
     const ctx = gsap.context(() => {

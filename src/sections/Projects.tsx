@@ -66,6 +66,84 @@ const PROJECT_DETAILS_MAP: {
     caseStudy: CaseStudy;
   };
 } = {
+  'kolhapur-digital-twin': {
+    title: 'AI-Based Flood Nowcasting Digital Twin for Kolhapur — MRSAC',
+    subtitle: 'Digital Twin · Satellite Remote Sensing · Geospatial Nowcasting',
+    categories: ['AI / ML', 'Other'],
+    isFeatured: true,
+    icon: Cpu,
+    image: '/earth-science-agi.png',
+    tags: ['Sentinel-1/2', 'DEM', 'LULC', 'Geospatial ML', 'Python', 'Digital Twin'],
+    metrics: [
+      { label: 'Sub-Basin', value: 'Upper Krishna' },
+      { label: 'Sensors', value: 'Sentinel-1/2' },
+      { label: 'Architecture', value: 'Multi-Hazard' }
+    ],
+    caseStudy: {
+      problem: 'Kolhapur city and the Upper Krishna sub-basin experience severe recurring monsoon flood events, complicated by incomplete, delayed, and inconsistently available ground hydrological telemetry.',
+      research: 'Investigated a multi-hazard (flood + landslide) digital twin architecture under Maharashtra’s climate resilience program. Fused open Sentinel-1 SAR and Sentinel-2 optical imagery with MRSAC’s Land Use/Land Cover (LULC) and Digital Elevation Model (DEM) datasets to drive an ML-based nowcasting layer.',
+      architecture: `
+┌────────────────┐      ┌────────────────┐      ┌────────────────┐
+│ Sentinel-1/2   ├─────►│ Geospatial     ├─────►│ ML Nowcasting  │
+│ Satellite Feed │      │ Preprocessing  │      │ Layer Engine   │
+└────────────────┘      └────────────────┘      └───────┬────────┘
+                                                        │ (Infers Risk)
+                                                        ▼
+┌────────────────┐      ┌────────────────┐      ┌────────────────┐
+│ Interactive    │◄─────┤ Digital Twin   │◄─────┤ MRSAC LULC/DEM │
+│ Risk Dashboard │      │ Fusion Core    │      │ Basemaps       │
+└────────────────┘      └────────────────┘      └────────────────┘
+      `,
+      implementation: [
+        'Built a flood nowcasting module for Kolhapur city as part of a proposed multi-hazard (flood + landslide) digital twin architecture for the Upper Krishna sub-basin',
+        'Integrated open Sentinel-1/2 satellite imagery with MRSAC’s LULC and DEM datasets into a working nowcasting pipeline',
+        'Developed an ML-based nowcasting layer with an interactive dashboard for visualizing localized flood risk',
+        'Applied AI to a real-world scenario with incomplete and inconsistently available data, engineering robust preprocessing and feature extraction'
+      ],
+      challenges: 'Operating in real-world scenarios with sparse and inconsistently available ground data required calibrating synthetic aperture radar (SAR) water signatures against DEM elevation slopes.',
+      results: 'Successfully built and demonstrated an operational flood nowcasting layer and visualization dashboard for Kolhapur city under Maharashtra’s climate resilience program.',
+      futureWork: 'Extend the multi-hazard architecture to incorporate rainfall-induced landslide prediction and stream real-time IoT river gauge telemetry.'
+    }
+  },
+  'krishna-river-flood': {
+    title: 'AI-Based Flood Nowcasting Digital Twin for Kolhapur — MRSAC',
+    subtitle: 'Digital Twin · Satellite Remote Sensing · Geospatial Nowcasting',
+    categories: ['AI / ML', 'Other'],
+    isFeatured: true,
+    icon: Cpu,
+    image: '/earth-science-agi.png',
+    tags: ['Sentinel-1/2', 'DEM', 'LULC', 'Geospatial ML', 'Python', 'Digital Twin'],
+    metrics: [
+      { label: 'Sub-Basin', value: 'Upper Krishna' },
+      { label: 'Sensors', value: 'Sentinel-1/2' },
+      { label: 'Architecture', value: 'Multi-Hazard' }
+    ],
+    caseStudy: {
+      problem: 'Kolhapur city and the Upper Krishna sub-basin experience severe recurring monsoon flood events, complicated by incomplete, delayed, and inconsistently available ground hydrological telemetry.',
+      research: 'Investigated a multi-hazard (flood + landslide) digital twin architecture under Maharashtra’s climate resilience program. Fused open Sentinel-1 SAR and Sentinel-2 optical imagery with MRSAC’s Land Use/Land Cover (LULC) and Digital Elevation Model (DEM) datasets to drive an ML-based nowcasting layer.',
+      architecture: `
+┌────────────────┐      ┌────────────────┐      ┌────────────────┐
+│ Sentinel-1/2   ├─────►│ Geospatial     ├─────►│ ML Nowcasting  │
+│ Satellite Feed │      │ Preprocessing  │      │ Layer Engine   │
+└────────────────┘      └────────────────┘      └───────┬────────┘
+                                                        │ (Infers Risk)
+                                                        ▼
+┌────────────────┐      ┌────────────────┐      ┌────────────────┐
+│ Interactive    │◄─────┤ Digital Twin   │◄─────┤ MRSAC LULC/DEM │
+│ Risk Dashboard │      │ Fusion Core    │      │ Basemaps       │
+└────────────────┘      └────────────────┘      └────────────────┘
+      `,
+      implementation: [
+        'Built a flood nowcasting module for Kolhapur city as part of a proposed multi-hazard (flood + landslide) digital twin architecture for the Upper Krishna sub-basin',
+        'Integrated open Sentinel-1/2 satellite imagery with MRSAC’s LULC and DEM datasets into a working nowcasting pipeline',
+        'Developed an ML-based nowcasting layer with an interactive dashboard for visualizing localized flood risk',
+        'Applied AI to a real-world scenario with incomplete and inconsistently available data, engineering robust preprocessing and feature extraction'
+      ],
+      challenges: 'Operating in real-world scenarios with sparse and inconsistently available ground data required calibrating synthetic aperture radar (SAR) water signatures against DEM elevation slopes.',
+      results: 'Successfully built and demonstrated an operational flood nowcasting layer and visualization dashboard for Kolhapur city under Maharashtra’s climate resilience program.',
+      futureWork: 'Extend the multi-hazard architecture to incorporate rainfall-induced landslide prediction and stream real-time IoT river gauge telemetry.'
+    }
+  },
   'lan-agentic-rag': {
     title: 'LAN Agentic RAG System',
     subtitle: 'Local LLM · Multi-Agent · RAG',
@@ -454,7 +532,43 @@ export default function Projects() {
     };
   }, []);
 
-  const projects: Project[] = repos.map((repo) => {
+  // Ensure the 4 flagship resume projects are always present in the repository stream
+  const allRepos = [...repos];
+  if (!allRepos.some((r) => r.name.toLowerCase() === 'lan-agentic-rag')) {
+    allRepos.unshift({
+      id: 9991,
+      name: 'lan-agentic-rag',
+      description: 'Local Area Network Agentic RAG System using Ollama-hosted LLMs, Qdrant vector search, and MySQL.',
+      html_url: 'https://github.com/omgawande1523/lan-agentic-rag',
+      stargazers_count: 0,
+      language: 'Python',
+      forks_count: 0,
+      updated_at: new Date().toISOString(),
+    });
+  }
+  if (!allRepos.some((r) => r.name.toLowerCase() === 'kolhapur-digital-twin' || r.name.toLowerCase() === 'krishna-river-flood')) {
+    allRepos.unshift({
+      id: 9992,
+      name: 'Kolhapur-Digital-Twin',
+      description: 'AI-Based Flood Nowcasting Digital Twin for Kolhapur — MRSAC climate resilience initiative.',
+      html_url: 'https://github.com/omgawande1523/Kolhapur-Digital-Twin',
+      stargazers_count: 1,
+      language: 'Python',
+      forks_count: 0,
+      updated_at: new Date().toISOString(),
+    });
+  }
+
+  // Deduplicate repos by canonical project key
+  const seenIds = new Set<string>();
+  const dedupedRepos = allRepos.filter((repo) => {
+    const rawKey = repo.name.toLowerCase().replace(/[\._0-9]+$/, '').replace(/\.$/, '');
+    if (seenIds.has(rawKey)) return false;
+    seenIds.add(rawKey);
+    return true;
+  });
+
+  const projects: Project[] = dedupedRepos.map((repo) => {
     const detail = PROJECT_DETAILS_MAP[repo.name.toLowerCase()] || PROJECT_DETAILS_MAP[repo.name.replace(/\./g, '').toLowerCase()];
     
     const defaultCaseStudy: CaseStudy = {
@@ -504,7 +618,27 @@ export default function Projects() {
     return project.categories.includes(activeCategory);
   });
 
-  const featured = filteredProjects.filter((p) => p.isFeatured);
+  const RESUME_PRIORITY_ORDER = [
+    'kolhapur-digital-twin',
+    'krishna-river-flood',
+    'lan-agentic-rag',
+    'automatic-waste-segregation-with-computer-vision',
+    'sarcasm-detection',
+  ];
+
+  const getResumeOrderScore = (id: string) => {
+    const lower = id.toLowerCase();
+    for (let i = 0; i < RESUME_PRIORITY_ORDER.length; i++) {
+      if (lower.includes(RESUME_PRIORITY_ORDER[i]) || RESUME_PRIORITY_ORDER[i].includes(lower)) {
+        return i;
+      }
+    }
+    return 999;
+  };
+
+  const featured = filteredProjects
+    .filter((p) => p.isFeatured)
+    .sort((a, b) => getResumeOrderScore(a.id) - getResumeOrderScore(b.id));
   const archive = filteredProjects.filter((p) => !p.isFeatured);
 
   const expandedProject = projects.find((p) => p.id === expandedId);

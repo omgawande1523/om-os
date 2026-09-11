@@ -22,9 +22,9 @@ const highlights = [
   },
   {
     icon: Briefcase,
-    title: 'Industry Internships',
-    subtitle: 'Acube AI & RNR',
-    description: 'Developed AI-powered applications, integrated machine learning models into production systems, and built enterprise ERP modules with AI capabilities.',
+    title: 'Research & Internships',
+    subtitle: 'MRSAC, Acube AI & RNR',
+    description: 'Contributed to climate resilience digital twin at MRSAC, integrated production ML & LLM models at Acube AI, and built enterprise ERP AI modules at RNR.',
     colorClass: 'bg-neo-yellow',
   },
   {

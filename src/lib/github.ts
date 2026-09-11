@@ -20,14 +20,44 @@ export interface GitHubStatsData {
 
 const FALLBACK_REPOS: GitHubRepo[] = [
   {
+    id: 100,
+    name: 'Kolhapur-Digital-Twin',
+    description: 'AI-Based Flood Nowcasting Digital Twin for Kolhapur — MRSAC climate resilience initiative integrating Sentinel-1/2 satellite imagery and DEM datasets.',
+    html_url: 'https://github.com/omgawande1523/Kolhapur-Digital-Twin',
+    stargazers_count: 1,
+    language: 'Python',
+    forks_count: 0,
+    updated_at: '2026-08-15T05:00:00Z'
+  },
+  {
+    id: 101,
+    name: 'lan-agentic-rag',
+    description: 'Local Area Network Agentic RAG System using Ollama-hosted LLMs, Qdrant vector search, MySQL, and dedicated verification agent for hallucination grounding.',
+    html_url: 'https://github.com/omgawande1523/lan-agentic-rag',
+    stargazers_count: 0,
+    language: 'Python',
+    forks_count: 0,
+    updated_at: '2026-07-20T05:00:00Z'
+  },
+  {
     id: 1,
     name: 'Automatic-waste-segregation-with-computer-vision',
-    description: 'Create a system that uses image recognition to automatically classify waste (plastic, paper, metal, organic, e-waste) and guide sorting bins + track contamination.',
+    description: 'Smart AI Waste Segregation System using YOLOv8 and Raspberry Pi for real-time autonomous waste classification and segregation on constrained edge hardware.',
     html_url: 'https://github.com/omgawande1523/Automatic-waste-segregation-with-computer-vision',
     stargazers_count: 0,
-    language: 'JavaScript',
+    language: 'Python',
     forks_count: 0,
     updated_at: '2026-06-22T05:00:00Z'
+  },
+  {
+    id: 10,
+    name: 'Sarcasm-Detection',
+    description: 'Transformer-based NLP framework for sarcasm detection in regional Indian languages using custom annotated datasets and research integrity safeguards.',
+    html_url: 'https://github.com/omgawande1523/Sarcasm-Detection',
+    stargazers_count: 0,
+    language: 'Python',
+    forks_count: 0,
+    updated_at: '2026-06-22T02:20:00Z'
   },
   {
     id: 2,
@@ -108,16 +138,6 @@ const FALLBACK_REPOS: GitHubRepo[] = [
     language: 'Python',
     forks_count: 0,
     updated_at: '2026-06-22T02:30:00Z'
-  },
-  {
-    id: 10,
-    name: 'Sarcasm-Detection',
-    description: 'NLP sarcasm classifier utilizing LSTM and recurrent architectures on social queries.',
-    html_url: 'https://github.com/omgawande1523/Sarcasm-Detection',
-    stargazers_count: 0,
-    language: 'Python',
-    forks_count: 0,
-    updated_at: '2026-06-22T02:20:00Z'
   },
   {
     id: 11,

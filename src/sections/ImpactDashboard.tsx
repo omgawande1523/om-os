@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Award, Users, Briefcase, Zap, Github, Layers, Target, ShieldCheck } from 'lucide-react';
+import { Award, Users, Briefcase, Zap, Github, Layers, Target, ShieldCheck, Globe } from 'lucide-react';
 
 const impactItems = [
   {
@@ -23,23 +23,33 @@ const impactItems = [
     metric: '3-Year CR'
   },
   {
-    title: 'AI Intern @ RNR Innotech',
-    subtitle: 'INDUSTRY_EXPERIENCE',
-    icon: Briefcase,
-    description: 'Developed and optimized AI-enabled ERP system modules. Created automated intelligent workflows and integrated AI capabilities to drive business process optimization.',
-    colorClass: 'bg-neo-pink',
-    spanClass: 'lg:col-span-6 md:col-span-6',
-    tags: ['ERP Automation', 'AI Integration', 'Intelligent Workflows'],
-    metric: 'Internship'
+    title: 'R&D Intern @ MRSAC',
+    subtitle: 'RESEARCH_INNOVATION',
+    icon: Globe,
+    description: 'Contributed to a multi-hazard digital twin initiative under Maharashtra’s climate resilience program, engineering a flood nowcasting module for Kolhapur city using Sentinel-1/2 imagery and DEM datasets.',
+    colorClass: 'bg-neo-yellow',
+    spanClass: 'lg:col-span-4 md:col-span-6',
+    tags: ['Digital Twin', 'Flood Nowcasting', 'Satellite ML', 'Upper Krishna'],
+    metric: 'Aug 2026'
   },
   {
     title: 'ML Intern @ Acube AI',
     subtitle: 'INDUSTRY_EXPERIENCE',
     icon: Zap,
-    description: 'Collaborated on developing applied machine learning models and AI solution projects. Designed and implemented custom AI workflows for applied AI systems.',
+    description: 'Collaborated on developing applied machine learning models and AI solution projects. Designed prompt engineering workflows and collaborated on end-to-end AI deployment.',
     colorClass: 'bg-neo-orange',
-    spanClass: 'lg:col-span-6 md:col-span-12',
-    tags: ['AI Solutions', 'AI Workflows', 'Applied AI Systems'],
+    spanClass: 'lg:col-span-4 md:col-span-6',
+    tags: ['AI Solutions', 'LLMs & ML Models', 'Applied Workflows'],
+    metric: 'Internship'
+  },
+  {
+    title: 'AI Intern @ RNR Innotech',
+    subtitle: 'ENTERPRISE_AI',
+    icon: Briefcase,
+    description: 'Developed and optimized AI-enabled ERP system modules. Created automated intelligent workflows and integrated AI capabilities to drive business process optimization.',
+    colorClass: 'bg-neo-pink',
+    spanClass: 'lg:col-span-4 md:col-span-12',
+    tags: ['ERP Automation', 'AI Integration', 'Intelligent Workflows'],
     metric: 'Internship'
   },
   {

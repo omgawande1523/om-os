@@ -10,7 +10,8 @@ import {
   FolderOpen,
   Terminal,
   Activity,
-  CheckCircle2
+  CheckCircle2,
+  Users
 } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -63,6 +64,14 @@ const skillCategories = [
     colorClass: 'bg-neo-surface',
     skills: ['Raspberry Pi 4', 'Camera Module Integration', 'IoT'],
     description: 'Deploying AI models on embedded hardware like Raspberry Pi 4, camera module integration, and IoT edge computing systems.'
+  },
+  {
+    id: 'soft-skills',
+    title: 'Soft Skills & Leadership',
+    icon: Users,
+    colorClass: 'bg-neo-yellow',
+    skills: ['Leadership', 'Problem Solving', 'Strategic Thinking', 'Teamwork', 'Adaptability'],
+    description: 'Executive forum leadership, cross-functional engineering collaboration, analytical problem solving, and strategic adaptation across research and industry.'
   },
 ];
 
