@@ -8,9 +8,11 @@
     "snapshot": "node scripts/snapshot-github.mjs",
     "prebuild": "node scripts/snapshot-github.mjs",
     "build": "tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
-    "lint": "eslint .",
     "preview": "vite preview",
-    "optimize-images": "node scripts/optimize-images.mjs"
+    "lint": "eslint .",
+    "typecheck": "tsc -b --noEmit",
+    "optimize-images": "node scripts/optimize-images.mjs",
+    "check-links": "node scripts/check-links.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.562.0",
