@@ -77,6 +77,9 @@ module.exports = {
         "neo-hover": "6px 6px 0px var(--neo-shadow)",
         "neo-silver": "4px 4px 0px #C4C4C4",
         "neo-sm": "2px 2px 0px var(--neo-shadow)",
+        // Neo-brutalist tokens adapted from ekmas/neobrutalism-components (MIT, © 2023 Samuel Breznjak)
+        nb: "4px 4px 0px 0px var(--neo-shadow)",
+        "nb-sm": "2px 2px 0px 0px var(--neo-shadow)",
         "neo-md": "4px 4px 0px var(--neo-shadow)",
         "neo-lg": "8px 8px 0px var(--neo-shadow)",
       },

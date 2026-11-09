@@ -7,12 +7,13 @@ export type LeadershipIcon = 'flag' | 'users' | 'trophy' | 'target' | 'sparkles'
 
 export interface LeadershipRole {
   id: string;
+  /** Shown as a one-liner by default; the rest sit behind "Show all". */
+  featured: boolean;
   icon: LeadershipIcon;
   role: string;
   org: string;
   period: string;
   details: string[];
-  color: string;
 }
 
 export const leadershipIntro =
@@ -21,6 +22,7 @@ export const leadershipIntro =
 export const leadership: LeadershipRole[] = [
   {
     id: 'ai-prabodha',
+    featured: true,
     icon: 'flag',
     role: 'President (prev. Secretary & Founding Member)',
     org: 'AI Prabodha Student Forum',
@@ -30,10 +32,10 @@ export const leadership: LeadershipRole[] = [
       'Organized multiple Python development bootcamps and artificial intelligence starter seminars.',
       'Mentored 50+ junior engineering students in setting up local Jupyter notebooks and training models.',
     ],
-    color: 'bg-neo-mint',
   },
   {
     id: 'class-rep',
+    featured: true,
     icon: 'users',
     role: 'Class Representative',
     org: 'AI Department, SVPCET',
@@ -43,10 +45,10 @@ export const leadership: LeadershipRole[] = [
       'Liaison between department faculty heads and 70+ students to smooth academic operations.',
       'Managed event feedback loops resulting in improved laboratory compute hour allocations.',
     ],
-    color: 'bg-neo-blue',
   },
   {
     id: 'dataventics',
+    featured: true,
     icon: 'trophy',
     role: 'Dataventics GenAI Hackathon Lead',
     org: 'SVPCET AI Campus Events',
@@ -56,10 +58,10 @@ export const leadership: LeadershipRole[] = [
       'Configured server compute slots and API access keys for student hackathon teams.',
       'Maintained uptime of assessment web app during concurrent grading checks by judges.',
     ],
-    color: 'bg-neo-yellow',
   },
   {
     id: 'ai-verse',
+    featured: false,
     icon: 'target',
     role: 'AI Verse Organizer',
     org: 'Department Technical Board',
@@ -69,10 +71,10 @@ export const leadership: LeadershipRole[] = [
       'Designed evaluation schemas and reference prompts to assess model compliance and efficiency.',
       'Evaluated 40+ competitor submissions, checking execution pipelines and response accuracy.',
     ],
-    color: 'bg-neo-pink',
   },
   {
     id: 'community',
+    featured: false,
     icon: 'sparkles',
     role: 'Community Builder',
     org: 'Open Source Education',
@@ -81,10 +83,10 @@ export const leadership: LeadershipRole[] = [
       'Host weekend code reviews and hardware debugging sessions for student builders.',
       'Organize technical visits to local tech hubs to inspect real-world automated pipelines.',
     ],
-    color: 'bg-neo-orange',
   },
   {
     id: 'tech-lead',
+    featured: false,
     icon: 'brain',
     role: 'Technical Leader',
     org: 'Research & Project Teams',
@@ -94,6 +96,8 @@ export const leadership: LeadershipRole[] = [
       'Guiding model optimization methodologies (quantization, RAG pipeline fine-tuning).',
       'Orchestrated multi-disciplinary teams across frontend, backend, and embedded edge systems.',
     ],
-    color: 'bg-neo-surface',
   },
 ];
+
+/** Hero fact line label for the forum role (same role as leadership[0]). */
+export const forumRoleShort = 'President, AI Prabodha';

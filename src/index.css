@@ -476,3 +476,37 @@ textarea:focus-visible {
 .dark .text-red-700 {
   color: #fca5a5 !important;
 }
+
+/* Neo-brutalist press (v3). Tokens and interaction adapted from
+   ekmas/neobrutalism-components (https://github.com/ekmas/neobrutalism-components),
+   MIT License, © 2023 Samuel Breznjak: shadow offset 4px, translate onto the shadow on press. */
+.nb-press,
+.nb-press-lg {
+  transition:
+    transform 100ms ease-out,
+    box-shadow 100ms ease-out;
+}
+/* For elements with the 2px shadow (shadow-neo-sm / shadow-nb-sm) */
+.nb-press:hover,
+.nb-press:focus-visible {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 0 var(--neo-shadow);
+}
+.nb-press:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+/* For cards with the 4px shadow (shadow-nb) */
+.nb-press-lg:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 0 var(--neo-shadow);
+}
+.nb-press-lg:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+/* "All projects": rows after the 6th are hidden until "Show all" (they stay in the HTML). */
+.project-list-collapsed > li:nth-child(n + 7):not(:target) {
+  display: none;
+}

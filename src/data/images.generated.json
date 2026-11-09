@@ -1,15 +1,9 @@
 {
   "portrait": {
-    "width": 640,
-    "height": 640,
+    "width": 352,
+    "height": 352,
     "avif": "/img/om-gawande-portrait.avif",
     "webp": "/img/om-gawande-portrait.webp"
-  },
-  "resumePreview": {
-    "width": 800,
-    "height": 1035,
-    "avif": "/Om_Gawande_Resume_preview.avif",
-    "webp": "/Om_Gawande_Resume_preview.webp"
   },
   "mrsacOverview": {
     "width": 1200,

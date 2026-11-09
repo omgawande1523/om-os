@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Github, Linkedin, Mail, Menu, X, Terminal, Cpu, Clock, Wifi, Sun, Moon } from 'lucide-react';
+import { Github, Linkedin, Mail, Menu, X, Terminal, Clock, Sun, Moon } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
-import { sections, preambleNav } from '../data/sections';
+import { sections } from '../data/sections';
+import { RESUME_PDF } from '../data/resume';
 import { profile } from '../data/profile';
 
-const navLinks = [
-  ...preambleNav.map((s) => ({ label: s.nav, href: `#${s.id}` })),
-  ...sections.map((s) => ({ label: s.nav, href: `#${s.id}` })),
-];
+const navLinks = sections.map((s) => ({ label: s.nav, href: `#${s.id}` }));
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
@@ -58,17 +56,10 @@ export default function Header() {
             <Terminal size={12} aria-hidden="true" />
             <span>OM_OS v1.0.4</span>
           </a>
-          <div className="flex items-center gap-1.5 text-xs text-black/60 hidden sm:flex" aria-hidden="true">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="text-[10px] tracking-wide uppercase font-semibold">System: Online</span>
-          </div>
         </div>
 
         {/* Center: Desktop Nav Menus */}
-        <nav className="hidden xl:flex items-center gap-0.5 text-[11px]" aria-label="Sections">
+        <nav className="hidden lg:flex items-center gap-0.5 text-[11px]" aria-label="Sections">
           {navLinks.map((link) => (
             <a
               key={link.label}
@@ -115,6 +106,14 @@ export default function Header() {
             </a>
           </div>
 
+          <a
+            href={RESUME_PDF}
+            download
+            className="nb-press hidden sm:inline-flex items-center gap-1 font-mono text-[11px] font-bold uppercase border-[2px] border-black px-2 py-1 bg-neo-yellow text-black shadow-nb-sm"
+          >
+            Resume <span aria-hidden="true">↓</span>
+          </a>
+
           {/* Dark Mode Toggle */}
           <button
             onClick={toggleTheme}
@@ -132,11 +131,7 @@ export default function Header() {
           </button>
 
           {/* System Info */}
-          <div className="flex items-center gap-4 text-xs font-semibold" aria-hidden="true">
-            <div className="flex items-center gap-1 hidden xs:flex">
-              <Wifi size={13} className="text-black" />
-              <Cpu size={13} className="text-black" />
-            </div>
+          <div className="hidden md:flex items-center gap-4 text-xs font-semibold" aria-hidden="true">
             <div className="flex items-center gap-1.5 bg-neo-bg py-0.5 px-2 border border-black/25">
               <Clock size={12} className="text-black/70" />
               <span className="text-[11px] font-bold tracking-tight">{time}</span>
@@ -150,7 +145,7 @@ export default function Header() {
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
-            className="xl:hidden p-1 border border-black hover:bg-black hover:text-neo-bg transition-colors"
+            className="lg:hidden p-1 border border-black hover:bg-black hover:text-neo-bg transition-colors"
           >
             {mobileOpen ? <X size={16} aria-hidden="true" /> : <Menu size={16} aria-hidden="true" />}
           </button>
@@ -159,7 +154,7 @@ export default function Header() {
 
       {/* Mobile Nav Menu */}
       {mobileOpen && (
-        <div id="mobile-menu" className="xl:hidden border-t-[2.5px] border-black bg-neo-bg text-xs">
+        <div id="mobile-menu" className="lg:hidden border-t-[2.5px] border-black bg-neo-bg text-xs">
           <nav className="flex flex-col" aria-label="Sections">
             {navLinks.map((link) => (
               <a
@@ -171,6 +166,13 @@ export default function Header() {
                 <span>{link.label}</span>
               </a>
             ))}
+            <a
+              href={RESUME_PDF}
+              download
+              className="px-6 py-3 border-b border-black/10 hover:bg-black hover:text-neo-bg transition-colors font-bold uppercase tracking-wider"
+            >
+              Resume <span aria-hidden="true">↓</span>
+            </a>
             <div className="flex items-center gap-4 px-6 py-4 bg-black/5">
               <span className="font-bold text-black/60">Socials:</span>
               <a

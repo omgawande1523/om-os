@@ -1,117 +1,79 @@
-import { useState } from 'react';
-import { Folder, FolderOpen, FileText, GraduationCap } from 'lucide-react';
-import { useReveal } from '../hooks/useReveal';
+import { ArrowUpRight, Award, GraduationCap } from 'lucide-react';
 import SectionHeading from '../components/SectionHeading';
 import { experience, education } from '../data/experience';
-
+import { certifications } from '../data/certifications';
 
 export default function Experience() {
-  const windowRef = useReveal<HTMLDivElement>();
-  const [selectedId, setSelectedId] = useState<string>(experience[0].id);
-
-
-  const current = experience.find((r) => r.id === selectedId) ?? experience[0];
-
   return (
-    <section
-      id="experience"
-      className="w-full py-24 px-4 md:px-8 lg:px-16 bg-neo-bg text-black relative transition-colors duration-200"
-    >
-      <div className="max-w-7xl mx-auto space-y-12">
+    <section id="experience" aria-labelledby="experience-title" className="w-full py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-neo-bg text-black">
+      <div className="max-w-7xl mx-auto space-y-10">
         <SectionHeading id="experience" />
 
-        <div ref={windowRef} className="space-y-8">
-          {/* Education card */}
-          <article className="os-window bg-neo-surface">
-            <div className="os-window-header">
-              <div className="flex items-center gap-2 font-mono text-sm text-black">
-                <GraduationCap size={14} aria-hidden="true" />
-                <span>{education.fileName}</span>
+        {/* Timeline */}
+        <ol className="relative border-l-[2.5px] border-black ml-2 space-y-8">
+          {experience.map((role) => (
+            <li key={role.id} className="relative pl-6 md:pl-8">
+              <span className="absolute -left-[9px] top-1.5 w-4 h-4 bg-neo-yellow border-[2.5px] border-black" aria-hidden="true" />
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <h3 className="font-display text-lg md:text-xl font-bold text-black">{role.title}</h3>
+                {role.period && <span className="font-mono text-xs font-bold text-black/70">{role.period}</span>}
               </div>
-              <span className="font-mono text-[10px] font-bold">{education.period}</span>
-            </div>
-            <div className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-              <div className="md:col-span-8 space-y-1">
-                <h3 className="font-display text-xl md:text-2xl font-bold text-black">{education.degree}</h3>
-                <p className="font-body text-sm text-black/75">
-                  {education.institution}, {education.city}
-                </p>
-              </div>
-              <dl className="md:col-span-4 grid grid-cols-2 gap-3 font-mono">
-                <div className="border-[2px] border-black p-3 bg-neo-yellow shadow-neo-sm">
-                  <dt className="text-[9px] font-bold uppercase text-black/70">CGPA</dt>
-                  <dd className="text-lg font-extrabold text-black">{education.cgpa}</dd>
-                </div>
-                <div className="border-[2px] border-black p-3 bg-neo-mint shadow-neo-sm">
-                  <dt className="text-[9px] font-bold uppercase text-black/70">Class of</dt>
-                  <dd className="text-lg font-extrabold text-black">{education.classOf}</dd>
-                </div>
-              </dl>
-            </div>
-          </article>
+              <p className="font-mono text-xs md:text-sm font-semibold text-black/80 mt-0.5">{role.org}</p>
+              <ul className="mt-3 space-y-1.5 font-body text-sm text-black/80 max-w-3xl">
+                {role.highlights.map((h) => (
+                  <li key={h} className="flex gap-2">
+                    <span className="text-black/50" aria-hidden="true">–</span>
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ol>
 
-          {/* Work experience explorer */}
-          <div className="os-window flex flex-col bg-neo-surface">
-            <div className="os-window-header-accent">
-              <div className="flex items-center gap-2 font-mono text-sm text-black min-w-0">
-                <Folder size={14} className="text-black shrink-0" aria-hidden="true" />
-                <span className="truncate">explorer.exe --path C:\omgawande\experience</span>
-              </div>
-              <div className="window-dots" aria-hidden="true">
-                <span className="window-dot bg-red-400"></span>
-                <span className="window-dot bg-yellow-400"></span>
-                <span className="window-dot bg-emerald-400"></span>
-              </div>
-            </div>
+        {/* Education: one line */}
+        <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs md:text-sm text-black border-t-[2.5px] border-black pt-6">
+          <GraduationCap size={16} aria-hidden="true" className="shrink-0" />
+          <span className="font-bold">{education.degree}</span>
+          <span aria-hidden="true" className="text-black/40">·</span>
+          <span>
+            {education.institution}, {education.city}
+          </span>
+          <span aria-hidden="true" className="text-black/40">·</span>
+          <span>{education.period}</span>
+          <span aria-hidden="true" className="text-black/40">·</span>
+          <span className="font-bold">CGPA {education.cgpa}</span>
+        </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-12 bg-neo-surface">
-              <div className="md:col-span-4 p-4 md:border-r-[2.5px] border-b-[2.5px] md:border-b-0 border-black bg-neo-bg/50 font-mono text-xs space-y-2">
-                <p className="flex items-center gap-2 py-1.5 px-2.5 font-bold bg-black text-neo-bg">
-                  <FolderOpen size={14} aria-hidden="true" />
-                  <span>Work_Experience</span>
-                </p>
-                <div className="pl-6 border-l border-black/10 space-y-0.5" role="group" aria-label="Internships">
-                  {experience.map((role) => (
-                    <button
-                      key={role.id}
-                      type="button"
-                      onClick={() => setSelectedId(role.id)}
-                      aria-pressed={selectedId === role.id}
-                      className={`flex items-center gap-1.5 w-full text-left py-1 px-2 border border-transparent text-[11px] ${
-                        selectedId === role.id ? 'bg-neo-blue border-black font-semibold' : 'hover:bg-black/5 text-black'
-                      }`}
-                    >
-                      <FileText size={11} aria-hidden="true" />
-                      <span>{role.fileName}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="md:col-span-8 p-6 md:p-8 bg-neo-surface space-y-6">
-                <div className="space-y-2">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <h3 className="font-display text-2xl font-bold text-black">{current.title}</h3>
-                    {current.period && (
-                      <span className="inline-flex items-center font-mono text-[10px] font-bold bg-neo-yellow/20 text-black border border-black/15 px-2 py-0.5">
-                        {current.period}
-                      </span>
-                    )}
-                  </div>
-                  <p className="font-mono text-xs text-black/60 font-semibold uppercase">{current.org}</p>
-                </div>
-
-                <ul className="space-y-2 font-body text-sm text-black/80">
-                  {current.highlights.map((highlight) => (
-                    <li key={highlight} className="flex items-start gap-2">
-                      <span className="text-neo-pink font-bold mt-0.5" aria-hidden="true">•</span>
-                      <span>{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
+        {/* Certifications: badges */}
+        <div className="space-y-3">
+          <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-black/70">Certifications</h3>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {certifications.map((c) => {
+              const body = (
+                <>
+                  <Award size={14} aria-hidden="true" className="shrink-0 mt-0.5" />
+                  <span className="min-w-0">
+                    <span className="block font-display text-xs font-bold text-black leading-snug">{c.name}</span>
+                    <span className="block font-mono text-[10px] text-black/70 mt-0.5">{c.issuer}</span>
+                  </span>
+                  {c.credentialUrl && <ArrowUpRight size={12} aria-hidden="true" className="shrink-0 ml-auto" />}
+                </>
+              );
+              const cls = 'flex items-start gap-2 h-full border-[2px] border-black bg-neo-surface p-3 shadow-nb-sm';
+              return (
+                <li key={c.id}>
+                  {c.credentialUrl ? (
+                    <a href={c.credentialUrl} target="_blank" rel="noopener noreferrer" className={`nb-press ${cls} hover:bg-neo-yellow`}>
+                      {body}
+                    </a>
+                  ) : (
+                    <div className={cls}>{body}</div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </section>

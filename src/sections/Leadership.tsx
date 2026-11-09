@@ -1,107 +1,47 @@
-import { ShieldCheck, Flag, Users, Trophy, Sparkles, Target, Brain, type LucideIcon } from 'lucide-react';
-import { useReveal } from '../hooks/useReveal';
 import SectionHeading from '../components/SectionHeading';
-import { leadership, leadershipIntro, type LeadershipIcon } from '../data/leadership';
+import { leadership } from '../data/leadership';
 
-
-const icons: Record<LeadershipIcon, LucideIcon> = {
-  flag: Flag,
-  users: Users,
-  trophy: Trophy,
-  target: Target,
-  sparkles: Sparkles,
-  brain: Brain,
-};
+const top = leadership.filter((r) => r.featured);
 
 export default function Leadership() {
-  const containerRef = useReveal<HTMLDivElement>({ stagger: true });
-
-
   return (
-    <section
-      id="leadership"
-      className="w-full py-24 px-4 md:px-8 lg:px-16 bg-neo-bg text-black relative transition-colors duration-200"
-    >
-      <div className="max-w-7xl mx-auto space-y-12">
-        {/* Section Header */}
+    <section id="leadership" aria-labelledby="leadership-title" className="w-full py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-neo-bg text-black">
+      <div className="max-w-7xl mx-auto space-y-6">
         <SectionHeading id="leadership" />
 
-        {/* Outer Command Center Window */}
-        <div className="os-window flex flex-col bg-neo-surface">
-          {/* Window Header */}
-          <div className="os-window-header-accent">
-            <div className="flex items-center gap-2 font-mono text-sm text-black min-w-0">
-              <ShieldCheck size={14} className="shrink-0" aria-hidden="true" />
-              <span className="truncate">community_leadership_dashboard.exe</span>
-            </div>
-            <div className="window-dots shrink-0" aria-hidden="true">
-              <span className="window-dot bg-red-400"></span>
-              <span className="window-dot bg-yellow-400"></span>
-              <span className="window-dot bg-emerald-400"></span>
-            </div>
-          </div>
+        <ul className="border-t-[2.5px] border-black">
+          {top.map((r) => (
+            <li key={r.id} className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 py-3 border-b border-black/15">
+              <span className="font-display text-sm md:text-base font-bold text-black">{r.role}</span>
+              <span className="font-body text-sm text-black/80">{r.org}</span>
+              <span className="font-mono text-xs text-black/70 md:ml-auto">{r.period}</span>
+            </li>
+          ))}
+        </ul>
 
-          {/* Sub menu bar */}
-          <div className="border-b-[2px] border-black bg-neo-surface px-4 py-2 flex items-center justify-between font-mono text-[10px] text-black/60 border-t-0 select-none">
-            <div className="flex gap-4">
-              <span>Registry</span>
-              <span>Achievements</span>
-              <span>Impact_Index</span>
-            </div>
-          </div>
-
-          {/* Window Body */}
-          <div className="p-6 md:p-8 bg-[#FFFDF9]">
-            <div className="max-w-3xl mb-8 space-y-2">
-              <p className="font-body text-sm text-black/70 leading-relaxed">{leadershipIntro}</p>
-            </div>
-
-            {/* Roles Grid */}
-            <div ref={containerRef} className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {leadership.map((item) => {
-                const Icon = icons[item.icon];
-                return (
-                  <div
-                    key={item.id}
-                    className="os-window bg-neo-surface hover:-translate-x-1.5 hover:-translate-y-1.5 hover:shadow-neo-lg transition-all duration-300 flex flex-col justify-between"
-                  >
-                    {/* Header bar of role window */}
-                    <div className={`border-b-[2.5px] border-black px-4 py-2 ${item.color} font-mono text-xs font-bold text-black flex justify-between items-center`}>
-                      <h3 className="uppercase">{item.role}</h3>
-                      <span className="text-[10px] text-black/60 font-bold">{item.period}</span>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-2">
-                          <div className="p-1 border border-black bg-black text-neo-bg">
-                            <Icon size={12} className="text-current" />
-                          </div>
-                          <span className="font-mono text-xs font-bold text-black">{item.org}</span>
-                        </div>
-                        <ul className="space-y-2 font-body text-xs text-black/75 leading-relaxed list-none">
-                          {item.details.map((detail, dIdx) => (
-                            <li key={dIdx} className="flex items-start gap-1.5">
-                              <span className="text-neo-pink font-bold mt-0.5">•</span>
-                              <span>{detail}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Footer bar */}
-          <div className="border-t-[2.5px] border-black bg-black text-neo-bg px-4 py-2 font-mono text-[9px] text-right flex justify-between select-none">
-            <span>{leadership.length} roles</span>
-            <span>SVPCET, Nagpur</span>
-          </div>
-        </div>
+        <details className="group border-[2px] border-black bg-neo-surface">
+          <summary className="cursor-pointer select-none px-4 py-2.5 font-mono text-xs font-bold uppercase text-black hover:bg-neo-yellow">
+            Show all {leadership.length} roles with details
+          </summary>
+          <ul className="px-4 pb-4 space-y-5">
+            {leadership.map((r) => (
+              <li key={r.id} className="pt-4 border-t border-black/15 first:border-t-0">
+                <p className="font-display text-sm font-bold text-black">
+                  {r.role} <span className="font-body font-normal text-black/80">· {r.org}</span>{' '}
+                  <span className="font-mono text-xs font-normal text-black/70">· {r.period}</span>
+                </p>
+                <ul className="mt-2 space-y-1 font-body text-sm text-black/80">
+                  {r.details.map((d) => (
+                    <li key={d} className="flex gap-2">
+                      <span className="text-black/50" aria-hidden="true">–</span>
+                      <span>{d}</span>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </details>
       </div>
     </section>
   );

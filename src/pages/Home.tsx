@@ -1,20 +1,15 @@
+import { lazy, Suspense } from 'react';
 import Header from '../components/Header';
-import CustomCursor from '../components/CustomCursor';
 import KeyboardShortcuts from '../components/KeyboardShortcuts';
 import Hero from '../sections/Hero';
-import About from '../sections/About';
-import Projects from '../sections/Projects';
-import { lazy, Suspense } from 'react';
+import Work from '../sections/Work';
 
 // Below the fold: separate chunks so the first screen parses less JS.
 const Experience = lazy(() => import('../sections/Experience'));
 const Publications = lazy(() => import('../sections/Publications'));
 const Skills = lazy(() => import('../sections/Skills'));
 const Leadership = lazy(() => import('../sections/Leadership'));
-const Certifications = lazy(() => import('../sections/Certifications'));
-const GitHubStats = lazy(() => import('../sections/GitHubStats'));
-const ResumeViewer = lazy(() => import('../sections/ResumeViewer'));
-const Footer = lazy(() => import('../sections/Footer'));
+const Contact = lazy(() => import('../sections/Contact'));
 
 export default function Home() {
   return (
@@ -22,22 +17,17 @@ export default function Home() {
       <a href="#main" className="skip-link">
         Skip to content
       </a>
-      <CustomCursor />
       <KeyboardShortcuts />
       <Header />
       <main id="main" tabIndex={-1} className="relative pt-11 outline-none">
         <Hero />
-        <About />
-        <Projects />
+        <Work />
         <Suspense fallback={null}>
           <Experience />
           <Publications />
           <Skills />
           <Leadership />
-          <Certifications />
-          <GitHubStats />
-          <ResumeViewer />
-          <Footer />
+          <Contact />
         </Suspense>
       </main>
     </div>

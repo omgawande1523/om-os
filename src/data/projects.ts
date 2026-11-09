@@ -38,6 +38,10 @@ export interface Project {
   liveUrl?: string;
   /** Note shown next to the live link, e.g. that it is a simulation. */
   liveNote?: string;
+  /** The demo runs on sample/synthetic data: the link reads "Demo (sample data)" instead of "Live" (Om, Nov 2026). */
+  sampleData?: boolean;
+  /** Short label for the hero "Now:" line. */
+  shortTitle?: string;
   /** Key from src/data/images.generated.json. Real screenshots only. */
   image?: ImageKey;
   imageAlt?: string;
@@ -70,7 +74,7 @@ export const projects: Project[] = [
     status: 'prototype',
     repoUrls: [gh('Kolhapur-Digital-Twin'), gh('Krishna-River-Flood')],
     liveUrl: 'https://krishna-river-flood.vercel.app',
-    liveNote: 'Upper Krishna basin simulation',
+    sampleData: true,
     image: 'mrsacOverview',
     imageAlt: 'Dashboard overview: Kolhapur nowcast map, rainfall and river-stage cards, and a banner stating the measured skill is low (CSI 0.0039)',
     featured: true,
@@ -192,6 +196,7 @@ export const projects: Project[] = [
   {
     slug: 'sarcasm-detection',
     title: 'Sarcasm Detection for Low-Resource Indian Languages',
+    shortTitle: 'Marathi sarcasm detection',
     oneLiner:
       'Transformer-based sarcasm detection for Marathi and other regional Indian languages, built on a custom annotated dataset.',
     problem:
@@ -253,6 +258,7 @@ export const projects: Project[] = [
   {
     slug: 'edgeseiz-net',
     title: 'EdgeSeiz-Net: EEG Seizure Detection for Edge Devices',
+    shortTitle: 'EEG seizure detection on edge devices',
     oneLiner:
       'Lightweight seizure detector aimed at ESP32 / Raspberry Pi-class hardware, trained and evaluated patient-independently on the CHB-MIT scalp EEG database.',
     problem: 'Seizure detection on cheap wearable-class hardware, evaluated on patients the model has never seen.',
@@ -356,6 +362,7 @@ export const projects: Project[] = [
     status: 'prototype',
     repoUrls: [gh('MathGPT')],
     liveUrl: 'https://math-gpt-frontend-two.vercel.app',
+    sampleData: true,
     featured: false,
     archive: true,
     categories: ['AI / ML', 'NLP'],
@@ -488,7 +495,6 @@ export const projects: Project[] = [
 
 export const featuredProjects = projects.filter((p) => p.featured);
 export const archiveProjects = projects.filter((p) => p.archive);
-export const projectCategories: ProjectCategory[] = ['AI / ML', 'Computer Vision', 'NLP', 'Geospatial', 'Security', 'Web'];
 
 export const statusLabel: Record<ProjectStatus, string> = {
   deployed: 'Deployed',
@@ -497,3 +503,8 @@ export const statusLabel: Record<ProjectStatus, string> = {
   'in progress': 'In progress',
 };
 
+
+export function liveLabel(p: Project): string {
+  if (p.sampleData) return 'Demo (sample data)';
+  return p.liveNote ? `Live: ${p.liveNote}` : 'Live demo';
+}

@@ -1,88 +1,29 @@
-import { Brain, Code2, Eye, Globe, Wrench, Cpu, Sparkles, FolderOpen, Users, type LucideIcon } from 'lucide-react';
-import { useReveal } from '../hooks/useReveal';
 import SectionHeading from '../components/SectionHeading';
-import { skillCategories, type SkillIcon } from '../data/skills';
-
-
-const icons: Record<SkillIcon, LucideIcon> = {
-  code: Code2,
-  brain: Brain,
-  eye: Eye,
-  sparkles: Sparkles,
-  globe: Globe,
-  wrench: Wrench,
-  cpu: Cpu,
-  users: Users,
-};
+import { skillGroups } from '../data/skills';
 
 export default function Skills() {
-  const gridRef = useReveal<HTMLDivElement>({ stagger: true });
-
-
   return (
-    <section
-      id="skills"
-      className="w-full py-24 px-4 md:px-8 lg:px-16 bg-neo-bg text-black relative transition-colors duration-200"
-    >
-      <div className="max-w-7xl mx-auto space-y-12">
-        {/* Section Header */}
-        <div>
-          <SectionHeading id="skills" />
-        </div>
-
-        {/* Skills Bento Grid - 4 Columns */}
-        <div
-          ref={gridRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {skillCategories.map((category) => {
-            const Icon = icons[category.icon];
-
-            return (
-              <div
-                key={category.id}
-                className="os-window flex flex-col justify-between group hover:-translate-x-1.5 hover:-translate-y-1.5 hover:shadow-neo-lg transition-all duration-300 bg-neo-surface"
-              >
-                {/* Folder Header */}
-                <div className={`border-b-[2px] border-black px-4 py-2 ${category.colorClass} font-mono text-xs font-bold text-black flex justify-between items-center select-none`}>
-                  <div className="flex items-center gap-2">
-                    <FolderOpen size={13} className="text-black" aria-hidden="true" />
-                    <span>{category.id}.sys</span>
-                  </div>
-                  <Icon size={14} className="text-black" aria-hidden="true" />
-                </div>
-
-                {/* Folder Body */}
-                <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                  <div className="space-y-3">
-                    <h3 className="font-display text-lg font-bold text-black ">
-                      {category.title}
-                    </h3>
-                    <p className="font-body text-xs text-black/70 leading-relaxed">
-                      {category.description}
-                    </p>
-                  </div>
-
-                  {/* Skills Badges Grid */}
-                  <div className="space-y-2 pt-4 border-t border-black/10">
-                    <div className="flex flex-wrap gap-1.5">
-                      {category.skills.map((skill) => (
-                        <span
-                          key={skill}
-                          className="font-mono text-[10px] text-black bg-black/5 border border-black/10 px-2 py-0.5 font-bold hover:bg-black hover:text-white transition-colors"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+    <section id="skills" aria-labelledby="skills-title" className="w-full py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-neo-bg text-black">
+      <div className="max-w-7xl mx-auto space-y-8">
+        <SectionHeading id="skills" />
+        {/* Cells sit on a black background; the 2.5px gaps draw the grid lines at every breakpoint. */}
+        <dl className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-[2.5px] bg-black border-[2.5px] border-black shadow-nb">
+          {skillGroups.map((g) => (
+            <div key={g.id} className="p-4 md:p-5 space-y-3 bg-neo-surface">
+              <dt className="font-mono text-xs font-bold uppercase tracking-wider text-black">{g.title}</dt>
+              <dd>
+                <ul className="flex flex-wrap gap-1.5">
+                  {g.skills.map((s) => (
+                    <li key={s} className="font-mono text-[11px] text-black bg-black/5 border border-black/15 px-1.5 py-0.5">
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
-
     </section>
   );
 }
