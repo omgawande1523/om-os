@@ -33,9 +33,10 @@ Every description below comes from the repo's own README (or its files, where th
 | `AgroSense` | Rainfall forecasting, crop-yield prediction and drought/flood indices for Vidarbha's 11 districts, with SHAP. | (none) | agriculture, forecasting, xgboost, shap, fastapi |
 | `AegisEdge` | Design blueprint for an offline face recognition and liveness module (React Native, TFLite, SQLCipher). | (none) | face-recognition, liveness-detection, tflite, react-native, design-doc |
 | `Shri-Gajanan-Dental-Clinic` | Website for Shri Gajanan Multispeciality Clinic, Nagpur (Next.js, Prisma, PostgreSQL). | **remove** (current homepage returns 404) | nextjs, typescript, prisma, website |
+| `SIH-NEW` → **`sih-extreme-weather-tracking`** (rename, Om, 2026-11-09) | Smart India Hackathon prototype: tracks extreme-weather anomalies in medium-range ensemble forecasts using EFI screening and a GNN. | https://sih-new-ten.vercel.app (200) | smart-india-hackathon, weather-forecasting, extreme-weather, graph-neural-network, era5 |
 | `omgawande1523` | (profile README, no change) | (none) | (none) |
 
-## 2. Proposed to archive or make private (not touched)
+## 2. Proposed to archive or make private — ON HOLD (Om, 2026-11-09)
 
 | Repo | Why | Suggestion |
 |---|---|---|
@@ -46,12 +47,15 @@ Every description below comes from the repo's own README (or its files, where th
 | `New-Pro` | Instagram AI-news automation; the name says nothing | rename (e.g. `instagram-ai-news`) or make private |
 | `gyrotex-social` | Workspace for an Instagram account, not a project | make private |
 | `Adhyayan-Simulation` | README is the Vite template; you chose not to show the simulation | archive, or add a README pointing to `ADHYAYAN` |
-| `SIH-NEW` | Substantial SIH prototype (extreme-weather tracking with a GNN), but the name hides it | ⚠ consider **renaming** (e.g. `sih-extreme-weather-tracking`) instead of archiving |
 | `Apache-Spark` | Teaching instrument (lab); live at apache-spark-rose.vercel.app | archive, or keep with description "Interactive Apache Spark architecture teaching tool" |
 
-## 3. Commands (write to GitHub, run only after you say yes)
+## 3. Final commands for approval (write to GitHub; not run)
+
+Run order matters: rename `SIH-NEW` first, then edit it under its new name. GitHub redirects old URLs after a rename, and the Vercel project stays linked.
 
 ```bash
+gh repo rename sih-extreme-weather-tracking --repo omgawande1523/SIH-NEW --yes
+gh repo edit omgawande1523/sih-extreme-weather-tracking --description "Smart India Hackathon prototype: tracks extreme-weather anomalies in medium-range ensemble forecasts using EFI screening and a GNN." --homepage "https://sih-new-ten.vercel.app" --add-topic smart-india-hackathon,weather-forecasting,extreme-weather,graph-neural-network,era5
 gh repo edit omgawande1523/om-os --description "My portfolio: a neo-brutalist OS-style site built with React, TypeScript and Vite, prerendered for SEO." --homepage "https://om-os.vercel.app" --add-topic portfolio,react,typescript,vite,tailwindcss
 gh repo edit omgawande1523/Kolhapur-Digital-Twin --description "Phase-1 pluvial-flood nowcasting digital twin for Kolhapur (MRSAC internship), on open Sentinel-1/2, SRTM and IMD data, with an honest back-test." --add-topic digital-twin,flood-nowcasting,remote-sensing,sentinel-1,geospatial,fastapi
 gh repo edit omgawande1523/Krishna-River-Flood --description "Interactive Leaflet simulation of the Upper Krishna basin: dam discharge, inundation zones and landslide susceptibility." --homepage "https://krishna-river-flood.vercel.app" --add-topic digital-twin,leaflet,gis,flood-simulation
@@ -78,14 +82,14 @@ gh repo edit omgawande1523/AegisEdge --description "Design blueprint for an offl
 gh repo edit omgawande1523/Shri-Gajanan-Dental-Clinic --description "Website for Shri Gajanan Multispeciality Clinic, Nagpur (Next.js, Prisma, PostgreSQL)." --homepage "" --add-topic nextjs,typescript,prisma,website
 ```
 
-Archive / visibility commands are listed separately so you can pick individually (they also need your yes):
+**Held, do not run yet.** Archive and visibility commands, kept for later:
 
-```bash
-gh repo archive omgawande1523/AegisEdge-Offline --yes
-gh repo archive "omgawande1523/Automatic-waste-segregation-with-computer-vision." --yes
-gh repo archive omgawande1523/Automatic-waste-segregation-with-computer-vision_01 --yes
-gh repo edit omgawande1523/gyrotex-social --visibility private --accept-visibility-change-consequences
-gh repo edit omgawande1523/Bot-Detector --visibility private --accept-visibility-change-consequences
+```text
+# HELD — gh repo archive omgawande1523/AegisEdge-Offline --yes
+# HELD — gh repo archive "omgawande1523/Automatic-waste-segregation-with-computer-vision." --yes
+# HELD — gh repo archive omgawande1523/Automatic-waste-segregation-with-computer-vision_01 --yes
+# HELD — gh repo edit omgawande1523/gyrotex-social --visibility private --accept-visibility-change-consequences
+# HELD — gh repo edit omgawande1523/Bot-Detector --visibility private --accept-visibility-change-consequences
 ```
 
 ## 4. Manual checklist (GitHub web UI)

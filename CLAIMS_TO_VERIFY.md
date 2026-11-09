@@ -67,9 +67,9 @@ Status: ✅ resolved · ❓ **needs Om's answer** · 🗑 removed
 | Claim | file:line | Source found | Action |
 |---|---|---|---|
 | MRSAC R&D Intern, Aug 2026, both bullets | Experience.tsx:12-25 | resume | ✅ kept. 3rd bullet rephrased from the resume's project section. |
-| Acube AI "Feb 2025 - Present" | Experience.tsx:34 | none; the resume gives no dates | ✅ **Om: same as resume** → no date shown |
-| RNR "Nov 2024 - Jan 2025" | Experience.tsx:48 | none | ✅ **Om: same as resume** → no date shown |
-| Company name "RNR Innotech" | Experience.tsx:43 (id), ImpactDashboard.tsx:46 | resume says "RNR" | ✅ "RNR" |
+| Acube AI "Feb 2025 - Present" | Experience.tsx:34 | none; the resume gives no dates | ✅ Om (round 3): **Jun 2026** |
+| RNR "Nov 2024 - Jan 2025" | Experience.tsx:48 | none | ✅ Om (round 3): **Jun 2026 – Nov 2026** |
+| Company name "RNR Innotech" | Experience.tsx:43 (id), ImpactDashboard.tsx:46 | resume says "RNR" | ✅ Om (round 3): "RNR Innotech" |
 | Locations "Nagpur, India", "Nagpur, India (Hybrid)", MRSAC "Nagpur, Maharashtra" | Experience.tsx:16, 32, 46 | none | 🗑 removed |
 | Education description "Focusing on artificial intelligence models, deep neural networks…" and "Advanced Coursework: Computer Vision, Deep Learning, Edge Computing" | Experience.tsx:67-70 | none | 🗑 removed |
 | B.Tech AI, SVPCET Nagpur, CGPA 8.68 / 10, class of 2027 | various | resume | ✅ one Education card |
@@ -149,3 +149,14 @@ Status: ✅ resolved · ❓ **needs Om's answer** · 🗑 removed
 | Project card images `aadhaarx.png`, `aegisedge.png`, `earth-science-agi.png`, `mathgpt.png`, `routeiq.png`, `waste-segregation.png` | Not screenshots: 1024×1024 generated mock-up photos (e.g. a kitchen bin, a phone showing an invented person's ID card). They imply products that don't exist as shown. | Removed from cards. Sources kept in `assets-src/images/`. ❓ **Om:** send real screenshots, or OK to delete them in Phase 7? |
 | MRSAC card | Real dashboard screenshot from `Kolhapur-Digital-Twin/docs/screenshots/01_overview.png` | ✅ used (AVIF/WebP, 1200×800) |
 | PPE `alert_frame.jpg` (real detection output) | Shows an identifiable face | ❓ **Om:** OK to use it on the PPE card (is that you)? Not used for now |
+
+## Decisions from Om (2026-11-09, round 3)
+
+| Item | Decision | Applied |
+|---|---|---|
+| AI-generated project images + `ai-cv-visual.jpg` | Delete | ✅ removed from `assets-src/images/` and `public/` |
+| PPE `alert_frame.jpg` | Don't use | ✅ not used |
+| Leadership "publishing custom Python wrappers and CLI tools on GitHub" | Remove | ✅ removed |
+| License | MIT for code; personal content, photo and resume excluded | ✅ `LICENSE` + README section |
+| Internship dates | MRSAC Aug 2026 · Acube AI Jun 2026 · **RNR Innotech** Jun 2026 – Nov 2026 (Om's confirmation; the resume has no dates for the last two and says "RNR") | ✅ site + GitHub profile draft |
+| GitHub writes | Show the final `gh repo edit` list; hold archive commands; rename SIH-NEW → `sih-extreme-weather-tracking` | ✅ `github-profile/repo-metadata.md` §3 (nothing run) |

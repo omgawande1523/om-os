@@ -13,8 +13,8 @@ AI engineer and B.Tech Artificial Intelligence student at St. Vincent Pallotti C
 ## Experience
 
 - **R&D Intern, Maharashtra Remote Sensing Application Centre (MRSAC)** · Aug 2026: flood-nowcasting module for Kolhapur's multi-hazard digital twin
-- **Data Analytics and AI Engineering Intern, Acube AI**: ML models, LLMs and backend APIs in production systems
-- **AI and ERP Solution Intern, RNR**: AI modules for enterprise ERP applications
+- **Data Analytics and AI Engineering Intern, Acube AI** · Jun 2026: ML models, LLMs and backend APIs in production systems
+- **AI and ERP Solution Intern, RNR Innotech** · Jun – Nov 2026: AI modules for enterprise ERP applications
 
 ## Featured projects
 

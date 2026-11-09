@@ -1,5 +1,5 @@
-// Source: public/Om_Gawande_Resume.pdf. Om confirmed (Nov 2026): use the resume's dates.
-// The resume gives no dates for Acube AI or RNR, so `period` is omitted for them.
+// Source: public/Om_Gawande_Resume.pdf. Dates and the "RNR Innotech" name confirmed by Om (Nov 2026);
+// the resume itself only dates the MRSAC internship.
 
 export interface Role {
   id: string;
@@ -43,6 +43,7 @@ export const experience: Role[] = [
     title: 'Data Analytics and AI Engineering Intern',
     org: 'Acube AI',
     shortOrg: 'Acube AI',
+    period: 'Jun 2026',
     highlights: [
       'Developed AI-powered applications by integrating machine learning models, LLMs and backend APIs into production-ready systems.',
       'Designed prompt engineering workflows, automated business processes and collaborated on end-to-end AI solution deployment.',
@@ -50,10 +51,11 @@ export const experience: Role[] = [
   },
   {
     id: 'rnr',
-    fileName: 'RNR_Internship.cfg',
+    fileName: 'RNR_Innotech_Internship.cfg',
     title: 'AI and ERP Solution Intern',
-    org: 'RNR',
-    shortOrg: 'RNR',
+    org: 'RNR Innotech',
+    shortOrg: 'RNR Innotech',
+    period: 'Jun 2026 – Nov 2026',
     highlights: [
       'Developed AI modules for enterprise ERP applications, including machine learning pipelines, NLP workflows and intelligent business automation features.',
       'Worked with cross-functional teams to design, implement, test and deploy AI solutions for real-world business use cases.',

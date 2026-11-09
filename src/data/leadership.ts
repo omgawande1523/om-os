@@ -1,4 +1,5 @@
-// Om confirmed (Nov 2026): keep the leadership roles and counts as they were.
+// Om confirmed (Nov 2026): keep the leadership roles and counts as they were,
+// except the 'Python wrappers and CLI tools' bullet, removed at Om's request.
 // The resume lists only the President and Class Representative roles; the rest are Om's statements.
 // Wording changed only where it read as a verification claim. See CLAIMS_TO_VERIFY.md.
 
@@ -77,7 +78,6 @@ export const leadership: LeadershipRole[] = [
     org: 'Open Source Education',
     period: 'Ongoing',
     details: [
-      'Advocate for open-source AI utilities, publishing custom Python wrappers and CLI tools on GitHub.',
       'Host weekend code reviews and hardware debugging sessions for student builders.',
       'Organize technical visits to local tech hubs to inspect real-world automated pipelines.',
     ],

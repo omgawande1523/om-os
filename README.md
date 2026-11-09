@@ -59,3 +59,9 @@ Copy `.env.example` to `.env.local` for local development. In Vercel, add them u
 |---|---|---|
 | `VITE_WEB3FORMS_KEY` | contact form | Free access key from https://web3forms.com. Without it, the form opens the visitor's email app (`mailto:`). It is public by design: it is embedded in the client bundle. |
 | `GITHUB_TOKEN` | `npm run snapshot` (build time only) | Optional. Raises the GitHub API rate limit so Vercel builds get byte-level language stats. A fine-grained token with no extra permissions is enough. |
+
+## License
+
+The **code** in this repository is licensed under the [MIT License](LICENSE).
+
+The MIT License does **not** cover my personal content: the text about me in `src/data/`, my photo, my resume (`public/Om_Gawande_Resume.pdf` and its previews), the OG image and project screenshots. © Om Gawande, all rights reserved. Please don't reuse them without asking.
