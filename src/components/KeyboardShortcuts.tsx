@@ -91,6 +91,10 @@ export default function KeyboardShortcuts() {
               </div>
             ))}
             <dt>
+              <kbd className="border border-black px-1.5 bg-neo-bg">⌘K</kbd>
+            </dt>
+            <dd>Command palette (Ctrl+K on Windows / Linux)</dd>
+            <dt>
               <kbd className="border border-black px-1.5 bg-neo-bg">?</kbd>
             </dt>
             <dd>Show / hide this help</dd>

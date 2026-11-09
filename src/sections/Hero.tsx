@@ -1,18 +1,10 @@
 import { ArrowDown, Download, Mail, Terminal as TerminalIcon } from 'lucide-react';
 import Picture from '../components/Picture';
+import Terminal from '../components/Terminal';
+import ScrambleText from '../components/ScrambleText';
 import { profile } from '../data/profile';
-import { education, experience } from '../data/experience';
-import { forumRoleShort } from '../data/leadership';
-import { projects } from '../data/projects';
+import { heroFacts as facts, nowProjects as now } from '../data/facts';
 import { RESUME_PDF } from '../data/resume';
-
-const mrsac = experience[0];
-
-/** At most three facts, all from src/data. */
-const facts = [`${mrsac.shortTitle} @ ${mrsac.shortOrg}`, `CGPA ${education.cgpa.split(' ')[0]}`, forumRoleShort];
-
-/** In-progress projects with a short label, linked to their entries in 01 / Work. */
-const now = projects.filter((p) => p.status === 'in progress' && p.shortTitle);
 
 const cta =
   'nb-press inline-flex items-center gap-2 font-mono text-xs font-bold uppercase border-[2.5px] border-black px-4 py-2.5 shadow-neo-sm';
@@ -42,7 +34,7 @@ export default function Hero() {
           <div className="p-5 sm:p-8 md:p-10 flex flex-col-reverse sm:flex-row gap-6 md:gap-10 items-start">
             <div className="flex-1 min-w-0 space-y-4">
               <h1 id="hero-title" className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-black leading-none">
-                {profile.name}
+                <ScrambleText text={profile.name} />
               </h1>
               <p className="font-mono text-sm md:text-base font-bold text-black">{profile.role}</p>
               <p className="font-body text-base md:text-lg text-black/80 leading-relaxed max-w-2xl">{profile.heroBio}</p>
@@ -97,6 +89,8 @@ export default function Hero() {
             </div>
           </div>
         </div>
+
+        <Terminal />
       </div>
     </section>
   );

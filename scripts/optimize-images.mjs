@@ -21,6 +21,9 @@ const KB = 1024;
 const IMAGES = {
   portrait: { src: 'om-gawande-photo.jpg', out: 'img/om-gawande-portrait', maxWidth: 352, budget: 30 * KB },
   mrsacOverview: { src: 'mrsac-flood-overview.png', out: 'img/mrsac-flood-overview', maxWidth: 1200, budget: 120 * KB },
+  // Poster frames of the recorded demo loops (public/video/*), shown until / instead of the video.
+  wasteDemoPoster: { src: 'smart-waste-segregation-demo.png', out: 'img/smart-waste-segregation-demo', maxWidth: 960, budget: 60 * KB },
+  ragDemoPoster: { src: 'offline-agentic-rag-demo.png', out: 'img/offline-agentic-rag-demo', maxWidth: 960, budget: 60 * KB },
 };
 
 async function encodeWithinBudget(input, format, width, budget) {

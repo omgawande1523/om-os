@@ -3,6 +3,7 @@ import { Github, Linkedin, Mail, Menu, X, Terminal, Clock, Sun, Moon } from 'luc
 import { useTheme } from './ThemeProvider';
 import { sections } from '../data/sections';
 import { RESUME_PDF } from '../data/resume';
+import { OPEN_PALETTE_EVENT, preloadPalette } from '../lib/events';
 import { profile } from '../data/profile';
 
 const navLinks = sections.map((s) => ({ label: s.nav, href: `#${s.id}` }));
@@ -105,6 +106,18 @@ export default function Header() {
               <Mail size={14} aria-hidden="true" />
             </a>
           </div>
+
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event(OPEN_PALETTE_EVENT))}
+            onPointerEnter={preloadPalette}
+            onFocus={preloadPalette}
+            aria-label="Open command palette (Ctrl+K or Command+K)"
+            aria-keyshortcuts="Control+K Meta+K"
+            className="nb-press inline-flex items-center gap-1 font-mono text-[11px] font-bold border-[2px] border-black px-2 py-1 bg-neo-surface text-black shadow-nb-sm hover:bg-neo-yellow"
+          >
+            <span aria-hidden="true">⌘K</span>
+          </button>
 
           <a
             href={RESUME_PDF}

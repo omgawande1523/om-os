@@ -42,6 +42,8 @@ export interface Project {
   sampleData?: boolean;
   /** Short label for the hero "Now:" line. */
   shortTitle?: string;
+  /** Real recording of the live demo (public/video/<video>.{webm,mp4}) with its poster frame. */
+  demo?: { video: string; poster: ImageKey; caption: string; alt: string };
   /** Key from src/data/images.generated.json. Real screenshots only. */
   image?: ImageKey;
   imageAlt?: string;
@@ -123,6 +125,12 @@ export const projects: Project[] = [
     codeNote: 'Main system is private (code on request). The linked repo is the public simulation.',
     liveUrl: 'https://major-project-simulation.vercel.app',
     liveNote: 'Interactive simulation',
+    demo: {
+      video: 'offline-agentic-rag',
+      poster: 'ragDemoPoster',
+      caption: 'Recorded from the live simulation',
+      alt: 'The agentic RAG simulation routing a fee-structure question from the router agent to the SQL agent and schema validator',
+    },
     featured: true,
     archive: false,
     categories: ['AI / ML', 'NLP'],
@@ -149,6 +157,12 @@ export const projects: Project[] = [
     repoUrls: [gh('Automatic-waste-segregation-with-computer-vision')],
     liveUrl: 'https://automatic-waste-segregation-with-co.vercel.app',
     liveNote: 'Dashboard in simulation mode',
+    demo: {
+      video: 'smart-waste-segregation',
+      poster: 'wasteDemoPoster',
+      caption: 'Recorded from the dashboard (simulation mode)',
+      alt: 'The waste-segregation dashboard in simulation mode classifying an item and moving the bin-router servo',
+    },
     featured: true,
     archive: false,
     categories: ['Computer Vision', 'AI / ML'],

@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import Header from '../components/Header';
 import KeyboardShortcuts from '../components/KeyboardShortcuts';
+import PaletteLauncher from '../components/PaletteLauncher';
 import Hero from '../sections/Hero';
 import Work from '../sections/Work';
 
@@ -18,6 +19,7 @@ export default function Home() {
         Skip to content
       </a>
       <KeyboardShortcuts />
+      <PaletteLauncher />
       <Header />
       <main id="main" tabIndex={-1} className="relative pt-11 outline-none">
         <Hero />

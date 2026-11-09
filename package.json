@@ -15,6 +15,7 @@
     "check-links": "node scripts/check-links.mjs"
   },
   "dependencies": {
+    "cmdk": "^1.1.1",
     "lucide-react": "^0.562.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"

@@ -1,12 +1,14 @@
 import { lazy, Suspense, useEffect, useId, useState } from 'react';
 import { ChevronRight, Lock } from 'lucide-react';
 import Picture from '../components/Picture';
+import DemoVideo from '../components/DemoVideo';
 import GitHubStrip from '../components/GitHubStrip';
 import { StatusBadge, ProjectLinks } from '../components/ProjectBits';
 import SectionHeading from '../components/SectionHeading';
 import { profile } from '../data/profile';
 import { featuredProjects, archiveProjects, statusLabel, type Project } from '../data/projects';
-import { closeCaseStudy, EXPAND_PROJECTS_EVENT, openCaseStudy, useOpenCaseStudy } from '../lib/projectNav';
+import { flushSync } from 'react-dom';
+import { closeCaseStudy, EXPAND_PROJECTS_EVENT, openCaseStudy, useOpenCaseStudy, withViewTransition } from '../lib/projectNav';
 
 const loadCaseStudyDialog = () => import('../components/CaseStudyDialog');
 const CaseStudyDialog = lazy(loadCaseStudyDialog);
@@ -20,14 +22,16 @@ function FeaturedCard({ project }: { project: Project }) {
       id={`project-${project.slug}`}
       tabIndex={-1}
       aria-labelledby={`project-${project.slug}-title`}
-      className="os-window bg-neo-surface flex flex-col"
+      className="os-window nb-press-lg bg-neo-surface flex flex-col"
     >
       <div className="os-window-header-accent border-b-[2px] min-h-[42px]">
         <span className="font-mono text-[11px] font-bold text-black truncate">{project.categories.join(' · ')}</span>
         <StatusBadge status={project.status} />
       </div>
 
-      {project.image && (
+      {project.demo ? (
+        <DemoVideo video={project.demo.video} poster={project.demo.poster} alt={project.demo.alt} caption={project.demo.caption} />
+      ) : project.image && (
         <div className="aspect-video overflow-hidden border-b-[2.5px] border-black bg-white">
           <Picture
             name={project.image}
@@ -75,7 +79,7 @@ function FeaturedCard({ project }: { project: Project }) {
           {project.caseStudy && (
             <button
               type="button"
-              onClick={() => openCaseStudy(project.slug)}
+              onClick={() => withViewTransition(() => flushSync(() => openCaseStudy(project.slug)))}
               onPointerEnter={loadCaseStudyDialog}
               onFocus={loadCaseStudyDialog}
               className="nb-press inline-flex items-center gap-1 font-mono text-xs text-neo-bg bg-black font-bold uppercase px-3 py-1.5 border-[2px] border-black shadow-nb-sm hover:bg-neo-yellow hover:text-black"

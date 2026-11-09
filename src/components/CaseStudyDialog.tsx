@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
+import { withViewTransition } from '../lib/projectNav';
 import { ChevronRight, Terminal, X } from 'lucide-react';
 import type { Project } from '../data/projects';
 import { StatusBadge, ProjectLinks } from './ProjectBits';
@@ -15,7 +16,8 @@ export default function CaseStudyDialog({ project, onClose }: Props) {
   // Every close path goes through dialog.close() so the browser returns focus to the opener;
   // the native `close` event then tells the parent.
 
-  useEffect(() => {
+  // Layout effect so the dialog is open in the same commit (lets a View Transition capture it).
+  useLayoutEffect(() => {
     const dialog = dialogRef.current;
     if (dialog && !dialog.open) dialog.showModal();
   }, []);
@@ -25,7 +27,7 @@ export default function CaseStudyDialog({ project, onClose }: Props) {
       ref={dialogRef}
       onClose={onClose}
       onClick={(e) => {
-        if (e.target === dialogRef.current) dialogRef.current.close();
+        if (e.target === dialogRef.current) withViewTransition(() => dialogRef.current?.close());
       }}
       aria-labelledby="case-study-title"
       className="os-window p-0 max-w-3xl w-[calc(100%-2rem)] max-h-[85vh] bg-neo-surface border-[2.5px] border-black backdrop:bg-black/50"
@@ -39,7 +41,7 @@ export default function CaseStudyDialog({ project, onClose }: Props) {
             </div>
             <button
               type="button"
-              onClick={() => dialogRef.current?.close()}
+              onClick={() => withViewTransition(() => dialogRef.current?.close())}
               aria-label="Close case study"
               className="p-1 border border-black bg-neo-surface hover:bg-black hover:text-neo-bg transition-colors"
             >

@@ -510,3 +510,9 @@ textarea:focus-visible {
 .project-list-collapsed > li:nth-child(n + 7):not(:target) {
   display: none;
 }
+
+/* View Transitions (case study open/close). Only used when supported and motion is allowed. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 160ms;
+}

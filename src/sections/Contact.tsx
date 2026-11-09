@@ -3,6 +3,7 @@ import { ArrowUpRight, Github, IdCard, Linkedin, Mail, MapPin, Send } from 'luci
 import SectionHeading from '../components/SectionHeading';
 import { profile } from '../data/profile';
 import { github, formatDate } from '../lib/github';
+import { PREFILL_CONTACT_EVENT } from '../lib/events';
 
 const links = [
   { name: 'Email', handle: profile.email, href: `mailto:${profile.email}`, icon: Mail },
@@ -13,8 +14,6 @@ const links = [
 
 const SOURCE_URL = `${profile.links.github}/om-os`;
 
-/** Event used by the hero terminal (`sudo hire om`) to pre-fill the message. */
-export const PREFILL_CONTACT_EVENT = 'om:prefill-contact';
 
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY ?? '';
 
