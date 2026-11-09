@@ -24,6 +24,8 @@ export default function KeyboardShortcuts() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      // keydown can target the document/window (not an Element) in some browsers and extensions.
+      if (!(e.target instanceof Element) && e.target !== document && e.target !== window) return;
       if (e.metaKey || e.ctrlKey || e.altKey || isTyping(e.target)) return;
       // Leave other open dialogs (e.g. a case study) alone.
       const otherDialogOpen = [...document.querySelectorAll('dialog[open]')].some((d) => d !== dialogRef.current);

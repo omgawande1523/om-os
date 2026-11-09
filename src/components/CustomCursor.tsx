@@ -62,7 +62,8 @@ export default function CustomCursor() {
 
     // Handle interactive hover states
     const onMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
+      if (!(e.target instanceof Element)) return;
+      const target = e.target;
       
       const clickableElement = 
         target.closest('a') || 

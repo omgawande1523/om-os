@@ -118,16 +118,16 @@ export default function Header() {
           {/* Dark Mode Toggle */}
           <button
             onClick={toggleTheme}
-            className="p-1.5 border-[2px] border-black hover:bg-black hover:text-neo-bg transition-all bg-neo-surface dark:bg-[#111111] dark:text-white flex items-center justify-center shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]"
+            className="p-1.5 border-[2px] border-black text-black hover:bg-black hover:text-neo-bg focus-visible:bg-black focus-visible:text-neo-bg transition-all bg-neo-surface dark:bg-[#111111] flex items-center justify-center shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]"
             type="button"
             title={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
             aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
             data-cursor="GO"
           >
             {theme === 'light' ? (
-              <Moon size={13} aria-hidden="true" className="text-black dark:text-white transition-transform duration-500 hover:-rotate-12" />
+              <Moon size={13} aria-hidden="true" />
             ) : (
-              <Sun size={13} aria-hidden="true" className="text-black dark:text-white transition-transform duration-500 hover:rotate-90" />
+              <Sun size={13} aria-hidden="true" />
             )}
           </button>
 

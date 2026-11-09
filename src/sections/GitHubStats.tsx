@@ -306,7 +306,7 @@ export default function GitHubStats() {
               rel="noopener noreferrer"
               className="font-mono text-xs text-black border-b-[2px] border-black pb-0.5 font-bold hover:bg-neo-yellow flex items-center gap-1"
             >
-              <Github size={12} className="text-black" aria-hidden="true" />
+              <Github size={12} aria-hidden="true" />
               <span>Full GitHub profile</span>
             </a>
           </div>
