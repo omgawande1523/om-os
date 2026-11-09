@@ -19,10 +19,13 @@ const Footer = lazy(() => import('../sections/Footer'));
 export default function Home() {
   return (
     <div className="min-h-screen bg-neo-bg">
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
       <CustomCursor />
       <KeyboardShortcuts />
       <Header />
-      <main className="relative pt-11">
+      <main id="main" tabIndex={-1} className="relative pt-11 outline-none">
         <Hero />
         <About />
         <Projects />

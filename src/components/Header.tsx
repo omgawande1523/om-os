@@ -55,10 +55,10 @@ export default function Header() {
             }}
             className="flex items-center gap-2 font-bold text-sm bg-black text-neo-bg px-2 py-0.5 border border-black hover:bg-neo-bg hover:text-neo-text transition-colors"
           >
-            <Terminal size={12} />
+            <Terminal size={12} aria-hidden="true" />
             <span>OM_OS v1.0.4</span>
           </a>
-          <div className="flex items-center gap-1.5 text-xs text-black/60 hidden sm:flex">
+          <div className="flex items-center gap-1.5 text-xs text-black/60 hidden sm:flex" aria-hidden="true">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -91,8 +91,9 @@ export default function Header() {
               rel="noopener noreferrer"
               className="p-1 text-black hover:bg-neo-blue hover:border border-black transition-all"
               title="GitHub"
+              aria-label="GitHub"
             >
-              <Github size={14} />
+              <Github size={14} aria-hidden="true" />
             </a>
             <a
               href={profile.links.linkedin}
@@ -100,15 +101,17 @@ export default function Header() {
               rel="noopener noreferrer"
               className="p-1 text-black hover:bg-neo-pink hover:border border-black transition-all"
               title="LinkedIn"
+              aria-label="LinkedIn"
             >
-              <Linkedin size={14} />
+              <Linkedin size={14} aria-hidden="true" />
             </a>
             <a
               href={`mailto:${profile.email}`}
               className="p-1 text-black hover:bg-neo-yellow hover:border border-black transition-all"
               title="Email"
+              aria-label="Email"
             >
-              <Mail size={14} />
+              <Mail size={14} aria-hidden="true" />
             </a>
           </div>
 
@@ -116,18 +119,20 @@ export default function Header() {
           <button
             onClick={toggleTheme}
             className="p-1.5 border-[2px] border-black hover:bg-black hover:text-neo-bg transition-all bg-neo-surface dark:bg-[#111111] dark:text-white flex items-center justify-center shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]"
+            type="button"
             title={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+            aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
             data-cursor="GO"
           >
             {theme === 'light' ? (
-              <Moon size={13} className="text-black dark:text-white transition-transform duration-500 hover:-rotate-12" />
+              <Moon size={13} aria-hidden="true" className="text-black dark:text-white transition-transform duration-500 hover:-rotate-12" />
             ) : (
-              <Sun size={13} className="text-black dark:text-white transition-transform duration-500 hover:rotate-90" />
+              <Sun size={13} aria-hidden="true" className="text-black dark:text-white transition-transform duration-500 hover:rotate-90" />
             )}
           </button>
 
           {/* System Info */}
-          <div className="flex items-center gap-4 text-xs font-semibold">
+          <div className="flex items-center gap-4 text-xs font-semibold" aria-hidden="true">
             <div className="flex items-center gap-1 hidden xs:flex">
               <Wifi size={13} className="text-black" />
               <Cpu size={13} className="text-black" />
@@ -140,17 +145,21 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <button
+            type="button"
             onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
             className="xl:hidden p-1 border border-black hover:bg-black hover:text-neo-bg transition-colors"
           >
-            {mobileOpen ? <X size={16} /> : <Menu size={16} />}
+            {mobileOpen ? <X size={16} aria-hidden="true" /> : <Menu size={16} aria-hidden="true" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Nav Menu */}
       {mobileOpen && (
-        <div className="xl:hidden border-t-[2.5px] border-black bg-neo-bg text-xs">
+        <div id="mobile-menu" className="xl:hidden border-t-[2.5px] border-black bg-neo-bg text-xs">
           <nav className="flex flex-col" aria-label="Sections">
             {navLinks.map((link) => (
               <a
@@ -168,23 +177,26 @@ export default function Header() {
                 href={profile.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="GitHub"
                 className="p-1 text-black border border-black hover:bg-black hover:text-neo-bg transition-all"
               >
-                <Github size={14} />
+                <Github size={14} aria-hidden="true" />
               </a>
               <a
                 href={profile.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="LinkedIn"
                 className="p-1 text-black border border-black hover:bg-black hover:text-neo-bg transition-all"
               >
-                <Linkedin size={14} />
+                <Linkedin size={14} aria-hidden="true" />
               </a>
               <a
                 href={`mailto:${profile.email}`}
+                aria-label="Email"
                 className="p-1 text-black border border-black hover:bg-black hover:text-neo-bg transition-all"
               >
-                <Mail size={14} />
+                <Mail size={14} aria-hidden="true" />
               </a>
             </div>
           </nav>

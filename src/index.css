@@ -159,6 +159,18 @@
   .dark .hover\:text-\[\#FAF6EE\]:hover {
     color: #111111 !important;
   }
+  .dark .hover\:bg-neo-yellow:hover,
+  .dark .hover\:bg-neo-blue:hover,
+  .dark .hover\:bg-neo-pink:hover,
+  .dark .hover\:bg-neo-mint:hover {
+    color: #111111 !important;
+  }
+  .dark .hover\:bg-neo-yellow:hover *,
+  .dark .hover\:bg-neo-blue:hover *,
+  .dark .hover\:bg-neo-pink:hover *,
+  .dark .hover\:bg-neo-mint:hover * {
+    color: #111111 !important;
+  }
   .dark .hover\:bg-neo-bg:hover {
     background-color: var(--neo-bg) !important;
     color: var(--neo-text) !important;
@@ -200,12 +212,7 @@
   .dark .os-window-header,
   .dark .os-window-header-accent,
   .dark .os-window-header-pink,
-  .dark .os-window-header-blue,
-  .dark [class*="bg-neo-mint"],
-  .dark [class*="bg-neo-blue"],
-  .dark [class*="bg-neo-pink"],
-  .dark [class*="bg-neo-orange"],
-  .dark [class*="bg-neo-yellow"] {
+  .dark .os-window-header-blue {
     color: #111111 !important;
     border-color: #000000 !important;
   }
@@ -218,12 +225,7 @@
   .dark .os-window-header *,
   .dark .os-window-header-accent *,
   .dark .os-window-header-pink *,
-  .dark .os-window-header-blue *,
-  .dark [class*="bg-neo-mint"] *,
-  .dark [class*="bg-neo-blue"] *,
-  .dark [class*="bg-neo-pink"] *,
-  .dark [class*="bg-neo-orange"] *,
-  .dark [class*="bg-neo-yellow"] * {
+  .dark .os-window-header-blue * {
     color: #111111 !important;
     border-color: #000000 !important;
   }
@@ -237,12 +239,7 @@
   .dark .os-window-header .text-black,
   .dark .os-window-header-accent .text-black,
   .dark .os-window-header-pink .text-black,
-  .dark .os-window-header-blue .text-black,
-  .dark [class*="bg-neo-mint"] .text-black,
-  .dark [class*="bg-neo-blue"] .text-black,
-  .dark [class*="bg-neo-pink"] .text-black,
-  .dark [class*="bg-neo-orange"] .text-black,
-  .dark [class*="bg-neo-yellow"] .text-black {
+  .dark .os-window-header-blue .text-black {
     color: #111111 !important;
   }
 
@@ -437,4 +434,45 @@ dialog::backdrop {
     opacity: 1 !important;
     transform: none !important;
   }
+}
+
+/* Keyboard focus: thick brutalist ring, visible on every surface in both themes */
+:focus-visible {
+  outline: 3px solid #111111;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px #F5C518;
+}
+.dark :focus-visible {
+  outline-color: #F5C518;
+  box-shadow: 0 0 0 6px #111111;
+}
+input:focus-visible,
+textarea:focus-visible {
+  outline-offset: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2000;
+  padding: 0.5rem 0.75rem;
+  background: #F5C518;
+  color: #111111;
+  border: 2.5px solid #111111;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 0.8rem;
+  transform: translateY(-200%);
+}
+.skip-link:focus {
+  transform: none;
+}
+
+/* Status colours readable on dark surfaces */
+.dark .text-emerald-700 {
+  color: #6ee7b7 !important;
+}
+.dark .text-red-700 {
+  color: #fca5a5 !important;
 }

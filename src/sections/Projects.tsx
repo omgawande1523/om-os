@@ -12,7 +12,8 @@ import {
   type ProjectCategory,
 } from '../data/projects';
 
-const CaseStudyDialog = lazy(() => import('../components/CaseStudyDialog'));
+const loadCaseStudyDialog = () => import('../components/CaseStudyDialog');
+const CaseStudyDialog = lazy(loadCaseStudyDialog);
 
 type Filter = 'All' | ProjectCategory;
 
@@ -156,6 +157,8 @@ export default function Projects() {
                         <button
                           type="button"
                           onClick={() => openCaseStudy(project.slug)}
+                          onPointerEnter={loadCaseStudyDialog}
+                          onFocus={loadCaseStudyDialog}
                           className="inline-flex items-center gap-1 font-mono text-xs text-neo-bg bg-black font-bold uppercase px-3 py-1.5 border-[2px] border-black hover:bg-neo-yellow hover:text-black transition-colors"
                         >
                           <span>Case study</span>

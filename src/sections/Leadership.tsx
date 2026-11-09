@@ -30,11 +30,11 @@ export default function Leadership() {
         <div className="os-window flex flex-col bg-neo-surface">
           {/* Window Header */}
           <div className="os-window-header-accent">
-            <div className="flex items-center gap-2 font-mono text-sm text-black">
-              <ShieldCheck size={14} />
-              <span>community_leadership_dashboard.exe</span>
+            <div className="flex items-center gap-2 font-mono text-sm text-black min-w-0">
+              <ShieldCheck size={14} className="shrink-0" aria-hidden="true" />
+              <span className="truncate">community_leadership_dashboard.exe</span>
             </div>
-            <div className="window-dots">
+            <div className="window-dots shrink-0" aria-hidden="true">
               <span className="window-dot bg-red-400"></span>
               <span className="window-dot bg-yellow-400"></span>
               <span className="window-dot bg-emerald-400"></span>

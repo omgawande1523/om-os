@@ -12,7 +12,7 @@ module.exports = {
       colors: {
         'off-white': '#F7F7F5',
         'deep-charcoal': 'var(--neo-text)',
-        'silver': '#C4C4C4',
+        'silver': '#5C5C5C', // ≥ 4.5:1 on all light surfaces (dark mode overrides to #A0A0A0)
         'neo-bg': 'var(--neo-bg)',
         'neo-surface': 'var(--neo-surface)',
         'neo-mint': '#99D2BF',

@@ -120,7 +120,7 @@ export default function Certifications() {
                           key={skill}
                           className="font-mono text-[9px] font-bold text-black bg-black/5 border border-black/10 px-2 py-1 flex items-center gap-1"
                         >
-                          <CheckCircle size={9} className="text-emerald-600" aria-hidden="true" />
+                          <CheckCircle size={9} className="text-emerald-700" aria-hidden="true" />
                           {skill}
                         </span>
                       ))}

@@ -150,7 +150,7 @@ export default function Footer() {
               <span>Send_Prompt</span>
               <span>Coordinates</span>
             </div>
-            <div className="flex items-center gap-1 text-emerald-600 font-bold text-[10px]">
+            <div className="flex items-center gap-1 text-emerald-700 font-bold text-[10px]">
               <Activity size={12} className="animate-pulse" />
               <span>LOG_DAEMON_ACTIVE</span>
             </div>
@@ -291,7 +291,7 @@ export default function Footer() {
 
           {/* Footer bar */}
           <div className="border-t-[2.5px] border-black bg-black text-neo-bg px-4 py-2 font-mono text-[10px] text-right flex justify-between select-none">
-            <span className="text-neo-yellow">CONSOLE: INCOMING_SOCKET_OPEN</span>
+            <span>CONSOLE: INCOMING_SOCKET_OPEN</span>
             <span>SYSTEM_OUT: DISPATCH_READY</span>
           </div>
         </div>
