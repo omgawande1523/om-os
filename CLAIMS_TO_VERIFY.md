@@ -141,3 +141,11 @@ Status: ✅ resolved · ❓ **needs Om's answer** · 🗑 removed
 | "610 contributions last year" (brief) | github-contributions-api.jogruber.de reports **265** for the last year. It reads the public contribution calendar; private contributions only count if "Include private contributions" is enabled on your profile | ✅ the site shows whatever the API returns at build time (265 today) |
 | "2 followers" (brief) | `/users/omgawande1523` is not reachable from this sandbox | ✅ shown as "—" in the committed snapshot; filled automatically on the next Vercel build |
 | Language split | `/repos/{r}/languages` not reachable here, so the committed snapshot uses "share of public repos by primary language" and says so on the page | ✅ Vercel builds use byte counts (method label switches automatically) |
+
+## Images (Phase 4)
+
+| Item | Finding | Action |
+|---|---|---|
+| Project card images `aadhaarx.png`, `aegisedge.png`, `earth-science-agi.png`, `mathgpt.png`, `routeiq.png`, `waste-segregation.png` | Not screenshots: 1024×1024 generated mock-up photos (e.g. a kitchen bin, a phone showing an invented person's ID card). They imply products that don't exist as shown. | Removed from cards. Sources kept in `assets-src/images/`. ❓ **Om:** send real screenshots, or OK to delete them in Phase 7? |
+| MRSAC card | Real dashboard screenshot from `Kolhapur-Digital-Twin/docs/screenshots/01_overview.png` | ✅ used (AVIF/WebP, 1200×800) |
+| PPE `alert_frame.jpg` (real detection output) | Shows an identifiable face | ❓ **Om:** OK to use it on the PPE card (is that you)? Not used for now |

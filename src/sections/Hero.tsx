@@ -1,43 +1,11 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
 import { profile } from '../data/profile';
+import Picture from '../components/Picture';
 import { education, experience } from '../data/experience';
 import { leadership } from '../data/leadership';
 import { projects, featuredProjects } from '../data/projects';
 import { Terminal, ArrowDown, MapPin, GraduationCap, Command, Cpu, Briefcase, Award } from 'lucide-react';
 
 export default function Hero() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const terminalWindowRef = useRef<HTMLDivElement>(null);
-  const portraitWindowRef = useRef<HTMLDivElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-      tl.fromTo(
-        terminalWindowRef.current,
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1 }
-      )
-        .fromTo(
-          portraitWindowRef.current,
-          { y: 50, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1 },
-          '-=0.8'
-        )
-        .fromTo(
-          statsRef.current?.children || [],
-          { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.6, stagger: 0.08 },
-          '-=0.6'
-        );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   const metrics = [
     { label: 'CGPA', value: education.cgpa.split(' ')[0], detail: `${education.degree.replace('B.Tech in ', 'B.Tech ')}, class of ${education.classOf}`, color: 'bg-neo-yellow' },
     { label: 'Leadership', value: 'President', detail: leadership[0].org, color: 'bg-neo-mint' },
@@ -47,7 +15,6 @@ export default function Hero() {
 
   return (
     <section
-      ref={sectionRef}
       className="min-h-screen w-full pt-20 pb-16 px-4 md:px-8 lg:px-16 flex flex-col justify-center bg-neo-bg text-black overflow-hidden relative transition-colors duration-200"
     >
       {/* Decorative Grid Lines to give OS look */}
@@ -73,9 +40,7 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           {/* Left Column: Welcome Terminal Window */}
           <div
-            ref={terminalWindowRef}
             className="lg:col-span-7 os-window flex flex-col h-full"
-            style={{ opacity: 0 }}
           >
             <div className="os-window-header-accent">
               <div className="flex items-center gap-2">
@@ -146,9 +111,7 @@ export default function Hero() {
 
           {/* Right Column: User Portrait Window */}
           <div
-            ref={portraitWindowRef}
             className="lg:col-span-5 os-window flex flex-col justify-between"
-            style={{ opacity: 0 }}
           >
             <div className="os-window-header">
               <div className="flex items-center gap-2">
@@ -171,9 +134,11 @@ export default function Hero() {
                 {/* Main Frame */}
                 <div className="relative border-[2.5px] border-black p-2 bg-neo-surface hover:-translate-x-1 hover:-translate-y-1 transition-all duration-300 shadow-none z-10">
                   <div className="w-56 h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 overflow-hidden border border-black">
-                    <img
-                      src="/om-gawande-photo.jpg"
+                    <Picture
+                      name="portrait"
                       alt={`Portrait of ${profile.name}`}
+                      priority
+                      sizes="288px"
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                     />
                   </div>
@@ -197,7 +162,6 @@ export default function Hero() {
 
         {/* Key facts, all derived from src/data */}
         <div
-          ref={statsRef}
           className="grid grid-cols-2 md:grid-cols-4 gap-4"
         >
           {metrics.map((metric) => (

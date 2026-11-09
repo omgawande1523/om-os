@@ -1,51 +1,26 @@
-import { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useState } from 'react';
 import { Folder, FolderOpen, FileText, GraduationCap } from 'lucide-react';
+import { useReveal } from '../hooks/useReveal';
 import SectionHeading from '../components/SectionHeading';
 import { experience, education } from '../data/experience';
 
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Experience() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const windowRef = useRef<HTMLDivElement>(null);
+  const windowRef = useReveal<HTMLDivElement>();
   const [selectedId, setSelectedId] = useState<string>(experience[0].id);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        windowRef.current,
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: windowRef.current,
-            start: 'top 85%',
-            toggleActions: 'play none none none',
-          },
-        }
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   const current = experience.find((r) => r.id === selectedId) ?? experience[0];
 
   return (
     <section
-      ref={sectionRef}
       id="experience"
       className="w-full py-24 px-4 md:px-8 lg:px-16 bg-neo-bg text-black relative transition-colors duration-200"
     >
       <div className="max-w-7xl mx-auto space-y-12">
         <SectionHeading id="experience" />
 
-        <div ref={windowRef} className="space-y-8" style={{ opacity: 0 }}>
+        <div ref={windowRef} className="space-y-8">
           {/* Education card */}
           <article className="os-window bg-neo-surface">
             <div className="os-window-header">

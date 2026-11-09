@@ -72,5 +72,3 @@ export const education: Education = {
   classOf: 2027,
   cgpa: '8.68 / 10',
 };
-
-export const internshipCount = experience.length;

@@ -1,11 +1,8 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Brain, Code2, Eye, Globe, Wrench, Cpu, Sparkles, FolderOpen, Users, type LucideIcon } from 'lucide-react';
+import { useReveal } from '../hooks/useReveal';
 import SectionHeading from '../components/SectionHeading';
 import { skillCategories, type SkillIcon } from '../data/skills';
 
-gsap.registerPlugin(ScrollTrigger);
 
 const icons: Record<SkillIcon, LucideIcon> = {
   code: Code2,
@@ -19,44 +16,17 @@ const icons: Record<SkillIcon, LucideIcon> = {
 };
 
 export default function Skills() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headingRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
+  const gridRef = useReveal<HTMLDivElement>({ stagger: true });
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (gridRef.current) {
-        gsap.fromTo(
-          gridRef.current.children,
-          { y: 40, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: gridRef.current,
-              start: 'top 85%',
-              toggleActions: 'play none none none',
-            },
-          }
-        );
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section
-      ref={sectionRef}
       id="skills"
       className="w-full py-24 px-4 md:px-8 lg:px-16 bg-neo-bg text-black relative transition-colors duration-200"
     >
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
-        <div ref={headingRef}>
+        <div>
           <SectionHeading id="skills" />
         </div>
 

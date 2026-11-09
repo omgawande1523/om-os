@@ -1,11 +1,8 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ShieldCheck, Flag, Users, Trophy, Sparkles, Target, Brain, type LucideIcon } from 'lucide-react';
+import { useReveal } from '../hooks/useReveal';
 import SectionHeading from '../components/SectionHeading';
 import { leadership, leadershipIntro, type LeadershipIcon } from '../data/leadership';
 
-gsap.registerPlugin(ScrollTrigger);
 
 const icons: Record<LeadershipIcon, LucideIcon> = {
   flag: Flag,
@@ -17,37 +14,11 @@ const icons: Record<LeadershipIcon, LucideIcon> = {
 };
 
 export default function Leadership() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useReveal<HTMLDivElement>({ stagger: true });
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (containerRef.current) {
-        gsap.fromTo(
-          containerRef.current.children,
-          { y: 50, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: 'top 80%',
-              toggleActions: 'play none none none',
-            },
-          }
-        );
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section
-      ref={sectionRef}
       id="leadership"
       className="w-full py-24 px-4 md:px-8 lg:px-16 bg-neo-bg text-black relative transition-colors duration-200"
     >
@@ -93,7 +64,6 @@ export default function Leadership() {
                   <div
                     key={item.id}
                     className="os-window bg-neo-surface hover:-translate-x-1.5 hover:-translate-y-1.5 hover:shadow-neo-lg transition-all duration-300 flex flex-col justify-between"
-                    style={{ opacity: 0 }}
                   >
                     {/* Header bar of role window */}
                     <div className={`border-b-[2.5px] border-black px-4 py-2 ${item.color} font-mono text-xs font-bold text-black flex justify-between items-center`}>

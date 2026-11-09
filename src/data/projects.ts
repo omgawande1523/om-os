@@ -2,6 +2,8 @@
 // the resume, or a confirmation from Om (see CLAIMS_TO_VERIFY.md).
 // No metrics on cards. Case studies only where the README supports them.
 
+import type { ImageKey } from '../components/Picture';
+
 export type ProjectStatus = 'deployed' | 'prototype' | 'research' | 'in progress';
 
 export type ProjectCategory = 'AI / ML' | 'Computer Vision' | 'NLP' | 'Geospatial' | 'Security' | 'Web';
@@ -36,7 +38,9 @@ export interface Project {
   liveUrl?: string;
   /** Note shown next to the live link, e.g. that it is a simulation. */
   liveNote?: string;
-  image?: string;
+  /** Key from src/data/images.generated.json. Real screenshots only. */
+  image?: ImageKey;
+  imageAlt?: string;
   featured: boolean;
   archive: boolean;
   categories: ProjectCategory[];
@@ -67,6 +71,8 @@ export const projects: Project[] = [
     repoUrls: [gh('Kolhapur-Digital-Twin'), gh('Krishna-River-Flood')],
     liveUrl: 'https://krishna-river-flood.vercel.app',
     liveNote: 'Upper Krishna basin simulation',
+    image: 'mrsacOverview',
+    imageAlt: 'Dashboard overview: Kolhapur nowcast map, rainfall and river-stage cards, and a banner stating the measured skill is low (CSI 0.0039)',
     featured: true,
     archive: false,
     categories: ['AI / ML', 'Geospatial'],
@@ -139,7 +145,6 @@ export const projects: Project[] = [
     repoUrls: [gh('Automatic-waste-segregation-with-computer-vision')],
     liveUrl: 'https://automatic-waste-segregation-with-co.vercel.app',
     liveNote: 'Dashboard in simulation mode',
-    image: '/waste-segregation.png',
     featured: true,
     archive: false,
     categories: ['Computer Vision', 'AI / ML'],
@@ -305,7 +310,6 @@ export const projects: Project[] = [
     stack: ['TypeScript', 'Next.js', 'NestJS', 'FastAPI', 'PyTorch'],
     status: 'prototype',
     repoUrls: [gh('AadhaarX')],
-    image: '/aadhaarx.png',
     featured: false,
     archive: true,
     categories: ['Security', 'Web'],
@@ -321,7 +325,6 @@ export const projects: Project[] = [
     stack: ['TypeScript', 'Next.js', 'NestJS', 'FastAPI', 'XGBoost', 'PostGIS', 'Leaflet'],
     status: 'prototype',
     repoUrls: [gh('routeiq-enterprise')],
-    image: '/routeiq.png',
     featured: false,
     archive: true,
     categories: ['Geospatial', 'Web'],
@@ -353,7 +356,6 @@ export const projects: Project[] = [
     status: 'prototype',
     repoUrls: [gh('MathGPT')],
     liveUrl: 'https://math-gpt-frontend-two.vercel.app',
-    image: '/mathgpt.png',
     featured: false,
     archive: true,
     categories: ['AI / ML', 'NLP'],
@@ -369,7 +371,6 @@ export const projects: Project[] = [
     stack: ['Python', 'FastAPI', 'Next.js', 'Neo4j', 'PostGIS', 'Leaflet'],
     status: 'prototype',
     repoUrls: [gh('earth-science-agi')],
-    image: '/earth-science-agi.png',
     featured: false,
     archive: true,
     categories: ['Geospatial', 'AI / ML'],
@@ -478,7 +479,6 @@ export const projects: Project[] = [
     stack: ['React Native', 'TensorFlow Lite', 'SQLCipher'],
     status: 'prototype',
     repoUrls: [gh('AegisEdge')],
-    image: '/aegisedge.png',
     featured: false,
     archive: true,
     categories: ['Computer Vision', 'Security'],
@@ -497,6 +497,3 @@ export const statusLabel: Record<ProjectStatus, string> = {
   'in progress': 'In progress',
 };
 
-export function getProjectBySlug(slug: string): Project | undefined {
-  return projects.find((p) => p.slug === slug);
-}

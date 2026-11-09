@@ -1,52 +1,26 @@
-import { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useState } from 'react';
 import { Award, FileBadge, CheckCircle, ExternalLink } from 'lucide-react';
+import { useReveal } from '../hooks/useReveal';
 import SectionHeading from '../components/SectionHeading';
 import { certifications } from '../data/certifications';
 
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Certifications() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headingRef = useRef<HTMLDivElement>(null);
-  const windowRef = useRef<HTMLDivElement>(null);
+  const windowRef = useReveal<HTMLDivElement>();
 
   const [selectedCertId, setSelectedCertId] = useState(certifications[0].id);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        windowRef.current,
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: windowRef.current,
-            start: 'top 85%',
-            toggleActions: 'play none none none',
-          },
-        }
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   const currentCert = certifications.find((c) => c.id === selectedCertId) || certifications[0];
 
   return (
     <section
-      ref={sectionRef}
       id="certifications"
       className="w-full py-24 px-4 md:px-8 lg:px-16 bg-neo-bg text-black relative transition-colors duration-200"
     >
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
-        <div ref={headingRef}>
+        <div>
           <SectionHeading id="certifications" />
         </div>
 
@@ -54,7 +28,6 @@ export default function Certifications() {
         <div
           ref={windowRef}
           className="os-window flex flex-col bg-neo-surface"
-          style={{ opacity: 0 }}
         >
           {/* Header */}
           <div className="os-window-header-pink">

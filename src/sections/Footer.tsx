@@ -1,6 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useState } from 'react';
 import {
   Github,
   Linkedin,
@@ -13,11 +11,11 @@ import {
   Activity,
   IdCard,
 } from 'lucide-react';
+import { useReveal } from '../hooks/useReveal';
 import SectionHeading from '../components/SectionHeading';
 import { profile } from '../data/profile';
 import { leadership } from '../data/leadership';
 
-gsap.registerPlugin(ScrollTrigger);
 
 const socialLinks = [
   { name: 'GitHub', handle: `@${profile.githubUsername}`, href: profile.links.github, icon: Github, colorClass: 'hover:bg-neo-blue' },
@@ -61,35 +59,12 @@ function buildMailto(f: FormFields) {
 }
 
 export default function Footer() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headingRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useReveal<HTMLDivElement>();
 
   const [formData, setFormData] = useState<FormFields>(emptyForm);
   const [errors, setErrors] = useState<Partial<Record<keyof FormFields, string>>>({});
   const [status, setStatus] = useState<FormStatus>('idle');
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        containerRef.current,
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 85%',
-            toggleActions: 'play none none none',
-          },
-        }
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   const mailtoHref = buildMailto(formData);
 
@@ -142,13 +117,12 @@ export default function Footer() {
 
   return (
     <footer
-      ref={sectionRef}
       id="contact"
       className="w-full pt-24 pb-8 px-4 md:px-8 lg:px-16 bg-neo-bg text-black relative"
     >
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
-        <div ref={headingRef}>
+        <div>
           <SectionHeading id="contact" />
         </div>
 
@@ -156,7 +130,6 @@ export default function Footer() {
         <div
           ref={containerRef}
           className="os-window flex flex-col bg-neo-surface"
-          style={{ opacity: 0 }}
         >
           {/* Header */}
           <div className="os-window-header-pink">
@@ -324,7 +297,7 @@ export default function Footer() {
         </div>
 
         {/* Text Marquee Bar */}
-        <div className="border-y-[2.5px] border-black py-4 bg-neo-yellow/30 overflow-hidden select-none">
+        <div className="border-y-[2.5px] border-black py-4 bg-neo-yellow/30 overflow-hidden select-none" aria-hidden="true">
           <div className="flex animate-marquee whitespace-nowrap font-mono text-xs font-bold tracking-widest text-black">
             {Array.from({ length: 12 }).map((_, i) => (
               <span key={i} className="mx-4">

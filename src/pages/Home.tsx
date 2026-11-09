@@ -5,14 +5,17 @@ import KeyboardShortcuts from '../components/KeyboardShortcuts';
 import Hero from '../sections/Hero';
 import About from '../sections/About';
 import Projects from '../sections/Projects';
-import Experience from '../sections/Experience';
-import Publications from '../sections/Publications';
-import Skills from '../sections/Skills';
-import Leadership from '../sections/Leadership';
-import Certifications from '../sections/Certifications';
-import GitHubStats from '../sections/GitHubStats';
-import ResumeViewer from '../sections/ResumeViewer';
-import Footer from '../sections/Footer';
+import { lazy, Suspense } from 'react';
+
+// Below the fold: separate chunks so the first screen parses less JS.
+const Experience = lazy(() => import('../sections/Experience'));
+const Publications = lazy(() => import('../sections/Publications'));
+const Skills = lazy(() => import('../sections/Skills'));
+const Leadership = lazy(() => import('../sections/Leadership'));
+const Certifications = lazy(() => import('../sections/Certifications'));
+const GitHubStats = lazy(() => import('../sections/GitHubStats'));
+const ResumeViewer = lazy(() => import('../sections/ResumeViewer'));
+const Footer = lazy(() => import('../sections/Footer'));
 
 export default function Home() {
   return (
@@ -25,14 +28,16 @@ export default function Home() {
         <Hero />
         <About />
         <Projects />
-        <Experience />
-        <Publications />
-        <Skills />
-        <Leadership />
-        <Certifications />
-        <GitHubStats />
-        <ResumeViewer />
-        <Footer />
+        <Suspense fallback={null}>
+          <Experience />
+          <Publications />
+          <Skills />
+          <Leadership />
+          <Certifications />
+          <GitHubStats />
+          <ResumeViewer />
+          <Footer />
+        </Suspense>
       </main>
     </div>
   );

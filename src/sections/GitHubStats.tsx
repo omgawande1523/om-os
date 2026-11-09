@@ -1,12 +1,10 @@
-import { useState, useRef, useEffect, type ReactNode } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useState, type ReactNode } from 'react';
+import { useReveal } from '../hooks/useReveal';
 import { Github, ChevronRight, Play, BarChart2, Calendar, GitCommit, GitBranch } from 'lucide-react';
 import SectionHeading from '../components/SectionHeading';
 import { github, languageMethodLabel, formatDate, display } from '../lib/github';
 import { projects } from '../data/projects';
 
-gsap.registerPlugin(ScrollTrigger);
 
 const languageColors = ['bg-neo-blue', 'bg-neo-mint', 'bg-neo-pink', 'bg-neo-yellow', 'bg-neo-orange', 'bg-black/40', 'bg-black/15'];
 
@@ -60,8 +58,7 @@ const stats = [
 ];
 
 export default function GitHubStats() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const windowRef = useRef<HTMLDivElement>(null);
+  const windowRef = useReveal<HTMLDivElement>();
   const [inputVal, setInputVal] = useState('');
   const [logs, setLogs] = useState<CommandLog[]>([
     {
@@ -73,23 +70,6 @@ export default function GitHubStats() {
       ),
     },
   ]);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        windowRef.current,
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: windowRef.current, start: 'top 85%', toggleActions: 'play none none none' },
-        }
-      );
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
 
   const runCommand = (cmd: string) => {
     const clean = cmd.trim().toLowerCase();
@@ -158,14 +138,13 @@ export default function GitHubStats() {
 
   return (
     <section
-      ref={sectionRef}
       id="github"
       className="w-full py-24 px-4 md:px-8 lg:px-16 bg-neo-bg text-black relative transition-colors duration-200"
     >
       <div className="max-w-7xl mx-auto space-y-12">
         <SectionHeading id="github" />
 
-        <div ref={windowRef} className="os-window flex flex-col bg-neo-surface" style={{ opacity: 0 }}>
+        <div ref={windowRef} className="os-window flex flex-col bg-neo-surface">
           <div className="os-window-header-dark">
             <div className="flex items-center gap-2 font-mono text-sm text-neo-bg min-w-0">
               <Github size={14} className="text-neo-bg shrink-0" aria-hidden="true" />

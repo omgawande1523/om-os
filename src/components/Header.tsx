@@ -1,6 +1,5 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { Github, Linkedin, Mail, Menu, X, Terminal, Cpu, Clock, Wifi, Sun, Moon } from 'lucide-react';
-import gsap from 'gsap';
 import { useTheme } from './ThemeProvider';
 import { sections, preambleNav } from '../data/sections';
 import { profile } from '../data/profile';
@@ -14,7 +13,6 @@ export default function Header() {
   const { theme, toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [time, setTime] = useState('');
-  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const updateTime = () => {
@@ -33,16 +31,6 @@ export default function Header() {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    if (headerRef.current) {
-      gsap.fromTo(
-        headerRef.current,
-        { y: -100, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }
-      );
-    }
-  }, []);
-
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setMobileOpen(false);
@@ -54,9 +42,7 @@ export default function Header() {
 
   return (
     <header
-      ref={headerRef}
       className="fixed top-0 left-0 right-0 z-[100] bg-neo-bg border-b-[2.5px] border-black text-black select-none font-mono"
-      style={{ opacity: 0 }}
     >
       <div className="flex items-center justify-between h-11 px-4 md:px-6">
         {/* Left Side: Logo/System Status */}

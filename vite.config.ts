@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
-import { inspectAttr } from 'kimi-plugin-inspect-react'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 const RESUME_FILE = 'public/Om_Gawande_Resume.pdf'
 
@@ -18,8 +18,12 @@ function resumeMeta() {
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: './',
-  plugins: [inspectAttr(), react()],
+  base: '/',
+  plugins: [
+    react(),
+    // `ANALYZE=1 npm run build` writes bundle-stats.html (gitignored) with a treemap of the JS.
+    ...(process.env.ANALYZE ? [visualizer({ filename: 'bundle-stats.html', gzipSize: true, template: 'treemap' })] : []),
+  ],
   define: {
     __RESUME_META__: JSON.stringify(resumeMeta()),
   },

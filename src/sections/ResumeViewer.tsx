@@ -1,8 +1,7 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FileText, Download, Eye } from 'lucide-react';
+import { useReveal } from '../hooks/useReveal';
 import SectionHeading from '../components/SectionHeading';
+import Picture from '../components/Picture';
 import { profile } from '../data/profile';
 
 const RESUME_PDF = '/Om_Gawande_Resume.pdf';
@@ -14,37 +13,13 @@ const resumeUpdated = new Date(`${__RESUME_META__.modified}T00:00:00Z`).toLocale
   timeZone: 'UTC',
 });
 
-gsap.registerPlugin(ScrollTrigger);
 
 export default function ResumeViewer() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useReveal<HTMLDivElement>();
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        containerRef.current,
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 85%',
-            toggleActions: 'play none none none',
-          },
-        }
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section
-      ref={sectionRef}
       id="resume"
       className="w-full py-24 px-4 md:px-8 lg:px-16 bg-neo-bg text-black relative"
     >
@@ -56,7 +31,6 @@ export default function ResumeViewer() {
         <div
           ref={containerRef}
           className="os-window flex flex-col bg-neo-surface max-w-4xl mx-auto"
-          style={{ opacity: 0 }}
         >
           {/* Header */}
           <div className="os-window-header-blue">
@@ -83,11 +57,10 @@ export default function ResumeViewer() {
           <div className="p-6 md:p-8 bg-neo-bg flex flex-col md:flex-row items-center md:items-stretch gap-8">
             {/* Visual PDF Preview */}
             <div className="w-full md:w-1/2 border-[2.5px] border-black shadow-neo bg-white overflow-hidden relative flex items-center justify-center min-h-[500px]">
-              <img
-                src="/Om_Gawande_Resume_preview.jpg"
+              <Picture
+                name="resumePreview"
                 alt={`First page of ${profile.name}'s resume`}
-                loading="lazy"
-                decoding="async"
+                sizes="(min-width: 768px) 440px, 100vw"
                 className="w-full h-auto max-h-[550px] object-contain select-none p-2"
               />
             </div>

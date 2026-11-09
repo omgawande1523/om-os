@@ -1,14 +1,11 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Award, Briefcase, Code2, FileText, FlaskConical, Github, Linkedin, Users, Compass, Hammer } from 'lucide-react';
 import { profile } from '../data/profile';
 import { education, experience } from '../data/experience';
 import { projects } from '../data/projects';
 import { leadership } from '../data/leadership';
 import { certifications } from '../data/certifications';
+import { useReveal } from '../hooks/useReveal';
 
-gsap.registerPlugin(ScrollTrigger);
 
 const inProgress = projects.filter((p) => p.status === 'in progress');
 
@@ -27,34 +24,11 @@ const profileLinks = [
 ].filter((l) => l.href);
 
 export default function About() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const windowRef = useRef<HTMLDivElement>(null);
+  const windowRef = useReveal<HTMLDivElement>();
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        windowRef.current,
-        { y: 60, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: windowRef.current,
-            start: 'top 85%',
-            toggleActions: 'play none none none',
-          },
-        }
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section
-      ref={sectionRef}
       id="about"
       aria-labelledby="about-title"
       className="w-full py-24 px-4 md:px-8 lg:px-16 bg-neo-bg text-black relative transition-colors duration-200"
@@ -69,7 +43,7 @@ export default function About() {
           </h2>
         </div>
 
-        <div ref={windowRef} className="os-window flex flex-col" style={{ opacity: 0 }}>
+        <div ref={windowRef} className="os-window flex flex-col">
           <div className="os-window-header-pink">
             <div className="flex items-center gap-2 text-black">
               <FileText size={14} aria-hidden="true" />

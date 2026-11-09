@@ -106,7 +106,9 @@ export default function ElasticThreadGrid() {
     const springRatio = 0.3;
     const influenceRadius = 0.8;
 
+    let running = false;
     const animate = () => {
+      if (!running) return;
       frameRef.current = requestAnimationFrame(animate);
 
       const mouseX = mouseRef.current.x * 5;
@@ -153,7 +155,22 @@ export default function ElasticThreadGrid() {
       renderer.render(scene, camera);
     };
 
-    animate();
+    // Only animate while the section is on screen.
+    const start = () => {
+      if (running) return;
+      running = true;
+      frameRef.current = requestAnimationFrame(animate);
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(frameRef.current);
+    };
+    const observer = new IntersectionObserver(([entry]) => (entry.isIntersecting ? start() : stop()), {
+      rootMargin: '100px',
+    });
+    observer.observe(container);
+    const onVisibility = () => (document.hidden ? stop() : observer.takeRecords());
+    document.addEventListener('visibilitychange', onVisibility);
 
     // Resize handler
     const handleResize = () => {
@@ -170,7 +187,9 @@ export default function ElasticThreadGrid() {
     window.addEventListener('resize', handleResize);
 
     return () => {
-      cancelAnimationFrame(frameRef.current);
+      stop();
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
       container.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
       renderer.dispose();
@@ -187,6 +206,7 @@ export default function ElasticThreadGrid() {
   return (
     <div
       ref={containerRef}
+      aria-hidden="true"
       style={{
         position: 'absolute',
         top: 0,
