@@ -1,47 +1,30 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Award, Users, Briefcase, BookOpen, Settings, FileText, Code2, Lightbulb } from 'lucide-react';
+import { Award, Briefcase, Code2, FileText, FlaskConical, Github, Linkedin, Users, Compass, Hammer } from 'lucide-react';
+import { profile } from '../data/profile';
+import { education, experience } from '../data/experience';
+import { projects } from '../data/projects';
+import { leadership } from '../data/leadership';
+import { certifications } from '../data/certifications';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const highlights = [
-  {
-    icon: Award,
-    title: 'Forum President',
-    subtitle: 'AI Prabodha Student Forum',
-    description: 'Leading the AI student community at SVPCET, hosting hackathons, tech seminars, and mentoring junior coders.',
-    colorClass: 'bg-neo-mint',
-  },
-  {
-    icon: Users,
-    title: 'Class Representative',
-    subtitle: 'Elected CR for 3 Years',
-    description: 'Serving as the primary communication link between students, academic department chairs, and college administration.',
-    colorClass: 'bg-neo-blue',
-  },
-  {
-    icon: Briefcase,
-    title: 'Research & Internships',
-    subtitle: 'MRSAC, Acube AI & RNR',
-    description: 'Contributed to climate resilience digital twin at MRSAC, integrated production ML & LLM models at Acube AI, and built enterprise ERP AI modules at RNR.',
-    colorClass: 'bg-neo-yellow',
-  },
-  {
-    icon: BookOpen,
-    title: 'Academic Honors',
-    subtitle: '8.68 Cumulative CGPA',
-    description: 'Consistently strong performance in advanced computer science, neural networks, and statistics coursework.',
-    colorClass: 'bg-neo-pink',
-  },
-];
+const inProgress = projects.filter((p) => p.status === 'in progress');
 
 const quickStats = [
-  { icon: Code2, label: 'Projects Built', value: '15+', color: 'text-neo-blue' },
-  { icon: Lightbulb, label: 'Leadership Roles', value: '3', color: 'text-neo-orange' },
-  { icon: Users, label: 'Events Organized', value: '10+', color: 'text-neo-mint' },
-  { icon: Award, label: 'Certifications', value: '5+', color: 'text-neo-yellow' },
+  { icon: Code2, label: 'Projects', value: projects.length },
+  { icon: Briefcase, label: 'Internships', value: experience.length },
+  { icon: Users, label: 'Leadership roles', value: leadership.length },
+  { icon: Award, label: 'Certifications', value: certifications.length },
 ];
+
+const profileLinks = [
+  { label: 'GitHub', href: profile.links.github, icon: Github },
+  { label: 'LinkedIn', href: profile.links.linkedin, icon: Linkedin },
+  { label: 'ORCID', href: profile.links.orcid, icon: FileText },
+  { label: 'Google Scholar', href: profile.links.googleScholar, icon: FileText },
+].filter((l) => l.href);
 
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -73,140 +56,123 @@ export default function About() {
     <section
       ref={sectionRef}
       id="about"
+      aria-labelledby="about-title"
       className="w-full py-24 px-4 md:px-8 lg:px-16 bg-neo-bg text-black relative transition-colors duration-200"
     >
       <div className="max-w-7xl mx-auto space-y-12">
-        {/* Section Header */}
-        <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-silver">
-          <span>05 / ABOUT_ME.SYS</span>
+        <div className="space-y-1">
+          <p className="font-mono text-xs uppercase tracking-widest text-silver" aria-hidden="true">
+            00 / ABOUT.SYS
+          </p>
+          <h2 id="about-title" className="font-display text-2xl md:text-3xl font-extrabold uppercase tracking-wide text-black">
+            About
+          </h2>
         </div>
 
-        {/* About OS Window */}
-        <div
-          ref={windowRef}
-          className="os-window flex flex-col"
-          style={{ opacity: 0 }}
-        >
-          {/* Header */}
+        <div ref={windowRef} className="os-window flex flex-col" style={{ opacity: 0 }}>
           <div className="os-window-header-pink">
             <div className="flex items-center gap-2 text-black">
-              <FileText size={14} />
-              <span>system_properties_v1.0</span>
+              <FileText size={14} aria-hidden="true" />
+              <span>system_properties</span>
             </div>
-            <div className="window-dots">
+            <div className="window-dots" aria-hidden="true">
               <span className="window-dot bg-red-400"></span>
               <span className="window-dot bg-yellow-400"></span>
               <span className="window-dot bg-emerald-400"></span>
             </div>
           </div>
 
-          {/* Menu bar inside window */}
-          <div className="border-b-[2.5px] border-black bg-neo-surface px-4 py-1.5 flex items-center gap-4 font-mono text-xs text-black/60 font-semibold border-t-0 select-none">
-            <span className="hover:text-black cursor-pointer">File</span>
-            <span className="hover:text-black cursor-pointer">Edit</span>
-            <span className="hover:text-black cursor-pointer">Compile</span>
-            <span className="hover:text-black cursor-pointer">Help</span>
-          </div>
-
-          {/* Window Body */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 border-t-0 bg-neo-surface">
-            {/* Bio Column */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 bg-neo-surface">
+            {/* Bio */}
             <div className="lg:col-span-5 p-6 md:p-8 space-y-6 lg:border-r-[2.5px] border-black flex flex-col justify-between">
               <div className="space-y-6">
-                {/* Premium Profile Card */}
-                <div className="relative group w-max mx-auto lg:mx-0 select-none">
-                  {/* Layered behind offset */}
-                  <div className="absolute inset-0 border-[2px] border-black bg-neo-pink translate-x-2 translate-y-2 pointer-events-none" />
-                  <div className="relative border-[2.5px] border-black p-2 bg-neo-surface shadow-none z-10 w-40 h-40 overflow-hidden">
-                    <img
-                      src="/om-gawande-photo.jpg"
-                      alt="Om Gawande"
-                      className="w-full h-full object-cover border border-black"
-                    />
-                  </div>
-                  <div className="absolute -top-3 -right-3 bg-neo-yellow border border-black px-2 py-0.5 text-[8px] font-mono font-bold rotate-6 z-20 text-black">
-                    OM_OS v1.0
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 font-mono text-xs bg-neo-blue/20 text-black border border-black/10 px-2.5 py-1 w-max">
-                  <span>Target: AI & Machine Learning</span>
-                </div>
-                <h3 className="font-display text-3xl font-extrabold leading-tight">
-                  BUILDER. LEADER.
-                  <br />
-                  PROBLEM SOLVER.
-                </h3>
-                <p className="font-body text-sm md:text-base text-black/80 leading-relaxed">
-                  Artificial Intelligence undergraduate with practical experience in building real-world computer vision and NLP systems and deploying them on embedded and fully offline infrastructure. Experienced in training custom object detection models, developing local LLM-based agentic pipelines, and delivering end-to-end AI solutions from dataset preparation to production deployment.
-                </p>
-                <p className="font-body text-sm md:text-base text-black/80 leading-relaxed">
-                  Interested in applied AI, computer vision, and scalable intelligent systems. As President of the AI Prabodha Student Forum, I lead a community of aspiring AI engineers and organize technical events that bridge the gap between applied research and production systems.
-                </p>
+                {profile.aboutParagraphs.map((para) => (
+                  <p key={para} className="font-body text-sm md:text-base text-black/80 leading-relaxed">
+                    {para}
+                  </p>
+                ))}
               </div>
 
-              <div className="pt-6 border-t border-black/15 font-mono text-xs text-silver space-y-1.5">
-                <p>INSTITUTION: SVPCET, Nagpur</p>
-                <p>CGPA METRIC: 8.68 / 10.0</p>
-                <p>GRADUATION: CLASS OF 2027</p>
+              <div className="pt-6 border-t border-black/15 font-mono text-xs text-black/70 space-y-1.5">
+                <p>
+                  {education.shortName}, {education.city} · CGPA {education.cgpa} · Class of {education.classOf}
+                </p>
+                <ul className="flex flex-wrap gap-2 pt-2">
+                  {profileLinks.map(({ label, href, icon: Icon }) => (
+                    <li key={label}>
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 border-[2px] border-black px-2 py-1 font-bold text-black bg-neo-surface hover:bg-neo-yellow transition-colors"
+                      >
+                        <Icon size={12} aria-hidden="true" />
+                        {label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
-            {/* Highlights Grid Column */}
-            <div className="lg:col-span-7 p-6 md:p-8 bg-neo-surface space-y-8">
-              <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-black/60 mb-4 flex items-center gap-2">
-                <Settings size={12} className="text-black" />
-                SYSTEM_KEY_HIGHLIGHTS
-              </h4>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {highlights.map((item, idx) => {
-                  const Icon = item.icon;
-                  return (
-                    <div
-                      key={idx}
-                      className="os-window bg-neo-surface hover:-translate-x-1 hover:-translate-y-1 hover:shadow-neo-lg transition-all duration-300 flex flex-col justify-between"
-                    >
-                      <div className={`border-b-[2px] border-black px-4 py-1.5 ${item.colorClass} font-mono text-[10px] font-bold text-black flex justify-between items-center`}>
-                        <span className="uppercase">{item.title}</span>
-                        <Icon size={12} className="text-black" />
-                      </div>
-                      <div className="p-4 space-y-2">
-                        <p className="font-mono text-xs font-semibold text-black/60">
-                          {item.subtitle}
-                        </p>
-                        <p className="font-body text-xs text-black/75 leading-relaxed">
-                          {item.description}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
+            {/* What I'm working on / interests / looking for */}
+            <div className="lg:col-span-7 p-6 md:p-8 bg-neo-surface grid grid-cols-1 sm:grid-cols-2 gap-4 content-start">
+              <div className="os-window bg-neo-surface">
+                <div className="border-b-[2px] border-black px-4 py-1.5 bg-neo-mint font-mono text-[10px] font-bold text-black flex justify-between items-center">
+                  <h3 className="uppercase">Research interests</h3>
+                  <FlaskConical size={12} aria-hidden="true" />
+                </div>
+                <ul className="p-4 space-y-1.5 font-body text-sm text-black/80">
+                  {profile.researchInterests.map((r) => (
+                    <li key={r}>{r}</li>
+                  ))}
+                </ul>
               </div>
+
+              {inProgress.length > 0 && (
+                <div className="os-window bg-neo-surface">
+                  <div className="border-b-[2px] border-black px-4 py-1.5 bg-neo-yellow font-mono text-[10px] font-bold text-black flex justify-between items-center">
+                    <h3 className="uppercase">Working on now</h3>
+                    <Hammer size={12} aria-hidden="true" />
+                  </div>
+                  <ul className="p-4 space-y-3 font-body text-sm text-black/80">
+                    {inProgress.map((p) => (
+                      <li key={p.slug}>
+                        <span className="font-bold text-black">{p.title}</span>
+                        <span className="block text-xs text-black/70 mt-0.5">{p.oneLiner}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {profile.lookingFor && (
+                <div className="os-window bg-neo-surface sm:col-span-2">
+                  <div className="border-b-[2px] border-black px-4 py-1.5 bg-neo-blue font-mono text-[10px] font-bold text-black flex justify-between items-center">
+                    <h3 className="uppercase">Looking for</h3>
+                    <Compass size={12} aria-hidden="true" />
+                  </div>
+                  <p className="p-4 font-body text-sm text-black/80">{profile.lookingFor}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Quick Stats Row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {quickStats.map((stat, idx) => {
-            const Icon = stat.icon;
-            return (
-              <div
-                key={idx}
-                className="os-window bg-neo-surface hover:-translate-x-1 hover:-translate-y-1 hover:shadow-neo-lg transition-all duration-300 p-4 flex items-center gap-4"
-              >
-                <div className="p-2 border-[2px] border-black bg-black text-neo-bg">
-                  <Icon size={18} className="text-current" />
-                </div>
-                <div>
-                  <p className="font-mono text-xl md:text-2xl font-extrabold text-black leading-none">{stat.value}</p>
-                  <p className="font-mono text-[10px] font-bold text-silver uppercase mt-1">{stat.label}</p>
-                </div>
+        {/* Counts derived from src/data */}
+        <ul className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {quickStats.map(({ icon: Icon, label, value }) => (
+            <li key={label} className="os-window bg-neo-surface p-4 flex items-center gap-4">
+              <div className="p-2 border-[2px] border-black bg-black text-neo-bg">
+                <Icon size={18} className="text-current" aria-hidden="true" />
               </div>
-            );
-          })}
-        </div>
+              <div>
+                <p className="font-mono text-xl md:text-2xl font-extrabold text-black leading-none">{value}</p>
+                <p className="font-mono text-[10px] font-bold text-black/70 uppercase mt-1">{label}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

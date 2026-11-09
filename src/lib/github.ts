@@ -18,6 +18,11 @@ export interface GitHubStatsData {
   repos: GitHubRepo[];
 }
 
+interface ApiRepo extends GitHubRepo {
+  fork: boolean;
+  private: boolean;
+}
+
 const FALLBACK_REPOS: GitHubRepo[] = [
   {
     id: 100,
@@ -195,7 +200,7 @@ export async function fetchGitHubData(): Promise<GitHubStatsData> {
     if (now - cachedTime < CACHE_DURATION_MS) {
       try {
         return JSON.parse(cachedDataStr);
-      } catch (e) {
+      } catch {
         // Parse error, clear cache and proceed to fetch
         localStorage.removeItem(CACHE_KEY);
         localStorage.removeItem(TIMESTAMP_KEY);
@@ -212,12 +217,12 @@ export async function fetchGitHubData(): Promise<GitHubStatsData> {
     // Fetch repos
     const reposRes = await fetch('https://api.github.com/users/omgawande1523/repos?per_page=100&sort=updated');
     if (!reposRes.ok) throw new Error('Failed to fetch repositories');
-    const reposData: any[] = await reposRes.json();
+    const reposData: ApiRepo[] = await reposRes.json();
 
     // Filter out forks if preferred, or keep all. Let's filter to real user repos
     const userRepos: GitHubRepo[] = reposData
-      .filter((repo: any) => !repo.fork)
-      .map((repo: any) => ({
+      .filter((repo) => !repo.fork && !repo.private)
+      .map((repo) => ({
         id: repo.id,
         name: repo.name,
         description: repo.description,
@@ -283,7 +288,9 @@ export async function fetchGitHubData(): Promise<GitHubStatsData> {
     if (cachedDataStr) {
       try {
         return JSON.parse(cachedDataStr);
-      } catch (e) {}
+      } catch {
+        // ignore corrupt cache
+      }
     }
     return FALLBACK_DATA;
   }

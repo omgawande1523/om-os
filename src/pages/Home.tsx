@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import CustomCursor from '../components/CustomCursor';
 import Hero from '../sections/Hero';
-import ImpactDashboard from '../sections/ImpactDashboard';
 import Projects from '../sections/Projects';
 import Leadership from '../sections/Leadership';
 import About from '../sections/About';
@@ -65,15 +64,14 @@ export default function Home() {
       <Header />
       <main className="relative pt-11">
         <Hero />
-        <ImpactDashboard />
-        <Projects />
-        <Leadership />
         <About />
-        <Skills />
-        <GitHubStats />
+        <Projects />
         <Experience />
-        <ResumeViewer />
+        <Skills />
+        <Leadership />
         <Certifications />
+        <GitHubStats />
+        <ResumeViewer />
         <Footer />
       </main>
     </div>

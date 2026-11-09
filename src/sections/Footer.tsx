@@ -11,40 +11,19 @@ import {
   Heart,
   MessageSquare,
   Activity,
-  Phone,
+  IdCard,
 } from 'lucide-react';
+import SectionHeading from '../components/SectionHeading';
+import { profile } from '../data/profile';
+import { leadership } from '../data/leadership';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const socialLinks = [
-  {
-    name: 'GitHub',
-    handle: '@omgawande1523',
-    href: 'https://github.com/omgawande1523',
-    icon: Github,
-    colorClass: 'hover:bg-neo-blue',
-  },
-  {
-    name: 'LinkedIn',
-    handle: 'Om Gawande',
-    href: 'https://linkedin.com/in/om-gawande-601081242',
-    icon: Linkedin,
-    colorClass: 'hover:bg-neo-pink',
-  },
-  {
-    name: 'Email',
-    handle: 'gawandeom2005@gmail.com',
-    href: 'mailto:gawandeom2005@gmail.com',
-    icon: Mail,
-    colorClass: 'hover:bg-neo-yellow',
-  },
-  {
-    name: 'Phone',
-    handle: '+91 8010173681',
-    href: 'tel:+918010173681',
-    icon: Phone,
-    colorClass: 'hover:bg-neo-mint',
-  },
+  { name: 'GitHub', handle: `@${profile.githubUsername}`, href: profile.links.github, icon: Github, colorClass: 'hover:bg-neo-blue' },
+  { name: 'LinkedIn', handle: profile.name, href: profile.links.linkedin, icon: Linkedin, colorClass: 'hover:bg-neo-pink' },
+  { name: 'ORCID', handle: profile.links.orcid.replace('https://orcid.org/', ''), href: profile.links.orcid, icon: IdCard, colorClass: 'hover:bg-neo-mint' },
+  { name: 'Email', handle: profile.email, href: `mailto:${profile.email}`, icon: Mail, colorClass: 'hover:bg-neo-yellow' },
 ];
 
 export default function Footer() {
@@ -92,8 +71,8 @@ export default function Footer() {
     >
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
-        <div ref={headingRef} className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-silver">
-          <span>08 / CONTACT_CONSOLE.EXE</span>
+        <div ref={headingRef}>
+          <SectionHeading id="contact" />
         </div>
 
         {/* Contact Console OS Window */}
@@ -207,7 +186,7 @@ export default function Footer() {
                     >
                       <div className="flex items-center gap-3">
                         <div className="p-1.5 border border-black bg-black text-neo-bg">
-                          <Icon size={14} />
+                          <Icon size={14} aria-hidden="true" />
                         </div>
                         <div>
                           <p className="font-mono text-xs font-bold text-black">
@@ -234,11 +213,11 @@ export default function Footer() {
                   <span>LOCATION_COORDS</span>
                 </div>
                 <p className="font-body text-xs text-black/85 leading-relaxed font-semibold">
-                  Nagpur, Maharashtra, India (IST +5:30)
+                  {profile.location.city}, {profile.location.region}, {profile.location.country} (IST, UTC+5:30)
                 </p>
-                <p className="font-mono text-[9px] text-black/60 font-bold mt-2 uppercase">
-                  STATUS: AVAILABLE FOR REMOTE / HYBRID ROLES
-                </p>
+                {profile.lookingFor && (
+                  <p className="font-mono text-[9px] text-black/70 font-bold mt-2 uppercase">{profile.lookingFor}</p>
+                )}
               </div>
             </div>
           </div>
@@ -255,7 +234,7 @@ export default function Footer() {
           <div className="flex animate-marquee whitespace-nowrap font-mono text-xs font-bold tracking-widest text-black">
             {Array.from({ length: 12 }).map((_, i) => (
               <span key={i} className="mx-4">
-                OM GAWANDE // AI & ML ENGINEER // FORUM PRESIDENT // CLASS REPRESENTATIVE // TECHNICAL LEADER //
+                {profile.name.toUpperCase()} // {profile.role.toUpperCase()} // {leadership[0].org.toUpperCase()} //
               </span>
             ))}
           </div>
@@ -264,7 +243,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[10px] text-silver select-none pt-4">
           <p className="flex items-center gap-1.5 font-semibold">
-            Built with <Heart size={10} className="text-neo-pink fill-neo-pink animate-pulse" /> by Om Gawande
+            Built with <Heart size={10} className="text-neo-pink fill-neo-pink animate-pulse" aria-hidden="true" /> by {profile.name}
           </p>
           <p className="font-semibold">
             © {new Date().getFullYear()} OM_OS v1.0.4. ALL RIGHTS RESERVED

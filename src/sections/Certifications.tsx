@@ -1,55 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Award, FileBadge, CheckCircle, ShieldCheck } from 'lucide-react';
+import { Award, FileBadge, CheckCircle, ExternalLink } from 'lucide-react';
+import SectionHeading from '../components/SectionHeading';
+import { certifications } from '../data/certifications';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const certificationsData = [
-  {
-    id: 'nvidia_dl',
-    fileName: 'NVIDIA_Deep_Learning.crt',
-    name: 'Fundamentals of Deep Learning — NVIDIA',
-    issuer: 'NVIDIA Deep Learning Institute',
-    credentialInfo: 'Completed hands-on training in deep learning fundamentals, neural networks, and AI model development.',
-    skills: ['Deep Learning', 'Neural Networks', 'AI Model Development'],
-    colorClass: 'bg-neo-mint',
-  },
-  {
-    id: 'nptel_ml',
-    fileName: 'NPTEL_Machine_Learning.crt',
-    name: 'Introduction to Machine Learning — NPTEL',
-    issuer: 'NPTEL (IIT Kharagpur)',
-    credentialInfo: 'Learned core machine learning concepts, supervised learning algorithms, and model evaluation techniques.',
-    skills: ['Machine Learning', 'Supervised Learning', 'Model Evaluation'],
-    colorClass: 'bg-neo-blue',
-  },
-  {
-    id: 'cloud_data',
-    fileName: 'Cloud_Data_Engineering.crt',
-    name: 'Data Engineering in Cloud Environment Training',
-    issuer: 'Cloud Data Academy',
-    credentialInfo: 'Acquired practical experience in cloud-based data pipelines, data processing, and modern data engineering workflows.',
-    skills: ['Cloud Pipelines', 'Data Processing', 'Data Engineering Workflows'],
-    colorClass: 'bg-neo-yellow',
-  },
-  {
-    id: 'genai_devops',
-    fileName: 'GenAI_DevOps_FDP.crt',
-    name: 'Generative AI & DevOps Faculty Development Program',
-    issuer: 'National Faculty Development Program',
-    credentialInfo: 'Explored Generative AI applications, DevOps methodologies, automation, and AI-powered development practices.',
-    skills: ['Generative AI', 'DevOps Methodologies', 'Automation', 'AI Development'],
-    colorClass: 'bg-neo-orange',
-  },
-];
 
 export default function Certifications() {
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
 
-  const [selectedCertId, setSelectedCertId] = useState(certificationsData[0].id);
+  const [selectedCertId, setSelectedCertId] = useState(certifications[0].id);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -73,7 +36,7 @@ export default function Certifications() {
     return () => ctx.revert();
   }, []);
 
-  const currentCert = certificationsData.find((c) => c.id === selectedCertId) || certificationsData[0];
+  const currentCert = certifications.find((c) => c.id === selectedCertId) || certifications[0];
 
   return (
     <section
@@ -83,8 +46,8 @@ export default function Certifications() {
     >
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
-        <div ref={headingRef} className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-silver">
-          <span>06 / CERTIFICATIONS_REGISTRY.EXE</span>
+        <div ref={headingRef}>
+          <SectionHeading id="certifications" />
         </div>
 
         {/* Explorer OS Window */}
@@ -110,14 +73,9 @@ export default function Certifications() {
           <div className="border-b-[2px] border-black bg-neo-surface px-4 py-2 flex items-center justify-between font-mono text-[10px] text-black/60 font-semibold border-t-0 select-none">
             <div className="flex gap-4">
               <span>Registry</span>
-              <span>Verify</span>
-              <span>Keys</span>
               <span>Status</span>
             </div>
-            <div className="flex items-center gap-1.5 text-emerald-600 font-bold">
-              <ShieldCheck size={12} />
-              <span>ALL_SIGNATURES_VALID</span>
-            </div>
+            <span>{certifications.length} CREDENTIALS</span>
           </div>
 
           {/* File Explorer Layout */}
@@ -129,10 +87,12 @@ export default function Certifications() {
               </p>
               
               <div className="space-y-1.5">
-                {certificationsData.map((cert) => (
+                {certifications.map((cert) => (
                   <button
                     key={cert.id}
+                    type="button"
                     onClick={() => setSelectedCertId(cert.id)}
+                    aria-pressed={selectedCertId === cert.id}
                     className={`flex items-center gap-2 w-full text-left py-2 px-3 border border-transparent font-bold transition-colors ${
                       selectedCertId === cert.id
                         ? 'bg-black text-neo-bg border-black'
@@ -150,11 +110,8 @@ export default function Certifications() {
             <div className="md:col-span-8 p-6 md:p-8 bg-neo-surface flex flex-col justify-between space-y-6">
               {/* File Info Bar */}
               <div className="flex items-center justify-between border-b border-black/10 pb-4 font-mono text-[10px] text-silver select-none">
-                <div>
-                  <span>REGISTRY_ID: {currentCert.id.toUpperCase()}</span>
-                  <span className="ml-4">FORMAT: X.509/SECURE</span>
-                </div>
-                <span>STATUS: ACTIVE_VERIFIED</span>
+                <span>CREDENTIAL: {currentCert.id.toUpperCase()}</span>
+                <span>STATUS: LOADED</span>
               </div>
 
               {/* Certificate Details */}
@@ -176,7 +133,7 @@ export default function Certifications() {
                       CREDENTIAL_INFORMATION
                     </p>
                     <p className="font-body text-sm text-black/85 leading-relaxed bg-neo-bg p-4 border border-black/10 rounded-none font-semibold">
-                      {currentCert.credentialInfo}
+                      {currentCert.summary}
                     </p>
                   </div>
 
@@ -190,7 +147,7 @@ export default function Certifications() {
                           key={skill}
                           className="font-mono text-[9px] font-bold text-black bg-black/5 border border-black/10 px-2 py-1 flex items-center gap-1"
                         >
-                          <CheckCircle size={9} className="text-emerald-600" />
+                          <CheckCircle size={9} className="text-emerald-600" aria-hidden="true" />
                           {skill}
                         </span>
                       ))}
@@ -202,7 +159,16 @@ export default function Certifications() {
               {/* Node status indicators */}
               <div className="border-t border-black/10 pt-4 flex justify-between items-center font-mono text-[9px] text-silver select-none">
                 <span>SYSTEM_LOG: CERTIFICATE_LOADED</span>
-                <span className="bg-black text-neo-bg px-2 py-0.5 uppercase">verified_log</span>
+                {currentCert.credentialUrl && (
+                  <a
+                    href={currentCert.credentialUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 bg-black text-neo-bg px-2 py-0.5 uppercase hover:bg-neo-yellow hover:text-black"
+                  >
+                    View credential <ExternalLink size={9} aria-hidden="true" />
+                  </a>
+                )}
               </div>
             </div>
           </div>

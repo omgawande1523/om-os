@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Github, ChevronRight, Activity, Play, BarChart2, Calendar, GitCommit, GitBranch } from 'lucide-react';
 gsap.registerPlugin(ScrollTrigger);
 import { fetchGitHubData } from '../lib/github';
+import SectionHeading from '../components/SectionHeading';
 import type { GitHubStatsData } from '../lib/github';
 
 // Mock contributions grid (24 weeks x 7 days)
@@ -60,7 +61,7 @@ export default function GitHubStats() {
 
   const topRepos = (currentStats.repos || []).slice(0, 4).map(r => ({
     name: r.name,
-    desc: r.description || 'Verified repository published on omgawande1523 GitHub profile.',
+    desc: r.description || 'No description on GitHub.',
     lang: r.language || 'Python'
   }));
 
@@ -210,8 +211,8 @@ export default function GitHubStats() {
     >
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
-        <div ref={headingRef} className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-silver">
-          <span>08 / OPEN_SOURCE_METRICS.LOG</span>
+        <div ref={headingRef}>
+          <SectionHeading id="github" />
         </div>
 
         {/* Outer Command Center Window */}

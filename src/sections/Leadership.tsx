@@ -1,84 +1,20 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ShieldCheck, Flag, Users, Trophy, Sparkles, Activity, Target, Brain } from 'lucide-react';
+import { ShieldCheck, Flag, Users, Trophy, Sparkles, Target, Brain, type LucideIcon } from 'lucide-react';
+import SectionHeading from '../components/SectionHeading';
+import { leadership, leadershipIntro, type LeadershipIcon } from '../data/leadership';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const leadershipRoles = [
-  {
-    icon: Flag,
-    role: 'President (prev. Secretary & Founding Member)',
-    org: 'AI Prabodha Student Forum',
-    period: '2023 - Present',
-    details: [
-      'Pioneered the SVPCET AI student society, growing the active member base to 150+ active participants.',
-      'Organized multiple Python development bootcamps and artificial intelligence starter seminars.',
-      'Mentored 50+ junior engineering students in setting up local Jupyter notebooks and training models.'
-    ],
-    color: 'bg-neo-mint',
-  },
-  {
-    icon: Users,
-    role: 'Class Representative',
-    org: 'AI Department, SVPCET',
-    period: '2023 - 2026 (3 Consecutive Years)',
-    details: [
-      'Elected peer representative coordinating scheduling, syllabus alignments, and resource distributions.',
-      'Liaison between department faculty heads and 70+ students to smooth academic operations.',
-      'Managed event feedback loops resulting in improved laboratory compute hour allocations.'
-    ],
-    color: 'bg-neo-blue',
-  },
-  {
-    icon: Trophy,
-    role: 'Dataventics GenAI Hackathon Lead',
-    org: 'SVPCET AI Campus Events',
-    period: '2024 - 2025',
-    details: [
-      'Chaired logistics and challenge design for campus-wide hackathons attracting 200+ competitors.',
-      'Configured server compute slots and verified target API access keys for student hackathon teams.',
-      'Maintained uptime of assessment web app during concurrent grading checks by judges.'
-    ],
-    color: 'bg-neo-yellow',
-  },
-  {
-    icon: Target,
-    role: 'AI Verse Organizer',
-    org: 'Department Technical Board',
-    period: '2024',
-    details: [
-      'Coordinated challenge rules and evaluation metrics for the campus-wide prompt engineering competition.',
-      'Designed evaluation schemas and reference prompts to assess model compliance and efficiency.',
-      'Evaluated 40+ competitor submissions, verifying execution pipelines and response accuracies.'
-    ],
-    color: 'bg-neo-pink',
-  },
-  {
-    icon: Sparkles,
-    role: 'Community Builder',
-    org: 'Open Source Education',
-    period: 'Ongoing',
-    details: [
-      'Advocate for open-source AI utilities, publishing custom Python wrappers and CLI tools on GitHub.',
-      'Host weekend code reviews and hardware debugging sessions for student builders.',
-      'Organize technical visits to local tech hubs to inspect real-world automated pipelines.'
-    ],
-    color: 'bg-neo-orange',
-  },
-  {
-    icon: Brain,
-    role: 'Technical Leader',
-    org: 'Research & Project Teams',
-    period: '2023 - Present',
-    details: [
-      'Directing core development groups for student projects, establishing coding styles and lint rules.',
-      'Guiding model optimization methodologies (quantization, RAG pipeline fine-tuning).',
-      'Orchestrated multi-disciplinary teams across frontend, backend, and embedded edge systems.'
-    ],
-    color: 'bg-neo-surface',
-  }
-];
+const icons: Record<LeadershipIcon, LucideIcon> = {
+  flag: Flag,
+  users: Users,
+  trophy: Trophy,
+  target: Target,
+  sparkles: Sparkles,
+  brain: Brain,
+};
 
 export default function Leadership() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -117,9 +53,7 @@ export default function Leadership() {
     >
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
-        <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-silver">
-          <span>04 / LEADERSHIP_REGISTRY.CFG</span>
-        </div>
+        <SectionHeading id="leadership" />
 
         {/* Outer Command Center Window */}
         <div className="os-window flex flex-col bg-neo-surface">
@@ -143,36 +77,27 @@ export default function Leadership() {
               <span>Achievements</span>
               <span>Impact_Index</span>
             </div>
-            <div className="flex items-center gap-1 text-emerald-600 font-bold">
-              <Activity size={10} className="animate-pulse" />
-              <span>LIVE_INDEX_OK</span>
-            </div>
           </div>
 
           {/* Window Body */}
           <div className="p-6 md:p-8 bg-[#FFFDF9]">
             <div className="max-w-3xl mb-8 space-y-2">
-              <h3 className="font-display text-2xl md:text-3xl font-extrabold text-black uppercase">
-                Bridging Tech & Management
-              </h3>
-              <p className="font-body text-sm text-black/70 leading-relaxed">
-                Technical competency becomes exponential when paired with leadership. As a forum founder, representative, and event organizer, I manage engineering goals, event operations, and student peer mentorship.
-              </p>
+              <p className="font-body text-sm text-black/70 leading-relaxed">{leadershipIntro}</p>
             </div>
 
             {/* Roles Grid */}
             <div ref={containerRef} className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {leadershipRoles.map((item, idx) => {
-                const Icon = item.icon;
+              {leadership.map((item) => {
+                const Icon = icons[item.icon];
                 return (
                   <div
-                    key={idx}
+                    key={item.id}
                     className="os-window bg-neo-surface hover:-translate-x-1.5 hover:-translate-y-1.5 hover:shadow-neo-lg transition-all duration-300 flex flex-col justify-between"
                     style={{ opacity: 0 }}
                   >
                     {/* Header bar of role window */}
                     <div className={`border-b-[2.5px] border-black px-4 py-2 ${item.color} font-mono text-xs font-bold text-black flex justify-between items-center`}>
-                      <span className="uppercase">{item.role}</span>
+                      <h3 className="uppercase">{item.role}</h3>
                       <span className="text-[10px] text-black/60 font-bold">{item.period}</span>
                     </div>
 
@@ -203,8 +128,8 @@ export default function Leadership() {
 
           {/* Footer bar */}
           <div className="border-t-[2.5px] border-black bg-black text-neo-bg px-4 py-2 font-mono text-[9px] text-right flex justify-between select-none">
-            <span>OFFICER_GRADE: SVPCET_FORUM_PRESIDENT</span>
-            <span>SYSTEM_METRIC: EXCELLENT</span>
+            <span>{leadership.length} roles</span>
+            <span>SVPCET, Nagpur</span>
           </div>
         </div>
       </div>

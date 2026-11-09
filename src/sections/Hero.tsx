@@ -1,5 +1,9 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { profile } from '../data/profile';
+import { education, experience } from '../data/experience';
+import { leadership } from '../data/leadership';
+import { projects, featuredProjects } from '../data/projects';
 import { Terminal, ArrowDown, MapPin, GraduationCap, Command, Cpu, Briefcase, Award } from 'lucide-react';
 
 export default function Hero() {
@@ -35,14 +39,10 @@ export default function Hero() {
   }, []);
 
   const metrics = [
-    { label: 'Academic Standing', value: '8.68 CGPA', detail: 'B.Tech AI Class of 2027', color: 'bg-neo-yellow' },
-    { label: 'AI Student Forum', value: 'President', detail: 'AI Prabodha Student Forum', color: 'bg-neo-mint' },
-    { label: 'R&D Internship', value: 'MRSAC', detail: 'Flood Nowcasting Digital Twin', color: 'bg-neo-blue' },
-    { label: 'AI Engineering', value: 'Acube AI', detail: 'Data Analytics & AI Eng.', color: 'bg-neo-pink' },
-    { label: 'Enterprise AI', value: 'RNR', detail: 'AI & ERP Solution Intern', color: 'bg-neo-orange' },
-    { label: 'Projects Built', value: '15+ Built', detail: 'AI Solutions & Workflows', color: 'bg-neo-yellow' },
-    { label: 'GitHub Ecosystem', value: '20+ Repos', detail: 'Verified Public Repos', color: 'bg-neo-mint' },
-    { label: 'Elected Leadership', value: '3-Year CR', detail: 'Class Representative', color: 'bg-neo-blue' },
+    { label: 'CGPA', value: education.cgpa.split(' ')[0], detail: `${education.degree.replace('B.Tech in ', 'B.Tech ')}, class of ${education.classOf}`, color: 'bg-neo-yellow' },
+    { label: 'Leadership', value: 'President', detail: leadership[0].org, color: 'bg-neo-mint' },
+    { label: 'Internships', value: String(experience.length), detail: experience.map((r) => r.shortOrg).join(' · '), color: 'bg-neo-blue' },
+    { label: 'Projects', value: String(projects.length), detail: `${featuredProjects.length} featured`, color: 'bg-neo-pink' },
   ];
 
   return (
@@ -59,13 +59,14 @@ export default function Hero() {
           <div className="flex items-center gap-3">
             <Command className="w-6 h-6 animate-spin text-black" style={{ animationDuration: '6s' }} />
             <h1 className="font-display text-lg md:text-xl font-bold tracking-wider uppercase text-black">
-              OM GAWANDE // SYSTEM MAIN_CONSOLE //
+              {profile.name}
+              <span className="sr-only">, {profile.role}</span>
+              <span aria-hidden="true" className="hidden sm:inline"> // SYSTEM MAIN_CONSOLE //</span>
             </h1>
           </div>
           <div className="font-mono text-xs font-semibold hidden md:flex items-center gap-4 text-black">
             <span>SYS_STATUS: ACTIVE</span>
-            <span>BAUD_RATE: 115200</span>
-            <span className="bg-black text-neo-yellow px-2 py-0.5">SECURE</span>
+            <span className="bg-black text-neo-yellow px-2 py-0.5">{profile.role.toUpperCase()}</span>
           </div>
         </div>
 
@@ -94,31 +95,30 @@ export default function Hero() {
                 <div className="space-y-1">
                   <p className="text-neo-blue"><span className="text-neo-pink">~/omgawande</span> $ cat identity.json</p>
                   <pre className="text-xs md:text-sm text-neo-mint leading-relaxed overflow-x-auto !bg-black/50 p-3 border border-white/10 rounded-sm">
-{`{
-  "name": "OM GAWANDE",
-  "role": "AI ENGINEER & MACHINE LEARNING DEVELOPER",
-  "mission": "BUILDING PRODUCTION-GRADE AI SOLUTIONS",
-  "focus": ["AI Solutions", "Machine Learning Workflows", "Full Stack Systems"]
-}`}
+{JSON.stringify(
+  { name: profile.name, role: profile.role, interests: profile.researchInterests },
+  null,
+  2
+)}
                   </pre>
                 </div>
                 
                 <p className="text-sm !text-[#FAF6EE]/85 leading-relaxed font-sans">
-                  B.Tech Artificial Intelligence student with practical experience in building real-world computer vision and NLP systems and deploying them on embedded and fully offline infrastructure. Specializing in custom object detection models, local LLM-based agentic pipelines, and delivering end-to-end AI solutions from dataset preparation to production deployment. President of the AI Prabodha Student Forum and experienced AI intern at MRSAC, Acube AI, and RNR. Interested in applied AI, computer vision, and scalable intelligent systems.
+                  {profile.heroBio}
                 </p>
 
                 <div className="flex flex-wrap gap-3 pt-2 text-xs">
                   <span className="inline-flex items-center gap-1.5 border border-white/20 px-2.5 py-1 !bg-white/5 !text-[#FAF6EE]">
                     <MapPin size={11} className="text-neo-pink" />
-                    Nagpur, Maharashtra
+                    {profile.location.city}, {profile.location.region}
                   </span>
                   <span className="inline-flex items-center gap-1.5 border border-white/20 px-2.5 py-1 !bg-white/5 !text-[#FAF6EE]">
                     <GraduationCap size={11} className="text-neo-blue" />
-                    SVPCET Nagpur
+                    {education.shortName} {education.city}
                   </span>
                   <span className="inline-flex items-center gap-1.5 border border-white/20 px-2.5 py-1 !bg-white/5 !text-[#FAF6EE]">
                     <Briefcase size={11} className="text-neo-yellow" />
-                    Interned @ MRSAC, Acube AI & RNR
+                    Interned @ {experience.map((r) => r.shortOrg).join(', ')}
                   </span>
                 </div>
               </div>
@@ -173,7 +173,7 @@ export default function Hero() {
                   <div className="w-56 h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 overflow-hidden border border-black">
                     <img
                       src="/om-gawande-photo.jpg"
-                      alt="Om Gawande"
+                      alt={`Portrait of ${profile.name}`}
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                     />
                   </div>
@@ -188,33 +188,30 @@ export default function Hero() {
                   PROFILE: OM GAWANDE
                 </p>
                 <p className="font-mono text-[10px] text-silver font-semibold uppercase">
-                  STATUS: PRESIDENT // LEADER // BUILDER
+                  {profile.role.toUpperCase()} // {education.shortName} {education.classOf}
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Stats Grid - Displays 8 Metric Cards */}
+        {/* Key facts, all derived from src/data */}
         <div
           ref={statsRef}
           className="grid grid-cols-2 md:grid-cols-4 gap-4"
         >
-          {metrics.map((metric, idx) => (
+          {metrics.map((metric) => (
             <div
-              key={idx}
+              key={metric.label}
               className={`os-window hover:-translate-x-1 hover:-translate-y-1 hover:shadow-neo-lg transition-all duration-300 ${metric.color}`}
             >
               <div className="border-b-[2px] border-black px-3 py-1 bg-black/5 font-mono text-[9px] font-bold text-black/70 flex justify-between select-none">
-                <span>METRIC // 0{idx + 1}</span>
+                <span>{metric.label.toUpperCase()}</span>
                 <Award size={10} className="text-black/50" />
               </div>
               <div className="p-4 space-y-1">
                 <p className="font-display text-lg md:text-xl font-extrabold text-black truncate leading-tight">
                   {metric.value}
-                </p>
-                <p className="font-mono text-[9px] font-bold text-black/60 uppercase tracking-wide">
-                  {metric.label}
                 </p>
                 <p className="font-sans text-[9px] text-black/70 leading-none">
                   {metric.detail}

@@ -1,14 +1,13 @@
 import { useEffect, useState, useRef } from 'react';
-import { Github, Linkedin, Mail, Menu, X, Terminal, Cpu, Clock, Wifi, Sun, Moon, Phone } from 'lucide-react';
+import { Github, Linkedin, Mail, Menu, X, Terminal, Cpu, Clock, Wifi, Sun, Moon } from 'lucide-react';
 import gsap from 'gsap';
 import { useTheme } from './ThemeProvider';
+import { sections, preambleNav } from '../data/sections';
+import { profile } from '../data/profile';
 
 const navLinks = [
-  { label: 'About', href: '#about', shortcut: '⌘A' },
-  { label: 'Skills', href: '#skills', shortcut: '⌘S' },
-  { label: 'Experience', href: '#experience', shortcut: '⌘E' },
-  { label: 'Projects', href: '#projects', shortcut: '⌘P' },
-  { label: 'Contact', href: '#contact', shortcut: '⌘C' },
+  ...preambleNav.map((s) => ({ label: s.nav, href: `#${s.id}` })),
+  ...sections.map((s) => ({ label: s.nav, href: `#${s.id}` })),
 ];
 
 export default function Header() {
@@ -83,18 +82,15 @@ export default function Header() {
         </div>
 
         {/* Center: Desktop Nav Menus */}
-        <nav className="hidden md:flex items-center gap-1 text-xs">
+        <nav className="hidden xl:flex items-center gap-0.5 text-[11px]" aria-label="Sections">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
-              className="px-3 py-1 hover:bg-black hover:text-neo-bg transition-colors relative group font-semibold uppercase tracking-wider"
+              className="px-2 py-1 hover:bg-black hover:text-neo-bg transition-colors font-semibold uppercase tracking-wider"
             >
               {link.label}
-              <span className="absolute left-1/2 -translate-x-1/2 -bottom-2 text-[8px] opacity-0 group-hover:opacity-100 transition-opacity bg-black text-neo-bg px-1 pointer-events-none">
-                {link.shortcut}
-              </span>
             </a>
           ))}
         </nav>
@@ -104,7 +100,7 @@ export default function Header() {
           {/* Quick social actions */}
           <div className="hidden sm:flex items-center gap-2 border-r border-black/20 pr-3">
             <a
-              href="https://github.com/omgawande1523"
+              href={profile.links.github}
               target="_blank"
               rel="noopener noreferrer"
               className="p-1 text-black hover:bg-neo-blue hover:border border-black transition-all"
@@ -113,7 +109,7 @@ export default function Header() {
               <Github size={14} />
             </a>
             <a
-              href="https://linkedin.com/in/om-gawande-601081242"
+              href={profile.links.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="p-1 text-black hover:bg-neo-pink hover:border border-black transition-all"
@@ -122,18 +118,11 @@ export default function Header() {
               <Linkedin size={14} />
             </a>
             <a
-              href="mailto:gawandeom2005@gmail.com"
+              href={`mailto:${profile.email}`}
               className="p-1 text-black hover:bg-neo-yellow hover:border border-black transition-all"
               title="Email"
             >
               <Mail size={14} />
-            </a>
-            <a
-              href="tel:+918010173681"
-              className="p-1 text-black hover:bg-neo-mint hover:border border-black transition-all"
-              title="Phone"
-            >
-              <Phone size={14} />
             </a>
           </div>
 
@@ -166,7 +155,7 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-1 border border-black hover:bg-black hover:text-neo-bg transition-colors"
+            className="xl:hidden p-1 border border-black hover:bg-black hover:text-neo-bg transition-colors"
           >
             {mobileOpen ? <X size={16} /> : <Menu size={16} />}
           </button>
@@ -175,8 +164,8 @@ export default function Header() {
 
       {/* Mobile Nav Menu */}
       {mobileOpen && (
-        <div className="md:hidden border-t-[2.5px] border-black bg-neo-bg text-xs">
-          <nav className="flex flex-col">
+        <div className="xl:hidden border-t-[2.5px] border-black bg-neo-bg text-xs">
+          <nav className="flex flex-col" aria-label="Sections">
             {navLinks.map((link) => (
               <a
                 key={link.label}
@@ -185,13 +174,12 @@ export default function Header() {
                 className="px-6 py-3 border-b border-black/10 hover:bg-black hover:text-neo-bg transition-colors font-bold uppercase tracking-wider flex justify-between items-center"
               >
                 <span>{link.label}</span>
-                <span className="text-[10px] text-black/40 group-hover:text-neo-bg/40">{link.shortcut}</span>
               </a>
             ))}
             <div className="flex items-center gap-4 px-6 py-4 bg-black/5">
               <span className="font-bold text-black/60">Socials:</span>
               <a
-                href="https://github.com/omgawande1523"
+                href={profile.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-1 text-black border border-black hover:bg-black hover:text-neo-bg transition-all"
@@ -199,7 +187,7 @@ export default function Header() {
                 <Github size={14} />
               </a>
               <a
-                href="https://linkedin.com/in/om-gawande-601081242"
+                href={profile.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-1 text-black border border-black hover:bg-black hover:text-neo-bg transition-all"
@@ -207,16 +195,10 @@ export default function Header() {
                 <Linkedin size={14} />
               </a>
               <a
-                href="mailto:gawandeom2005@gmail.com"
+                href={`mailto:${profile.email}`}
                 className="p-1 text-black border border-black hover:bg-black hover:text-neo-bg transition-all"
               >
                 <Mail size={14} />
-              </a>
-              <a
-                href="tel:+918010173681"
-                className="p-1 text-black border border-black hover:bg-black hover:text-neo-bg transition-all"
-              >
-                <Phone size={14} />
               </a>
             </div>
           </nav>

@@ -1,7 +1,11 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FileText, ShieldCheck, Download, Eye } from 'lucide-react';
+import { FileText, Download, Eye } from 'lucide-react';
+import SectionHeading from '../components/SectionHeading';
+import { profile } from '../data/profile';
+
+const RESUME_PDF = '/Om_Gawande_Resume.pdf';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -39,9 +43,7 @@ export default function ResumeViewer() {
     >
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
-        <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-silver">
-          <span>05 / RESUME_VIEWER.EXE</span>
-        </div>
+        <SectionHeading id="resume" />
 
         {/* Outer Doc Window */}
         <div
@@ -52,7 +54,7 @@ export default function ResumeViewer() {
           {/* Header */}
           <div className="os-window-header-blue">
             <div className="flex items-center gap-2 font-mono text-sm">
-              <FileText size={14} />
+              <FileText size={14} aria-hidden="true" />
               <span>resume_viewer.sys</span>
             </div>
             <div className="window-dots">
@@ -66,10 +68,8 @@ export default function ResumeViewer() {
           <div className="border-b-[2px] border-black bg-[#FFFDF9] px-4 py-2 flex items-center justify-between font-mono text-xs select-none">
             <div className="flex items-center gap-2 text-black/60 font-semibold">
               <span className="bg-black/10 px-2 py-0.5 rounded-sm">PAGE 1 / 1</span>
-              <span>100% Zoom</span>
-              <span className="hidden sm:inline">| Format: A4_Standard</span>
             </div>
-            <span className="text-[10px] text-silver font-bold uppercase hidden sm:inline">SHA256: VERIFIED_SIGNED</span>
+            <span className="text-[10px] text-silver font-bold uppercase hidden sm:inline">PDF</span>
           </div>
 
           {/* Doc Body */}
@@ -77,8 +77,10 @@ export default function ResumeViewer() {
             {/* Visual PDF Preview */}
             <div className="w-full md:w-1/2 border-[2.5px] border-black shadow-neo bg-white overflow-hidden relative flex items-center justify-center min-h-[500px]">
               <img
-                src="/Resume_Updated_preview.jpg"
-                alt="Om Gawande Resume Preview"
+                src="/Om_Gawande_Resume_preview.jpg"
+                alt={`First page of ${profile.name}'s resume`}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-auto max-h-[550px] object-contain select-none p-2"
               />
             </div>
@@ -87,30 +89,22 @@ export default function ResumeViewer() {
             <div className="w-full md:w-1/2 flex flex-col justify-between space-y-6">
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-2 border border-black/10 bg-neo-yellow/20 px-2.5 py-1 text-xs font-mono text-black font-semibold">
-                  <ShieldCheck size={12} className="text-black" />
-                  <span>Resume Updated.pdf</span>
+                  <FileText size={12} className="text-black" aria-hidden="true" />
+                  <span>Om_Gawande_Resume.pdf</span>
                 </div>
                 
                 <h3 className="font-display text-2xl md:text-3xl font-extrabold text-black uppercase">
-                  Verify Qualifications
+                  One-page resume
                 </h3>
                 
                 <p className="font-body text-sm text-black/70 leading-relaxed">
-                  Need a printable document / copy for HR databases, recruiters, or reference portfolios? Download my full, verified resume containing comprehensive details about my technical skill levels, project impact metrics, academic timelines, and leadership logs.
+                  A printable one-page summary of my education, internships, projects, skills and certifications.
                 </p>
 
                 <div className="border-y border-black/15 py-4 font-mono text-xs text-black/60 space-y-2">
                   <p className="flex justify-between">
-                    <span>File size:</span>
-                    <span className="font-bold text-black">78.2 KB</span>
-                  </p>
-                  <p className="flex justify-between">
-                    <span>Target position:</span>
-                    <span className="font-bold text-black">AI & Machine Learning Engineer</span>
-                  </p>
-                  <p className="flex justify-between">
-                    <span>Updates logs:</span>
-                    <span className="font-bold text-black">Aug 2026</span>
+                    <span>Role:</span>
+                    <span className="font-bold text-black">{profile.role}</span>
                   </p>
                 </div>
               </div>
@@ -118,22 +112,22 @@ export default function ResumeViewer() {
               {/* PDF Actions */}
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <a
-                  href="/Resume Updated.pdf"
-                  download="Resume Updated.pdf"
+                  href={RESUME_PDF}
+                  download="Om_Gawande_Resume.pdf"
                   className="flex-1 inline-flex items-center justify-center gap-2 font-mono text-xs bg-black text-neo-bg px-4 py-3 border-2 border-black hover:bg-neo-bg hover:text-black transition-all font-bold shadow-neo hover:shadow-none"
                   data-cursor="OPEN"
                 >
-                  <Download size={14} />
+                  <Download size={14} aria-hidden="true" />
                   DOWNLOAD RESUME
                 </a>
                 <a
-                  href="/Resume Updated.pdf"
+                  href={RESUME_PDF}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 inline-flex items-center justify-center gap-2 font-mono text-xs bg-neo-surface text-black px-4 py-3 border-2 border-black hover:bg-black hover:text-neo-bg transition-all font-bold"
                   data-cursor="OPEN"
                 >
-                  <Eye size={14} />
+                  <Eye size={14} aria-hidden="true" />
                   VIEW FULL PDF
                 </a>
               </div>
@@ -142,7 +136,7 @@ export default function ResumeViewer() {
 
           {/* Doc Status Footer */}
           <div className="border-t-[2.5px] border-black bg-black text-neo-bg px-4 py-2 font-mono text-[10px] text-right flex justify-between select-none">
-            <span>SIGNATURE: om.gawande_sys</span>
+            <span>{profile.name}</span>
             <span>SYSTEM_OUT: READY</span>
           </div>
         </div>

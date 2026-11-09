@@ -184,7 +184,7 @@ export default function CustomCursor() {
   useEffect(() => {
     if (particles.length === 0) return;
 
-    let animId = requestAnimationFrame(() => {
+    const animId = requestAnimationFrame(() => {
       setParticles((prev) =>
         prev
           .map((p) => {
