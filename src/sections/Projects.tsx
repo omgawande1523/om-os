@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useState, useSyncExternalStore } from 'react';
 import { ChevronRight, Code, Folder, ListFilter, Lock } from 'lucide-react';
 import ThreadGridBackground from '../components/ThreadGridBackground';
 import Picture from '../components/Picture';
@@ -18,30 +18,38 @@ type Filter = 'All' | ProjectCategory;
 
 const caseStudySlugs = new Set([...featuredProjects, ...archiveProjects].filter((p) => p.caseStudy).map((p) => p.slug));
 
+const hashListeners = new Set<() => void>();
+function subscribeHash(cb: () => void) {
+  hashListeners.add(cb);
+  window.addEventListener('hashchange', cb);
+  return () => {
+    hashListeners.delete(cb);
+    window.removeEventListener('hashchange', cb);
+  };
+}
+/** replaceState does not fire hashchange, so tell subscribers ourselves. */
+function notifyHash() {
+  hashListeners.forEach((cb) => cb());
+}
+
 function slugFromHash(): string | null {
-  if (typeof window === 'undefined') return null;
   const m = window.location.hash.match(/^#project\/([a-z0-9-]+)$/);
   return m && caseStudySlugs.has(m[1]) ? m[1] : null;
 }
 
 export default function Projects() {
   const [activeCategory, setActiveCategory] = useState<Filter>('All');
-  const [openSlug, setOpenSlug] = useState<string | null>(slugFromHash);
-
-  // Shareable deep links: #project/<slug>. Unknown slugs are ignored.
-  useEffect(() => {
-    const onHash = () => setOpenSlug(slugFromHash());
-    window.addEventListener('hashchange', onHash);
-    return () => window.removeEventListener('hashchange', onHash);
-  }, []);
+  // Shareable deep links: #project/<slug>. Unknown slugs are ignored. Null while hydrating.
+  const openSlug = useSyncExternalStore(subscribeHash, slugFromHash, () => null);
 
   const openCaseStudy = (slug: string) => {
     window.location.hash = `project/${slug}`;
   };
 
   const closeCaseStudy = () => {
-    setOpenSlug(null);
-    if (slugFromHash()) window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    if (!slugFromHash()) return;
+    window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    notifyHash();
   };
 
   const matches = (p: Project) => activeCategory === 'All' || p.categories.includes(activeCategory);

@@ -1,10 +1,15 @@
-import { createRoot } from 'react-dom/client'
+import { StrictMode } from 'react'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import './index.css'
-import Home from './pages/Home'
-import { ThemeProvider } from './components/ThemeProvider'
+import App from './App'
 
-createRoot(document.getElementById('root')!).render(
-  <ThemeProvider>
-    <Home />
-  </ThemeProvider>,
+const root = document.getElementById('root')!
+const app = (
+  <StrictMode>
+    <App />
+  </StrictMode>
 )
+
+// dist/index.html is prerendered at build time (scripts/prerender.mjs); hydrate it.
+if (root.hasChildNodes()) hydrateRoot(root, app)
+else createRoot(root).render(app)

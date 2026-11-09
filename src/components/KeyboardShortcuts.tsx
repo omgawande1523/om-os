@@ -64,37 +64,41 @@ export default function KeyboardShortcuts() {
       aria-labelledby="shortcuts-title"
       className="os-window p-0 w-[calc(100%-2rem)] max-w-sm bg-neo-surface border-[2.5px] border-black"
     >
-      <div className="os-window-header-accent">
-        <h2 id="shortcuts-title" className="font-mono text-sm text-black">
-          Keyboard shortcuts
-        </h2>
-        <button
-          type="button"
-          onClick={() => setOpen(false)}
-          aria-label="Close keyboard shortcuts"
-          className="p-1 border border-black bg-neo-surface hover:bg-black hover:text-neo-bg"
-        >
-          <X size={12} aria-hidden="true" />
-        </button>
-      </div>
-      <dl className="p-5 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 font-mono text-xs text-black">
-        {sections.map((s) => (
-          <div key={s.id} className="contents">
-            <dt>
-              <kbd className="border border-black px-1.5 bg-neo-bg">{Number(s.number)}</kbd>
-            </dt>
-            <dd>{s.title}</dd>
+      {open && (
+        <>
+          <div className="os-window-header-accent">
+            <h2 id="shortcuts-title" className="font-mono text-sm text-black">
+              Keyboard shortcuts
+            </h2>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Close keyboard shortcuts"
+              className="p-1 border border-black bg-neo-surface hover:bg-black hover:text-neo-bg"
+            >
+              <X size={12} aria-hidden="true" />
+            </button>
           </div>
-        ))}
-        <dt>
-          <kbd className="border border-black px-1.5 bg-neo-bg">?</kbd>
-        </dt>
-        <dd>Show / hide this help</dd>
-        <dt>
-          <kbd className="border border-black px-1.5 bg-neo-bg">Esc</kbd>
-        </dt>
-        <dd>Close dialogs</dd>
-      </dl>
+          <dl className="p-5 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 font-mono text-xs text-black">
+            {sections.map((s) => (
+              <div key={s.id} className="contents">
+                <dt>
+                  <kbd className="border border-black px-1.5 bg-neo-bg">{Number(s.number)}</kbd>
+                </dt>
+                <dd>{s.title}</dd>
+              </div>
+            ))}
+            <dt>
+              <kbd className="border border-black px-1.5 bg-neo-bg">?</kbd>
+            </dt>
+            <dd>Show / hide this help</dd>
+            <dt>
+              <kbd className="border border-black px-1.5 bg-neo-bg">Esc</kbd>
+            </dt>
+            <dd>Close dialogs</dd>
+          </dl>
+        </>
+      )}
     </dialog>
   );
 }

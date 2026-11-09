@@ -1,6 +1,5 @@
 import Header from '../components/Header';
 import CustomCursor from '../components/CustomCursor';
-import BootOverlay from '../components/BootOverlay';
 import KeyboardShortcuts from '../components/KeyboardShortcuts';
 import Hero from '../sections/Hero';
 import About from '../sections/About';
@@ -20,7 +19,6 @@ const Footer = lazy(() => import('../sections/Footer'));
 export default function Home() {
   return (
     <div className="min-h-screen bg-neo-bg">
-      <BootOverlay />
       <CustomCursor />
       <KeyboardShortcuts />
       <Header />

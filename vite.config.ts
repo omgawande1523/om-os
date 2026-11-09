@@ -26,6 +26,7 @@ export default defineConfig({
   ],
   define: {
     __RESUME_META__: JSON.stringify(resumeMeta()),
+    __BUILD_YEAR__: JSON.stringify(new Date().getFullYear()),
   },
   server: {
     port: 3000,

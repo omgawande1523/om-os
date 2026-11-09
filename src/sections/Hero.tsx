@@ -1,3 +1,4 @@
+import { useSyncExternalStore } from 'react';
 import { profile } from '../data/profile';
 import Picture from '../components/Picture';
 import { education, experience } from '../data/experience';
@@ -5,7 +6,13 @@ import { leadership } from '../data/leadership';
 import { projects, featuredProjects } from '../data/projects';
 import { Terminal, ArrowDown, MapPin, GraduationCap, Command, Cpu, Briefcase, Award } from 'lucide-react';
 
+const noopSubscribe = () => () => {};
+const getToday = () => new Date().toDateString();
+
 export default function Hero() {
+  // Visitor's date, client-only (the prerendered HTML shows a dash).
+  const today = useSyncExternalStore(noopSubscribe, getToday, () => null);
+
   const metrics = [
     { label: 'CGPA', value: education.cgpa.split(' ')[0], detail: `${education.degree.replace('B.Tech in ', 'B.Tech ')}, class of ${education.classOf}`, color: 'bg-neo-yellow' },
     { label: 'Leadership', value: 'President', detail: leadership[0].org, color: 'bg-neo-mint' },
@@ -56,7 +63,7 @@ export default function Hero() {
 
             <div className="p-6 flex-1 flex flex-col justify-between font-mono !bg-[#111111] !text-[#FAF6EE] space-y-6">
               <div className="space-y-4">
-                <div className="text-neo-mint text-xs">Last login: {new Date().toDateString()} on ttys001</div>
+                <div className="text-neo-mint text-xs">Last login: {today ?? '—'} on ttys001</div>
                 <div className="space-y-1">
                   <p className="text-neo-blue"><span className="text-neo-pink">~/omgawande</span> $ cat identity.json</p>
                   <pre className="text-xs md:text-sm text-neo-mint leading-relaxed overflow-x-auto !bg-black/50 p-3 border border-white/10 rounded-sm">

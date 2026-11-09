@@ -316,7 +316,7 @@ export default function Footer() {
             <a href={profile.links.orcid} target="_blank" rel="noopener noreferrer" className="underline hover:text-black">
               ORCID {profile.links.orcid.replace('https://orcid.org/', '')}
             </a>
-            <span>© {new Date().getFullYear()} {profile.name}</span>
+            <span>© {__BUILD_YEAR__} {profile.name}</span>
           </p>
         </div>
       </div>
