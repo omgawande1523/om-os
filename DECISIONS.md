@@ -42,3 +42,17 @@ Choices made while implementing `REDESIGN_PLAN.md` (approved by Om, 2026-11-09),
 | C-12 | View Transitions wrap opening (`flushSync` + `history.pushState`) and closing (`dialog.close()`) a case study, only when `document.startViewTransition` exists and motion is allowed; 160 ms cross-fade. Escape closes without a transition. | Feature-checked, skippable |
 | C-13 | Name scramble written for this site (~40 lines): once per session (sessionStorage), 700 ms, starts after the boot overlay is gone; skipped under reduced motion or blocked storage. The `<h1>` keeps the real name in a screen-reader span and in the prerendered HTML. React Bits' DecryptedText / ScrambledText were rejected (Framer Motion / GSAP). | Brief C1, C5 |
 | C-14 | React Bits SpotlightCard / TiltedCard not used (soft glows clash with flat neo-brutalism). | Quality over quantity |
+
+## Part D: verification fixes
+
+| # | Decision | Why |
+|---|---|---|
+| D-1 | First load measured 352 KB (over budget): Chrome fetches `loading="lazy"` images that sit within ~1,250 px of the viewport, and the AVIFs were heavier than their WebPs. `optimize-images` now caps every AVIF at its WebP's size → MRSAC 60 → 43 KB, posters 29/36 → 18/24 KB. First load 313 KB. | Budget ≤ 350 KB |
+| D-2 | `⌘K` header button: visible "⌘K" is now the start of its accessible name (+ screen-reader text "open command palette (Ctrl+K or Command+K)"). | axe `label-content-name-mismatch` |
+| D-3 | Removed `v1.0.4` from the header logo (`OM_OS`). | It was the only number on the page with no source |
+
+## Left out (and why)
+
+- Demo loops for krishna-river-flood (map watermark + "live" wording vs synthetic data), MathGPT (sample numbers), clone-detector and waste-sorting-simulation (archive only, no card to play on): Om's decision Q2.
+- React Bits components: DecryptedText / ScrambledText need Framer Motion / GSAP; SpotlightCard / TiltedCard don't fit flat neo-brutalism. Wrote a small scramble instead.
+- Magic UI / Aceternity / magic-portfolio code: Framer Motion or CC BY-NC; ideas only.

@@ -48,8 +48,9 @@ async function main() {
     let webp;
     // Shrink width by 10 % steps if quality alone cannot meet the budget.
     while (width >= 200) {
-      avif = await encodeWithinBudget(input, 'avif', width, cfg.budget);
       webp = await encodeWithinBudget(input, 'webp', width, cfg.budget);
+      // AVIF is listed first in <picture>, so it must never be heavier than the WebP fallback.
+      avif = webp ? await encodeWithinBudget(input, 'avif', width, Math.min(cfg.budget, webp.buf.length)) : null;
       if (avif && webp) break;
       width = Math.round(width * 0.9);
     }

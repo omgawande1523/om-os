@@ -1,6 +1,6 @@
 # OM_OS v3: redesign plan
 
-Status: **draft for Om's approval.** Nothing in Parts B–D is implemented yet. Part A (bug fixes) is done and committed locally (`01391dd`).
+Status: **approved by Om (2026-11-09) and implemented** (Parts B–D). Results: `docs/redesign/REPORT.md`; choices: `DECISIONS.md`.
 
 Goal: the site reads in 60 seconds, says each fact once, and has one or two real interactions instead of decoration. All v2 guarantees stay: sourced content in `src/data/`, prerendered HTML, ≤ 350 KB first load, Lighthouse mobile ≥ 95 ×4, axe clean, no horizontal scroll at 360 px.
 

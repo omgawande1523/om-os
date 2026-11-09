@@ -55,7 +55,7 @@ export default function Header() {
             className="flex items-center gap-2 font-bold text-sm bg-black text-neo-bg px-2 py-0.5 border border-black hover:bg-neo-bg hover:text-neo-text transition-colors"
           >
             <Terminal size={12} aria-hidden="true" />
-            <span>OM_OS v1.0.4</span>
+            <span>OM_OS</span>
           </a>
         </div>
 
@@ -112,11 +112,10 @@ export default function Header() {
             onClick={() => window.dispatchEvent(new Event(OPEN_PALETTE_EVENT))}
             onPointerEnter={preloadPalette}
             onFocus={preloadPalette}
-            aria-label="Open command palette (Ctrl+K or Command+K)"
             aria-keyshortcuts="Control+K Meta+K"
             className="nb-press inline-flex items-center gap-1 font-mono text-[11px] font-bold border-[2px] border-black px-2 py-1 bg-neo-surface text-black shadow-nb-sm hover:bg-neo-yellow"
           >
-            <span aria-hidden="true">⌘K</span>
+            ⌘K<span className="sr-only"> open command palette (Ctrl+K or Command+K)</span>
           </button>
 
           <a
