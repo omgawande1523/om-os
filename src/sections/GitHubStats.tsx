@@ -1,93 +1,75 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, type ReactNode } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Github, ChevronRight, Activity, Play, BarChart2, Calendar, GitCommit, GitBranch } from 'lucide-react';
-gsap.registerPlugin(ScrollTrigger);
-import { fetchGitHubData } from '../lib/github';
+import { Github, ChevronRight, Play, BarChart2, Calendar, GitCommit, GitBranch } from 'lucide-react';
 import SectionHeading from '../components/SectionHeading';
-import type { GitHubStatsData } from '../lib/github';
+import { github, languageMethodLabel, formatDate, display } from '../lib/github';
+import { projects } from '../data/projects';
 
-// Mock contributions grid (24 weeks x 7 days)
-const contributionWeeks = 28;
-const contributionGrid = Array.from({ length: 7 }).map((_, dayIdx) =>
-  Array.from({ length: contributionWeeks }).map((_, weekIdx) => {
-    // Generate organic patterns of activity (0 = none, 1-3 = varying density)
-    const seed = Math.sin(weekIdx * 0.4) + Math.cos(dayIdx * 0.6) + Math.random() * 0.8;
-    if (seed < 0.2) return 0;
-    if (seed < 0.9) return 1;
-    if (seed < 1.4) return 2;
-    return 3;
-  })
-);
+gsap.registerPlugin(ScrollTrigger);
+
+const languageColors = ['bg-neo-blue', 'bg-neo-mint', 'bg-neo-pink', 'bg-neo-yellow', 'bg-neo-orange', 'bg-black/40', 'bg-black/15'];
+
+const snapshotDate = formatDate(github.generatedAt);
+
+// Curated one-liners beat empty GitHub descriptions.
+const descriptionFor = (repoName: string, fallback: string | null) => {
+  const project = projects.find((p) => p.repoUrls.some((u) => u.endsWith(`/${repoName}`)));
+  return project?.oneLiner ?? fallback ?? 'No description on GitHub.';
+};
+
+const recentRepos = github.repos
+  .filter((r) => r.name !== github.user)
+  .slice(0, 5)
+  .map((r) => ({ name: r.name, lang: r.language ?? '—', desc: descriptionFor(r.name, r.description) }));
+
+// Contribution calendar: group days into weeks (columns), Sunday first.
+const weeks: ({ date: string; count: number; level: number } | null)[][] = [];
+if (github.contributions) {
+  const days = github.contributions.days;
+  const firstDow = days.length ? new Date(`${days[0].date}T00:00:00Z`).getUTCDay() : 0;
+  let week: ({ date: string; count: number; level: number } | null)[] = Array.from({ length: firstDow }, () => null);
+  for (const d of days) {
+    week.push(d);
+    if (week.length === 7) {
+      weeks.push(week);
+      week = [];
+    }
+  }
+  if (week.length) weeks.push([...week, ...Array.from({ length: 7 - week.length }, () => null)]);
+}
+
+const levelClass = [
+  'bg-black/5 dark:bg-white/5',
+  'bg-emerald-200 dark:bg-emerald-900/50',
+  'bg-emerald-400 dark:bg-emerald-700',
+  'bg-emerald-600 dark:bg-emerald-500',
+  'bg-emerald-800 dark:bg-emerald-300',
+];
 
 interface CommandLog {
   input: string;
-  output: React.ReactNode;
+  output: ReactNode;
 }
+
+const stats = [
+  { label: 'Public repos', value: display(github.publicRepos), className: 'bg-neo-mint/20' },
+  { label: 'Contributions (last year)', value: display(github.contributions?.lastYear), className: 'bg-neo-blue/20' },
+  { label: 'Stars', value: display(github.totalStars), className: 'bg-neo-pink/20' },
+  { label: 'Followers', value: display(github.followers), className: 'bg-neo-yellow/20' },
+];
 
 export default function GitHubStats() {
   const sectionRef = useRef<HTMLElement>(null);
-  const headingRef = useRef<HTMLDivElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
-
   const [inputVal, setInputVal] = useState('');
-  const [stats, setStats] = useState<GitHubStatsData | null>(null);
-
-  useEffect(() => {
-    let isMounted = true;
-    fetchGitHubData().then((data) => {
-      if (isMounted) {
-        setStats(data);
-      }
-    });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  const currentStats = stats || {
-    reposCount: 15,
-    starsCount: 2,
-    followers: 5,
-    contributions: 46,
-    languages: [
-      { name: 'Python', percentage: 60, color: 'bg-neo-blue' },
-      { name: 'TypeScript', percentage: 25, color: 'bg-neo-mint' },
-      { name: 'JavaScript', percentage: 10, color: 'bg-neo-pink' },
-      { name: 'Other', percentage: 5, color: 'bg-neo-yellow' }
-    ],
-    repos: []
-  };
-
-  const topRepos = (currentStats.repos || []).slice(0, 4).map(r => ({
-    name: r.name,
-    desc: r.description || 'No description on GitHub.',
-    lang: r.language || 'Python'
-  }));
-
-  const githubData = {
-    username: 'omgawande1523',
-    repos: currentStats.reposCount,
-    contributions: currentStats.contributions,
-    followers: currentStats.followers,
-    stars: currentStats.starsCount,
-    languages: currentStats.languages,
-    topRepos: topRepos.length > 0 ? topRepos : [
-      { name: 'Automatic-waste-segregation-with-computer-vision', desc: 'YOLO waste classifier source script', lang: 'JavaScript' },
-      { name: 'AadhaarX', desc: 'AI-Powered Secure Digital Identity & Verification Ecosystem', lang: 'TypeScript' },
-      { name: 'AegisEdge', desc: 'Secure Offline Facial Recognition and Liveness Detection system', lang: 'TypeScript' },
-      { name: 'routeiq-enterprise', desc: 'Enterprise smart-city road health intelligence platform RouteIQ', lang: 'TypeScript' },
-    ]
-  };
-
   const [logs, setLogs] = useState<CommandLog[]>([
     {
-      input: 'ssh -T git@github.com',
+      input: 'cat github.snapshot.json | head',
       output: (
-        <div className="space-y-1">
-          <p className="text-neo-mint">Hi omgawande1523! You have successfully authenticated, but GitHub does not provide shell access.</p>
-          <p className="text-silver">System: Loading local offline stats registry...</p>
-        </div>
+        <p className="text-[#c9c3b8]">
+          Snapshot of github.com/{github.user} taken {snapshotDate}. Type &apos;help&apos; for commands.
+        </p>
       ),
     },
   ]);
@@ -102,82 +84,64 @@ export default function GitHubStats() {
           opacity: 1,
           duration: 0.8,
           ease: 'power3.out',
-          scrollTrigger: {
-            trigger: windowRef.current,
-            start: 'top 85%',
-            toggleActions: 'play none none none',
-          },
+          scrollTrigger: { trigger: windowRef.current, start: 'top 85%', toggleActions: 'play none none none' },
         }
       );
     }, sectionRef);
-
     return () => ctx.revert();
   }, []);
 
-  const handleRunCommand = (cmd: string) => {
-    const cleanCmd = cmd.trim().toLowerCase();
-    let resNode: React.ReactNode;
-
-    switch (cleanCmd) {
+  const runCommand = (cmd: string) => {
+    const clean = cmd.trim().toLowerCase();
+    let out: ReactNode;
+    switch (clean) {
       case 'help':
-        resNode = (
-          <div className="space-y-1.5 text-xs !text-[#FAF6EE]/80">
+        out = (
+          <div className="space-y-1.5 text-xs">
             <p className="text-neo-yellow font-bold">AVAILABLE COMMANDS:</p>
-            <p><span className="text-neo-blue font-bold">stats</span> - Output core developer stats summary</p>
-            <p><span className="text-neo-blue font-bold">languages</span> - Output primary coding languages check</p>
-            <p><span className="text-neo-blue font-bold">repos</span> - Output top GitHub project repositories</p>
-            <p><span className="text-neo-blue font-bold">clear</span> - Flush diagnostic terminal logs</p>
+            <p><span className="text-neo-blue font-bold">stats</span> - profile numbers from the snapshot</p>
+            <p><span className="text-neo-blue font-bold">languages</span> - language split</p>
+            <p><span className="text-neo-blue font-bold">repos</span> - most recently pushed public repos</p>
+            <p><span className="text-neo-blue font-bold">clear</span> - clear the terminal</p>
           </div>
         );
         break;
       case 'stats':
-        resNode = (
-          <div className="space-y-1 text-xs border border-white/10 p-3 bg-white/5 font-mono !text-[#FAF6EE]/90">
-            <p className="text-neo-mint font-bold border-b border-white/10 pb-1 mb-1">GITHUB DEV METRICS:</p>
-            <p>USER: {githubData.username}</p>
-            <p>TOTAL_REPOSITORIES: {githubData.repos}</p>
-            <p>CONTRIBUTIONS_2026: {githubData.contributions}</p>
-            <p>TOTAL_STARS: {githubData.stars}</p>
-            <p>FOLLOWERS: {githubData.followers}</p>
+        out = (
+          <div className="space-y-1 text-xs border border-white/10 p-3 bg-white/5">
+            <p className="text-neo-mint font-bold border-b border-white/10 pb-1 mb-1">SNAPSHOT {snapshotDate}</p>
+            <p>USER: {github.user}</p>
+            <p>PUBLIC_REPOS: {display(github.publicRepos)}</p>
+            <p>CONTRIBUTIONS_LAST_YEAR: {display(github.contributions?.lastYear)}</p>
+            <p>STARS: {display(github.totalStars)}</p>
+            <p>FOLLOWERS: {display(github.followers)}</p>
           </div>
         );
         break;
       case 'languages':
-        resNode = (
-          <div className="space-y-3 text-xs border border-white/10 p-3 bg-white/5 !text-[#FAF6EE]/90">
-            <p className="text-neo-pink font-bold">PRIMARY LANGUAGE ALLOCATIONS:</p>
-            <div className="flex h-3 border border-white/20 p-0.5 w-full bg-black/40">
-              {githubData.languages.map((lang) => (
-                <div
-                  key={lang.name}
-                  style={{ width: `${lang.percentage}%` }}
-                  className={`h-full ${lang.color}`}
-                />
-              ))}
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              {githubData.languages.map((lang) => (
-                <div key={lang.name} className="flex items-center gap-1.5">
-                  <span className={`w-2.5 h-2.5 border border-black inline-block ${lang.color}`} />
-                  <span className="!text-[#FAF6EE]/80">{lang.name} ({lang.percentage}%)</span>
-                </div>
-              ))}
-            </div>
+        out = (
+          <div className="space-y-2 text-xs border border-white/10 p-3 bg-white/5">
+            <p className="text-neo-pink font-bold">LANGUAGES ({languageMethodLabel[github.languages.method]}):</p>
+            {github.languages.items.map((l) => (
+              <p key={l.name}>
+                {l.name.padEnd(18, ' ')} {l.percent}%
+              </p>
+            ))}
           </div>
         );
         break;
       case 'repos':
-        resNode = (
-          <div className="space-y-2 text-xs !text-[#FAF6EE]/90">
-            <p className="text-neo-blue font-bold">RECENT ACTIVE REPOSITORIES:</p>
-            <div className="space-y-2">
-              {githubData.topRepos.map((repo, idx) => (
-                <div key={idx} className="border-l-2 border-neo-mint pl-3 py-0.5 bg-white/5">
-                  <p className="font-bold text-neo-mint">{repo.name} <span className="text-[10px] text-white/40">({repo.lang})</span></p>
-                  <p className="text-white/60 text-[11px]">{repo.desc}</p>
-                </div>
-              ))}
-            </div>
+        out = (
+          <div className="space-y-2 text-xs">
+            <p className="text-neo-blue font-bold">RECENTLY PUSHED PUBLIC REPOS:</p>
+            {recentRepos.map((repo) => (
+              <div key={repo.name} className="border-l-2 border-neo-mint pl-3 py-0.5 bg-white/5">
+                <p className="font-bold text-neo-mint break-all">
+                  {repo.name} <span className="text-[10px] text-white/60">({repo.lang})</span>
+                </p>
+                <p className="text-white/70 text-[11px]">{repo.desc}</p>
+              </div>
+            ))}
           </div>
         );
         break;
@@ -186,21 +150,10 @@ export default function GitHubStats() {
         setInputVal('');
         return;
       default:
-        resNode = (
-          <p className="text-red-400">
-            command not found: '{cmd}'. Type 'help' to review available systems commands.
-          </p>
-        );
+        out = <p className="text-red-300">command not found: {cmd}. Type &apos;help&apos;.</p>;
     }
-
-    setLogs((prev) => [...prev, { input: cmd, output: resNode }]);
+    setLogs((prev) => [...prev, { input: cmd, output: out }]);
     setInputVal('');
-  };
-
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!inputVal.trim()) return;
-    handleRunCommand(inputVal);
   };
 
   return (
@@ -210,194 +163,142 @@ export default function GitHubStats() {
       className="w-full py-24 px-4 md:px-8 lg:px-16 bg-neo-bg text-black relative transition-colors duration-200"
     >
       <div className="max-w-7xl mx-auto space-y-12">
-        {/* Section Header */}
-        <div ref={headingRef}>
-          <SectionHeading id="github" />
-        </div>
+        <SectionHeading id="github" />
 
-        {/* Outer Command Center Window */}
-        <div
-          ref={windowRef}
-          className="os-window flex flex-col bg-neo-surface"
-          style={{ opacity: 0 }}
-        >
-          {/* Header */}
+        <div ref={windowRef} className="os-window flex flex-col bg-neo-surface" style={{ opacity: 0 }}>
           <div className="os-window-header-dark">
-            <div className="flex items-center gap-2 font-mono text-sm text-neo-bg">
-              <Github size={14} className="text-neo-bg" />
-              <span>git_command_center.exe --session=active</span>
+            <div className="flex items-center gap-2 font-mono text-sm text-neo-bg min-w-0">
+              <Github size={14} className="text-neo-bg shrink-0" aria-hidden="true" />
+              <span className="truncate">github.snapshot.json</span>
             </div>
-            <div className="window-dots">
-              <span className="window-dot bg-red-400"></span>
-              <span className="window-dot bg-yellow-400"></span>
-              <span className="window-dot bg-emerald-400"></span>
-            </div>
+            <span className="font-mono text-[10px] text-neo-bg">Snapshot: {snapshotDate}</span>
           </div>
 
-          {/* Sub-header info */}
-          <div className="border-b-[2px] border-black bg-neo-surface px-4 py-2 flex items-center justify-between font-mono text-[10px] text-black/60 font-semibold select-none border-t-0">
-            <div className="flex gap-4">
-              <span>Command_Center</span>
-              <span>Visual_Analytics</span>
-              <span>Local_Link</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-emerald-600 font-bold">
-              <Activity size={10} className="animate-pulse" />
-              <span>CONNECTED: GITHUB_API_SYNC</span>
-            </div>
-          </div>
+          <div className="grid grid-cols-1 xl:grid-cols-12 bg-neo-surface">
+            {/* Left: stats */}
+            <div className="xl:col-span-7 p-4 sm:p-6 md:p-8 space-y-6 xl:border-r-[2.5px] border-black min-w-0">
+              <dl className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {stats.map((s) => (
+                  <div key={s.label} className={`border-[2px] border-black p-3 shadow-neo-sm ${s.className}`}>
+                    <dd className="font-mono text-2xl font-extrabold text-black">{s.value}</dd>
+                    <dt className="font-mono text-[9px] font-bold text-black/70 uppercase">{s.label}</dt>
+                  </div>
+                ))}
+              </dl>
 
-          {/* Command Center Layout Split */}
-          <div className="grid grid-cols-1 xl:grid-cols-12 border-t-0 bg-neo-surface">
-            
-            {/* Left Column: Visual Analytics Panel (7 cols) */}
-            <div className="xl:col-span-7 p-6 md:p-8 space-y-6 xl:border-r-[2.5px] border-black bg-neo-surface flex flex-col justify-between">
-              
-              {/* Top Stats Cards row */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div className="border-[2px] border-black p-3 bg-neo-mint/20 shadow-neo-sm">
-                  <p className="font-mono text-2xl font-extrabold text-black">{githubData.repos}</p>
-                  <p className="font-mono text-[9px] font-bold text-black/60 uppercase">Repositories</p>
-                </div>
-                <div className="border-[2px] border-black p-3 bg-neo-blue/20 shadow-neo-sm">
-                  <p className="font-mono text-2xl font-extrabold text-black">{githubData.contributions}</p>
-                  <p className="font-mono text-[9px] font-bold text-black/60 uppercase">Contributions</p>
-                </div>
-                <div className="border-[2px] border-black p-3 bg-neo-pink/20 shadow-neo-sm">
-                  <p className="font-mono text-2xl font-extrabold text-black">{githubData.stars}</p>
-                  <p className="font-mono text-[9px] font-bold text-black/60 uppercase">Stars Earned</p>
-                </div>
-                <div className="border-[2px] border-black p-3 bg-neo-yellow/20 shadow-neo-sm">
-                  <p className="font-mono text-2xl font-extrabold text-black">{githubData.followers}</p>
-                  <p className="font-mono text-[9px] font-bold text-black/60 uppercase">Followers</p>
-                </div>
-              </div>
-
-              {/* Language Distribution Block */}
-              <div className="border-[2.5px] border-black bg-neo-surface p-4 shadow-neo-sm space-y-3">
-                <h4 className="font-mono text-xs font-bold text-black uppercase flex items-center gap-1.5 select-none">
-                  <BarChart2 size={13} className="text-neo-pink" />
-                  Primary Language Allocations
-                </h4>
-                {/* Visual stacked bar chart */}
-                <div className="flex h-4 border-[2px] border-black p-0.5 bg-neo-bg select-none">
-                  {githubData.languages.map((lang) => (
-                    <div
-                      key={lang.name}
-                      style={{ width: `${lang.percentage}%` }}
-                      className={`h-full ${lang.color} border-r last:border-r-0 border-black`}
-                      title={`${lang.name}: ${lang.percentage}%`}
-                    />
-                  ))}
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
-                  {githubData.languages.map((lang) => (
-                    <div key={lang.name} className="flex items-center gap-1.5">
-                      <span className={`w-2.5 h-2.5 border border-black inline-block ${lang.color}`} />
-                      <span className="font-semibold text-black/80">{lang.name} ({lang.percentage}%)</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Contribution Grid Graph */}
-              <div className="border-[2.5px] border-black bg-neo-surface p-4 shadow-neo-sm space-y-3">
-                <h4 className="font-mono text-xs font-bold text-black uppercase flex items-center gap-1.5 select-none">
-                  <Calendar size={13} className="text-neo-blue" />
-                  GitHub_Contributions_Calendar.cfg
-                </h4>
-                {/* Contribution cells */}
-                <div className="overflow-x-auto select-none pt-1 scrollbar-thin">
-                  <div className="flex flex-col gap-[3px] min-w-[340px]">
-                    {contributionGrid.map((row, rIdx) => (
-                      <div key={rIdx} className="flex gap-[3px]">
-                        {row.map((cell, cIdx) => {
-                          const bgColors = [
-                            'bg-black/5 dark:bg-white/5', // 0
-                            'bg-emerald-200 dark:bg-emerald-900/50', // 1
-                            'bg-emerald-400 dark:bg-emerald-700', // 2
-                            'bg-emerald-600 dark:bg-emerald-500', // 3
-                          ];
-                          return (
-                            <div
-                              key={cIdx}
-                              className={`w-2.5 h-2.5 border-[0.5px] border-black/10 shrink-0 ${bgColors[cell]}`}
-                            />
-                          );
-                        })}
-                      </div>
+              {github.languages.items.length > 0 && (
+                <div className="border-[2.5px] border-black bg-neo-surface p-4 shadow-neo-sm space-y-3">
+                  <h3 className="font-mono text-xs font-bold text-black uppercase flex items-center gap-1.5">
+                    <BarChart2 size={13} className="text-neo-pink" aria-hidden="true" />
+                    Languages
+                  </h3>
+                  <div className="flex h-4 border-[2px] border-black p-0.5 bg-neo-bg" aria-hidden="true">
+                    {github.languages.items.map((lang, i) => (
+                      <div
+                        key={lang.name}
+                        style={{ width: `${lang.percent}%` }}
+                        className={`h-full ${languageColors[i % languageColors.length]} border-r last:border-r-0 border-black`}
+                      />
                     ))}
                   </div>
+                  <ul className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs font-mono">
+                    {github.languages.items.map((lang, i) => (
+                      <li key={lang.name} className="flex items-center gap-1.5">
+                        <span className={`w-2.5 h-2.5 border border-black inline-block shrink-0 ${languageColors[i % languageColors.length]}`} />
+                        <span className="font-semibold text-black/80">
+                          {lang.name} ({lang.percent}%)
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="font-mono text-[10px] text-black/70">Method: {languageMethodLabel[github.languages.method]}.</p>
                 </div>
-                <div className="flex items-center justify-between text-[9px] font-mono text-silver pt-1">
-                  <span>Less active</span>
-                  <div className="flex items-center gap-1">
-                    <span className="w-2.5 h-2.5 border border-black/10 bg-black/5 dark:bg-white/5" />
-                    <span className="w-2.5 h-2.5 border border-black/10 bg-emerald-200 dark:bg-emerald-900/50" />
-                    <span className="w-2.5 h-2.5 border border-black/10 bg-emerald-400 dark:bg-emerald-700" />
-                    <span className="w-2.5 h-2.5 border border-black/10 bg-emerald-600 dark:bg-emerald-500" />
-                  </div>
-                  <span>More active</span>
-                </div>
-              </div>
+              )}
 
-              {/* Recent Open Source Work Activity */}
-              <div className="border-[2.5px] border-black bg-neo-surface p-4 shadow-neo-sm space-y-3">
-                <h4 className="font-mono text-xs font-bold text-black uppercase flex items-center gap-1.5 select-none">
-                  <GitBranch size={13} className="text-neo-yellow" />
-                  Recent Open Source Activity
-                </h4>
-                <div className="space-y-2 text-xs font-mono">
-                  <div className="flex items-start gap-2 border-b border-black/5 pb-2">
-                    <GitCommit size={14} className="text-neo-pink shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-bold text-black">feat: optimized liveness detection inference loop</p>
-                      <p className="text-[9px] text-silver font-semibold mt-0.5">omgawande1523/AegisEdge · 2 days ago</p>
+              {github.contributions && (
+                <div className="border-[2.5px] border-black bg-neo-surface p-4 shadow-neo-sm space-y-3">
+                  <h3 className="font-mono text-xs font-bold text-black uppercase flex items-center gap-1.5">
+                    <Calendar size={13} className="text-neo-blue" aria-hidden="true" />
+                    {github.contributions.lastYear} contributions in the last year
+                  </h3>
+                  <div className="overflow-x-auto pt-1" role="img" aria-label={`Contribution calendar: ${github.contributions.lastYear} contributions in the year to ${snapshotDate}`}>
+                    <div className="flex gap-[3px] w-max">
+                      {weeks.map((week, wi) => (
+                        <div key={wi} className="flex flex-col gap-[3px]">
+                          {week.map((day, di) =>
+                            day ? (
+                              <div
+                                key={day.date}
+                                title={`${day.date}: ${day.count}`}
+                                className={`w-2.5 h-2.5 border-[0.5px] border-black/10 ${levelClass[Math.min(day.level, 4)]}`}
+                              />
+                            ) : (
+                              <div key={`empty-${di}`} className="w-2.5 h-2.5" />
+                            )
+                          )}
+                        </div>
+                      ))}
                     </div>
                   </div>
-                  <div className="flex items-start gap-2">
-                    <GitCommit size={14} className="text-neo-pink shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-bold text-black">refactor: optimized GIS map snap snappers logic for road segments mapping</p>
-                      <p className="text-[9px] text-silver font-semibold mt-0.5">omgawande1523/routeiq-enterprise · 5 days ago</p>
-                    </div>
-                  </div>
+                  <p className="font-mono text-[10px] text-black/70">Public contribution calendar, from github-contributions-api.jogruber.de.</p>
                 </div>
-              </div>
+              )}
+
+              {github.recentPushes.length > 0 && (
+                <div className="border-[2.5px] border-black bg-neo-surface p-4 shadow-neo-sm space-y-3">
+                  <h3 className="font-mono text-xs font-bold text-black uppercase flex items-center gap-1.5">
+                    <GitBranch size={13} className="text-neo-orange" aria-hidden="true" />
+                    Latest public commits
+                  </h3>
+                  <ul className="space-y-2 text-xs font-mono">
+                    {github.recentPushes.map((push) => (
+                      <li key={`${push.repo}-${push.date}-${push.message}`} className="flex items-start gap-2 border-b border-black/5 pb-2 last:border-0">
+                        <GitCommit size={14} className="text-neo-pink shrink-0 mt-0.5" aria-hidden="true" />
+                        <div className="min-w-0">
+                          <p className="font-bold text-black break-words">{push.message}</p>
+                          <p className="text-[10px] text-black/70 font-semibold mt-0.5 break-all">
+                            {push.repo} · {formatDate(push.date)}
+                          </p>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
 
-            {/* Right Column: Shell Simulator (5 cols) */}
-            <div className="xl:col-span-5 p-6 md:p-8 !bg-[#111111] !text-[#FAF6EE] font-mono text-xs md:text-sm flex flex-col justify-between min-h-[350px] space-y-6">
-              <div className="space-y-4 flex-1 overflow-y-auto">
-                <div className="text-[#8a8a8a] border-b border-white/10 pb-2 mb-3">
-                  <p>Om Gawande Operating System [Version 1.0.4]</p>
-                  <p>Type 'help' to review available systems commands.</p>
-                </div>
-
-                {/* Logs output */}
+            {/* Right: terminal */}
+            <div className="xl:col-span-5 p-4 sm:p-6 md:p-8 !bg-[#111111] !text-[#FAF6EE] font-mono text-xs md:text-sm flex flex-col justify-between min-h-[350px] space-y-6 min-w-0">
+              <div className="space-y-4 flex-1 overflow-y-auto" aria-live="polite">
                 {logs.map((log, idx) => (
                   <div key={idx} className="space-y-2">
-                    <div className="flex items-center gap-1 text-neo-pink">
-                      <ChevronRight size={14} />
+                    <div className="flex items-center gap-1 text-neo-pink break-all">
+                      <ChevronRight size={14} className="shrink-0" aria-hidden="true" />
                       <span>{log.input}</span>
                     </div>
-                    <div className="pl-4 !text-[#FAF6EE]/90">{log.output}</div>
+                    <div className="pl-4 !text-[#FAF6EE]/90 break-words">{log.output}</div>
                   </div>
                 ))}
               </div>
 
-              {/* Input Form */}
-              <form onSubmit={handleFormSubmit} className="flex items-center gap-2 pt-4 border-t border-white/10">
-                <span className="text-neo-pink font-bold flex items-center select-none">
-                  <span>om_os</span>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (inputVal.trim()) runCommand(inputVal);
+                }}
+                className="flex items-center gap-2 pt-4 border-t border-white/10"
+              >
+                <span className="text-neo-pink font-bold flex items-center select-none" aria-hidden="true">
+                  om_os
                   <ChevronRight size={14} className="mt-0.5" />
                 </span>
                 <input
                   type="text"
                   value={inputVal}
                   onChange={(e) => setInputVal(e.target.value)}
-                  placeholder="type 'stats', 'languages', 'repos', 'clear'..."
-                  className="flex-1 bg-transparent !text-[#FAF6EE] outline-none font-mono text-xs md:text-sm border-none placeholder-white/30"
+                  aria-label="Terminal command (help, stats, languages, repos, clear)"
+                  placeholder="help, stats, languages, repos…"
+                  className="flex-1 min-w-0 bg-transparent !text-[#FAF6EE] font-mono text-xs md:text-sm border-none placeholder-white/50"
                   autoComplete="off"
                   spellCheck={false}
                 />
@@ -405,31 +306,29 @@ export default function GitHubStats() {
             </div>
           </div>
 
-          {/* Quick Click Shortcut Tray */}
-          <div className="border-t-[2.5px] border-black bg-neo-bg p-4 flex flex-wrap items-center justify-between gap-4 font-mono select-none border-x-0 border-b-0">
+          <div className="border-t-[2.5px] border-black bg-neo-bg p-4 flex flex-wrap items-center justify-between gap-4 font-mono">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[10px] text-silver font-bold uppercase mr-1">RUN CLI SHORTCUT:</span>
+              <span className="text-[10px] text-black/70 font-bold uppercase mr-1">Run:</span>
               {['help', 'stats', 'languages', 'repos', 'clear'].map((cmd) => (
                 <button
                   key={cmd}
-                  onClick={() => handleRunCommand(cmd)}
-                  className="px-3 py-1 bg-black text-neo-bg border border-black hover:bg-neo-bg hover:text-black transition-colors text-[10px] font-bold uppercase flex items-center gap-1 shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]"
-                  data-cursor="GO"
+                  type="button"
+                  onClick={() => runCommand(cmd)}
+                  className="px-3 py-1 bg-black text-neo-bg border border-black hover:bg-neo-bg hover:text-black transition-colors text-[10px] font-bold uppercase flex items-center gap-1"
                 >
-                  <Play size={8} />
+                  <Play size={8} aria-hidden="true" />
                   {cmd}
                 </button>
               ))}
             </div>
-
             <a
-              href="https://github.com/omgawande1523"
+              href={github.profileUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-xs text-black border-b-[2px] border-black pb-0.5 font-bold hover:text-silver hover:border-silver flex items-center gap-1"
+              className="font-mono text-xs text-black border-b-[2px] border-black pb-0.5 font-bold hover:bg-neo-yellow flex items-center gap-1"
             >
-              <Github size={12} className="text-black" />
-              <span>Full GitHub Profile</span>
+              <Github size={12} className="text-black" aria-hidden="true" />
+              <span>Full GitHub profile</span>
             </a>
           </div>
         </div>

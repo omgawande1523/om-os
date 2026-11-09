@@ -6,6 +6,13 @@ import SectionHeading from '../components/SectionHeading';
 import { profile } from '../data/profile';
 
 const RESUME_PDF = '/Om_Gawande_Resume.pdf';
+const resumeSize = `${(__RESUME_META__.sizeBytes / 1024).toFixed(1)} KB`;
+const resumeUpdated = new Date(`${__RESUME_META__.modified}T00:00:00Z`).toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -103,8 +110,12 @@ export default function ResumeViewer() {
 
                 <div className="border-y border-black/15 py-4 font-mono text-xs text-black/60 space-y-2">
                   <p className="flex justify-between">
-                    <span>Role:</span>
-                    <span className="font-bold text-black">{profile.role}</span>
+                    <span>File size:</span>
+                    <span className="font-bold text-black">{resumeSize}</span>
+                  </p>
+                  <p className="flex justify-between">
+                    <span>Last updated:</span>
+                    <span className="font-bold text-black">{resumeUpdated}</span>
                   </p>
                 </div>
               </div>

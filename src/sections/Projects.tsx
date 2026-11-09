@@ -21,6 +21,14 @@ const statusClass: Record<ProjectStatus, string> = {
   'in progress': 'bg-neo-pink',
 };
 
+const caseStudySlugs = new Set([...featuredProjects, ...archiveProjects].filter((p) => p.caseStudy).map((p) => p.slug));
+
+function slugFromHash(): string | null {
+  if (typeof window === 'undefined') return null;
+  const m = window.location.hash.match(/^#project\/([a-z0-9-]+)$/);
+  return m && caseStudySlugs.has(m[1]) ? m[1] : null;
+}
+
 function repoLabel(url: string) {
   return url.replace('https://github.com/', '');
 }
@@ -60,8 +68,24 @@ function ProjectLinks({ project, compact = false }: { project: Project; compact?
 
 export default function Projects() {
   const [activeCategory, setActiveCategory] = useState<Filter>('All');
-  const [openSlug, setOpenSlug] = useState<string | null>(null);
+  const [openSlug, setOpenSlug] = useState<string | null>(slugFromHash);
   const dialogRef = useRef<HTMLDialogElement>(null);
+
+  // Shareable deep links: #project/<slug>. Unknown slugs are ignored.
+  useEffect(() => {
+    const onHash = () => setOpenSlug(slugFromHash());
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
+  const openCaseStudy = (slug: string) => {
+    window.location.hash = `project/${slug}`;
+  };
+
+  const closeCaseStudy = () => {
+    setOpenSlug(null);
+    if (slugFromHash()) window.history.replaceState(null, '', window.location.pathname + window.location.search);
+  };
 
   const matches = (p: Project) => activeCategory === 'All' || p.categories.includes(activeCategory);
   const featured = featuredProjects.filter(matches);
@@ -176,7 +200,7 @@ export default function Projects() {
                       {project.caseStudy && (
                         <button
                           type="button"
-                          onClick={() => setOpenSlug(project.slug)}
+                          onClick={() => openCaseStudy(project.slug)}
                           className="inline-flex items-center gap-1 font-mono text-xs text-neo-bg bg-black font-bold uppercase px-3 py-1.5 border-[2px] border-black hover:bg-neo-yellow hover:text-black transition-colors"
                         >
                           <span>Case study</span>
@@ -235,9 +259,9 @@ export default function Projects() {
       {/* Case study dialog (native <dialog>: focus trap + Escape built in) */}
       <dialog
         ref={dialogRef}
-        onClose={() => setOpenSlug(null)}
+        onClose={closeCaseStudy}
         onClick={(e) => {
-          if (e.target === dialogRef.current) setOpenSlug(null);
+          if (e.target === dialogRef.current) closeCaseStudy();
         }}
         aria-labelledby="case-study-title"
         className="os-window p-0 max-w-3xl w-[calc(100%-2rem)] max-h-[85vh] bg-neo-surface border-[2.5px] border-black backdrop:bg-black/50"
@@ -251,7 +275,7 @@ export default function Projects() {
               </div>
               <button
                 type="button"
-                onClick={() => setOpenSlug(null)}
+                onClick={closeCaseStudy}
                 aria-label="Close case study"
                 className="p-1 border border-black bg-neo-surface hover:bg-black hover:text-neo-bg transition-colors"
               >

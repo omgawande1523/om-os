@@ -133,3 +133,11 @@ Status: ✅ resolved · ❓ **needs Om's answer** · 🗑 removed
 | Resume links to `/Resume Updated.pdf` | ResumeViewer.tsx:121-130 | identical file (md5) | ✅ now `/Om_Gawande_Resume.pdf` |
 | GitHub "Verified repository published on omgawande1523 GitHub profile." | GitHubStats.tsx:63 | none | ✅ → "No description on GitHub." |
 | GitHub contributions 46, stars `|| 2`, followers `|| 5`, made-up language %, fallback repos, random contribution heatmap, hardcoded commits "AegisEdge · 2 days ago" / "routeiq-enterprise · 5 days ago", fake "successfully authenticated" | github.ts:21-176, 268-270; GitHubStats.tsx:9-20, 47-79, 84-90, 353-361 | none | ⏳ **Phase 2** replaces all of it with the build-time snapshot (not touched in Phase 1) |
+
+## GitHub numbers (Phase 2 snapshot, 2026-11-09)
+
+| Claim | Source found | Action |
+|---|---|---|
+| "610 contributions last year" (brief) | github-contributions-api.jogruber.de reports **265** for the last year. It reads the public contribution calendar; private contributions only count if "Include private contributions" is enabled on your profile | ✅ the site shows whatever the API returns at build time (265 today) |
+| "2 followers" (brief) | `/users/omgawande1523` is not reachable from this sandbox | ✅ shown as "—" in the committed snapshot; filled automatically on the next Vercel build |
+| Language split | `/repos/{r}/languages` not reachable here, so the committed snapshot uses "share of public repos by primary language" and says so on the page | ✅ Vercel builds use byte counts (method label switches automatically) |

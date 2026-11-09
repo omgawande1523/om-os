@@ -36,8 +36,12 @@ export default function CustomCursor() {
   // Detect if screen is touch/mobile
   useEffect(() => {
     const checkMobile = () => {
-      const isTouch = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;
-      setIsMobile(isTouch);
+      // Decorative follower only: fine pointers, no reduced-motion preference.
+      const disabled =
+        !window.matchMedia('(pointer: fine)').matches ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+        window.innerWidth < 768;
+      setIsMobile(disabled);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -207,7 +211,7 @@ export default function CustomCursor() {
   if (isMobile) return null;
 
   return (
-    <>
+    <div aria-hidden="true">
       {/* Click burst particles */}
       <div ref={burstContainerRef} className="fixed inset-0 pointer-events-none z-[10000]">
         {particles.map((p) => (
@@ -289,6 +293,6 @@ export default function CustomCursor() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }

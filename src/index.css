@@ -360,15 +360,6 @@
   }
 }
 
-@layer utilities {
-  .custom-cursor {
-    cursor: none;
-  }
-
-  .cursor-none * {
-    cursor: none !important;
-  }
-}
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
@@ -386,4 +377,19 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #333333;
+}
+
+/* Boot overlay: progress bar fills over the overlay's lifetime */
+.boot-bar {
+  width: 0;
+  animation: boot-fill 600ms ease-out forwards;
+}
+@keyframes boot-fill {
+  to {
+    width: 100%;
+  }
+}
+
+dialog::backdrop {
+  background: rgb(0 0 0 / 0.55);
 }

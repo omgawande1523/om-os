@@ -1,297 +1,55 @@
-export interface GitHubRepo {
-  id: number;
+// Typed access to the build-time GitHub snapshot (scripts/snapshot-github.mjs).
+// The site never calls the GitHub API at runtime.
+import raw from '../data/github.snapshot.json';
+
+export interface SnapshotRepo {
   name: string;
   description: string | null;
-  html_url: string;
-  stargazers_count: number;
+  homepage: string | null;
   language: string | null;
-  forks_count: number;
-  updated_at: string;
+  topics: string[];
+  stars: number;
+  pushedAt: string;
+  url: string;
 }
 
-export interface GitHubStatsData {
-  reposCount: number;
-  starsCount: number;
-  followers: number;
-  contributions: number;
-  languages: { name: string; percentage: number; color: string }[];
-  repos: GitHubRepo[];
+export interface SnapshotLanguage {
+  name: string;
+  percent: number;
 }
 
-interface ApiRepo extends GitHubRepo {
-  fork: boolean;
-  private: boolean;
+export interface ContributionDay {
+  date: string;
+  count: number;
+  level: number;
 }
 
-const FALLBACK_REPOS: GitHubRepo[] = [
-  {
-    id: 100,
-    name: 'Kolhapur-Digital-Twin',
-    description: 'AI-Based Flood Nowcasting Digital Twin for Kolhapur — MRSAC climate resilience initiative integrating Sentinel-1/2 satellite imagery and DEM datasets.',
-    html_url: 'https://github.com/omgawande1523/Kolhapur-Digital-Twin',
-    stargazers_count: 1,
-    language: 'Python',
-    forks_count: 0,
-    updated_at: '2026-08-15T05:00:00Z'
-  },
-  {
-    id: 101,
-    name: 'lan-agentic-rag',
-    description: 'Local Area Network Agentic RAG System using Ollama-hosted LLMs, Qdrant vector search, MySQL, and dedicated verification agent for hallucination grounding.',
-    html_url: 'https://github.com/omgawande1523/lan-agentic-rag',
-    stargazers_count: 0,
-    language: 'Python',
-    forks_count: 0,
-    updated_at: '2026-07-20T05:00:00Z'
-  },
-  {
-    id: 1,
-    name: 'Automatic-waste-segregation-with-computer-vision',
-    description: 'Smart AI Waste Segregation System using YOLOv8 and Raspberry Pi for real-time autonomous waste classification and segregation on constrained edge hardware.',
-    html_url: 'https://github.com/omgawande1523/Automatic-waste-segregation-with-computer-vision',
-    stargazers_count: 0,
-    language: 'Python',
-    forks_count: 0,
-    updated_at: '2026-06-22T05:00:00Z'
-  },
-  {
-    id: 10,
-    name: 'Sarcasm-Detection',
-    description: 'Transformer-based NLP framework for sarcasm detection in regional Indian languages using custom annotated datasets and research integrity safeguards.',
-    html_url: 'https://github.com/omgawande1523/Sarcasm-Detection',
-    stargazers_count: 0,
-    language: 'Python',
-    forks_count: 0,
-    updated_at: '2026-06-22T02:20:00Z'
-  },
-  {
-    id: 2,
-    name: 'AadhaarX',
-    description: 'AI-Powered Secure Digital Identity & Verification Ecosystem for India\'s Digital Public Infrastructure (DPI)',
-    html_url: 'https://github.com/omgawande1523/AadhaarX',
-    stargazers_count: 0,
-    language: 'TypeScript',
-    forks_count: 0,
-    updated_at: '2026-06-22T04:30:00Z'
-  },
-  {
-    id: 3,
-    name: 'AegisEdge',
-    description: 'Secure Offline Facial Recognition and Liveness Detection system for Datalake 3.0',
-    html_url: 'https://github.com/omgawande1523/AegisEdge',
-    stargazers_count: 0,
-    language: 'TypeScript',
-    forks_count: 0,
-    updated_at: '2026-06-22T04:20:00Z'
-  },
-  {
-    id: 4,
-    name: 'routeiq-enterprise',
-    description: 'Enterprise smart-city road health intelligence platform RouteIQ',
-    html_url: 'https://github.com/omgawande1523/routeiq-enterprise',
-    stargazers_count: 0,
-    language: 'TypeScript',
-    forks_count: 0,
-    updated_at: '2026-06-22T04:10:00Z'
-  },
-  {
-    id: 5,
-    name: 'ai-autonomous-cyber-threat-detection',
-    description: 'Autonomous cyber threat detection and mitigation system utilising machine learning models to identify anomaly network traffic.',
-    html_url: 'https://github.com/omgawande1523/ai-autonomous-cyber-threat-detection',
-    stargazers_count: 0,
-    language: 'Python',
-    forks_count: 0,
-    updated_at: '2026-06-22T04:00:00Z'
-  },
-  {
-    id: 6,
-    name: 'Bot-Detector',
-    description: 'Predictive classifier model utilizing deep learning networks to identify and block automated spam queries.',
-    html_url: 'https://github.com/omgawande1523/Bot-Detector',
-    stargazers_count: 0,
-    language: 'Python',
-    forks_count: 0,
-    updated_at: '2026-06-22T03:00:00Z'
-  },
-  {
-    id: 7,
-    name: 'AgroSense',
-    description: 'Smart precision agriculture analysis and crop disease detection system utilizing computer vision models.',
-    html_url: 'https://github.com/omgawande1523/AgroSense',
-    stargazers_count: 0,
-    language: 'Python',
-    forks_count: 0,
-    updated_at: '2026-06-22T02:50:00Z'
-  },
-  {
-    id: 8,
-    name: 'earth-science-agi',
-    description: 'Artificial General Intelligence solutions applied to geographical, climatic and earth science datasets.',
-    html_url: 'https://github.com/omgawande1523/earth-science-agi',
-    stargazers_count: 0,
-    language: 'Python',
-    forks_count: 0,
-    updated_at: '2026-06-22T02:40:00Z'
-  },
-  {
-    id: 9,
-    name: 'MathGPT',
-    description: 'Mathematical tutoring assistant powered by LLMs for reasoning and step-by-step math solver.',
-    html_url: 'https://github.com/omgawande1523/MathGPT',
-    stargazers_count: 0,
-    language: 'Python',
-    forks_count: 0,
-    updated_at: '2026-06-22T02:30:00Z'
-  },
-  {
-    id: 11,
-    name: 'Urdu-Violence-Detection-AI',
-    description: 'Applied deep learning models for detecting violent speech patterns and anomalies in Urdu text datasets.',
-    html_url: 'https://github.com/omgawande1523/Urdu-Violence-Detection-AI',
-    stargazers_count: 0,
-    language: 'Python',
-    forks_count: 0,
-    updated_at: '2026-06-22T02:10:00Z'
-  },
-  {
-    id: 12,
-    name: 'Waste-Management',
-    description: 'Database schemas and backend routing coordinates for decentralized waste logistics.',
-    html_url: 'https://github.com/omgawande1523/Waste-Management',
-    stargazers_count: 0,
-    language: 'Python',
-    forks_count: 0,
-    updated_at: '2026-06-22T02:00:00Z'
-  }
-];
+export interface GitHubSnapshot {
+  generatedAt: string;
+  user: string;
+  profileUrl: string;
+  publicRepos: number;
+  followers: number | null;
+  totalStars: number;
+  languages: { method: 'bytes' | 'repo-count' | 'none'; items: SnapshotLanguage[] };
+  contributions: { lastYear: number; days: ContributionDay[] } | null;
+  recentPushes: { repo: string; message: string; date: string }[];
+  repos: SnapshotRepo[];
+}
 
-const FALLBACK_DATA: GitHubStatsData = {
-  reposCount: 15,
-  starsCount: 2,
-  followers: 5,
-  contributions: 46,
-  languages: [
-    { name: 'Python', percentage: 60, color: 'bg-neo-blue' },
-    { name: 'TypeScript', percentage: 25, color: 'bg-neo-mint' },
-    { name: 'JavaScript', percentage: 10, color: 'bg-neo-pink' },
-    { name: 'Other', percentage: 5, color: 'bg-neo-yellow' }
-  ],
-  repos: FALLBACK_REPOS
+export const github = raw as GitHubSnapshot;
+
+export const languageMethodLabel: Record<GitHubSnapshot['languages']['method'], string> = {
+  bytes: 'share of code by bytes across public repos',
+  'repo-count': 'share of public repos by primary language',
+  none: 'not available',
 };
 
-const CACHE_KEY = 'github_data_cache';
-const TIMESTAMP_KEY = 'github_data_timestamp';
-const CACHE_DURATION_MS = 3600000; // 1 hour
+export function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+}
 
-export async function fetchGitHubData(): Promise<GitHubStatsData> {
-  if (typeof window === 'undefined') {
-    return FALLBACK_DATA;
-  }
-
-  // Check cache
-  const cachedDataStr = localStorage.getItem(CACHE_KEY);
-  const cachedTimeStr = localStorage.getItem(TIMESTAMP_KEY);
-  
-  if (cachedDataStr && cachedTimeStr) {
-    const cachedTime = parseInt(cachedTimeStr, 10);
-    const now = Date.now();
-    
-    if (now - cachedTime < CACHE_DURATION_MS) {
-      try {
-        return JSON.parse(cachedDataStr);
-      } catch {
-        // Parse error, clear cache and proceed to fetch
-        localStorage.removeItem(CACHE_KEY);
-        localStorage.removeItem(TIMESTAMP_KEY);
-      }
-    }
-  }
-
-  try {
-    // Fetch profile
-    const profileRes = await fetch('https://api.github.com/users/omgawande1523');
-    if (!profileRes.ok) throw new Error('Failed to fetch profile');
-    const profile = await profileRes.json();
-
-    // Fetch repos
-    const reposRes = await fetch('https://api.github.com/users/omgawande1523/repos?per_page=100&sort=updated');
-    if (!reposRes.ok) throw new Error('Failed to fetch repositories');
-    const reposData: ApiRepo[] = await reposRes.json();
-
-    // Filter out forks if preferred, or keep all. Let's filter to real user repos
-    const userRepos: GitHubRepo[] = reposData
-      .filter((repo) => !repo.fork && !repo.private)
-      .map((repo) => ({
-        id: repo.id,
-        name: repo.name,
-        description: repo.description,
-        html_url: repo.html_url,
-        stargazers_count: repo.stargazers_count,
-        language: repo.language,
-        forks_count: repo.forks_count,
-        updated_at: repo.updated_at
-      }));
-
-    // Calculate stars
-    const starsCount = userRepos.reduce((acc, repo) => acc + repo.stargazers_count, 0);
-
-    // Calculate languages
-    const langCounts: { [key: string]: number } = {};
-    let totalLangRepos = 0;
-    
-    userRepos.forEach((repo) => {
-      if (repo.language) {
-        langCounts[repo.language] = (langCounts[repo.language] || 0) + 1;
-        totalLangRepos++;
-      }
-    });
-
-    const colorsMap: { [key: string]: string } = {
-      'Python': 'bg-neo-blue',
-      'JavaScript': 'bg-neo-pink',
-      'TypeScript': 'bg-neo-mint',
-      'HTML': 'bg-neo-yellow',
-      'CSS': 'bg-neo-orange',
-      'C++': 'bg-neo-pink',
-      'Java': 'bg-neo-blue'
-    };
-
-    const languages = Object.keys(langCounts)
-      .map((name) => {
-        const percentage = Math.round((langCounts[name] / totalLangRepos) * 100);
-        return {
-          name,
-          percentage,
-          color: colorsMap[name] || 'bg-neo-yellow'
-        };
-      })
-      .sort((a, b) => b.percentage - a.percentage);
-
-    const result: GitHubStatsData = {
-      reposCount: profile.public_repos || userRepos.length,
-      starsCount: starsCount || 2,
-      followers: profile.followers || 5,
-      contributions: 46, // Fallback statistic or event logs length
-      languages: languages.length > 0 ? languages : FALLBACK_DATA.languages,
-      repos: userRepos.length > 0 ? userRepos : FALLBACK_REPOS
-    };
-
-    // Save to cache
-    localStorage.setItem(CACHE_KEY, JSON.stringify(result));
-    localStorage.setItem(TIMESTAMP_KEY, Date.now().toString());
-
-    return result;
-  } catch (error) {
-    console.warn('GitHub API failed or rate-limited. Serving cached/fallback data.', error);
-    // If API failed but we have stale cache, use it
-    if (cachedDataStr) {
-      try {
-        return JSON.parse(cachedDataStr);
-      } catch {
-        // ignore corrupt cache
-      }
-    }
-    return FALLBACK_DATA;
-  }
+/** "—" for missing values. */
+export function display(value: number | null | undefined): string {
+  return value === null || value === undefined ? '—' : String(value);
 }
