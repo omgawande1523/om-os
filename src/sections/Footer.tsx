@@ -339,8 +339,11 @@ export default function Footer() {
           <p className="flex items-center gap-1.5 font-semibold">
             Built with <Heart size={10} className="text-neo-pink fill-neo-pink animate-pulse" aria-hidden="true" /> by {profile.name}
           </p>
-          <p className="font-semibold">
-            © {new Date().getFullYear()} OM_OS v1.0.4. ALL RIGHTS RESERVED
+          <p className="font-semibold flex flex-wrap items-center gap-3">
+            <a href={profile.links.orcid} target="_blank" rel="noopener noreferrer" className="underline hover:text-black">
+              ORCID {profile.links.orcid.replace('https://orcid.org/', '')}
+            </a>
+            <span>© {new Date().getFullYear()} {profile.name}</span>
           </p>
         </div>
       </div>
