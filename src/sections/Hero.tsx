@@ -6,6 +6,8 @@ import { profile } from '../data/profile';
 import { heroFacts as facts, nowProjects as now } from '../data/facts';
 import { RESUME_PDF } from '../data/resume';
 
+const nameClass = 'font-display text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-black leading-none';
+
 const cta =
   'nb-press inline-flex items-center gap-2 font-mono text-xs font-bold uppercase border-[2.5px] border-black px-4 py-2.5 shadow-neo-sm';
 
@@ -33,16 +35,19 @@ export default function Hero() {
 
           <div className="p-5 sm:p-8 md:p-10 flex flex-col-reverse sm:flex-row gap-6 md:gap-10 items-start">
             <div className="flex-1 min-w-0 space-y-4">
-              <h1 id="hero-title" className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-black leading-none">
-                <ScrambleText text={profile.name} />
-              </h1>
+              <div className="relative">
+                <h1 id="hero-title" className={nameClass}>
+                  {profile.name}
+                </h1>
+                <ScrambleText text={profile.name} targetId="hero-title" className={nameClass} />
+              </div>
               <p className="font-mono text-sm md:text-base font-bold text-black">{profile.role}</p>
               <p className="font-body text-base md:text-lg text-black/80 leading-relaxed max-w-2xl">{profile.heroBio}</p>
 
-              <ul className="flex flex-wrap gap-x-2 gap-y-1 font-mono text-xs md:text-sm font-semibold text-black" aria-label="Key facts">
-                {facts.map((f, i) => (
-                  <li key={f} className="flex items-center gap-2">
-                    {i > 0 && <span aria-hidden="true" className="text-black/40">·</span>}
+              {/* Gap-separated tags: no text separator can start or end a wrapped line. */}
+              <ul className="flex flex-wrap gap-2 font-mono text-xs md:text-sm font-semibold text-black" aria-label="Key facts">
+                {facts.map((f) => (
+                  <li key={f} className="border-[1.5px] border-black/30 px-2 py-0.5">
                     {f}
                   </li>
                 ))}

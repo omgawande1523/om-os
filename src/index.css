@@ -516,3 +516,40 @@ textarea:focus-visible {
 ::view-transition-new(root) {
   animation-duration: 160ms;
 }
+
+/* GitHub contribution calendar: weeks as grid columns, square cells sized by the container. */
+.gh-cal {
+  display: grid;
+  grid-template-columns: repeat(var(--gh-weeks), minmax(0, 1fr));
+  gap: 2px;
+  /* Cap cells at ~14px so the strip doesn't balloon on wide screens. */
+  max-width: calc(var(--gh-weeks) * 16px);
+}
+.gh-week {
+  display: grid;
+  grid-template-rows: repeat(7, auto);
+  gap: 2px;
+}
+.gh-day {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+}
+@media (max-width: 639px) {
+  .gh-cal {
+    grid-template-columns: repeat(var(--gh-weeks-mobile), minmax(0, 1fr));
+    max-width: calc(var(--gh-weeks-mobile) * 16px);
+  }
+  .gh-week-old {
+    display: none;
+  }
+}
+
+.dark .border-black\/30 {
+  border-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Hero name scramble: the real <h1> text is hidden (not removed) while the aria-hidden overlay animates. */
+h1[data-scrambling='true'],
+.dark h1[data-scrambling='true'] {
+  color: transparent !important;
+}

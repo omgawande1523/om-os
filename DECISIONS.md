@@ -56,3 +56,12 @@ Choices made while implementing `REDESIGN_PLAN.md` (approved by Om, 2026-11-09),
 - Demo loops for krishna-river-flood (map watermark + "live" wording vs synthetic data), MathGPT (sample numbers), clone-detector and waste-sorting-simulation (archive only, no card to play on): Om's decision Q2.
 - React Bits components: DecryptedText / ScrambledText need Framer Motion / GSAP; SpotlightCard / TiltedCard don't fit flat neo-brutalism. Wrote a small scramble instead.
 - Magic UI / Aceternity / magic-portfolio code: Framer Motion or CC BY-NC; ideas only.
+
+## Final polish (after preview review)
+
+| # | Decision | Why |
+|---|---|---|
+| P-1 | GitHub calendar is a CSS grid: weeks are `minmax(0,1fr)` columns, days are `aspect-ratio: 1` cells, capped at ~14 px. Below 640 px it shows the most recent 26 weeks (older weeks `display: none`) and says "last 26 weeks shown". No scroll container, no scrollbar. Checked at 360 / 800 / 1440 px in both themes. | It overflowed with a native scrollbar at ~800 px |
+| P-2 | Hero facts are gap-separated tags (`flex-wrap` + `gap`), with no "·" text separators. | A separator started the wrapped line |
+| P-3 | The `<h1>` contains exactly one copy of the name. The scramble draws on an `aria-hidden` sibling overlay with the same (monospace) typography; while it runs the heading's text is made transparent via `data-scrambling`, never replaced. | `textContent` was "Om GawandeOm Gawande" |
+| P-4 | Not changed (out of scope): the inline "·" in the `Now:` line, the Education line and the footer can still wrap at a separator on narrow screens. | "No other changes" |

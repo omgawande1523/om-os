@@ -12,13 +12,13 @@ All measurements on the production build (`npm run build` → `vite preview`), P
 | Initial JS (gzip) | 85 KB (+ 129 KB lazy three.js chunk) | **86.4 KB**, no three.js; palette 18.6 KB lazy on first open | new JS ≤ 25 KB ✅ (net +1.4 KB vs v2; +5.4 KB vs Part B) |
 | Lighthouse mobile (perf / a11y / best practices / SEO) | 98 / 100 / 100 / 100 | **99 / 100 / 100 / 100** (FCP 1.6 s, LCP 2.0 s, TBT 10 ms, CLS 0) | ≥ 95 ×4 ✅ |
 | Lighthouse desktop | 100 ×4 | **100 ×4** | |
-| axe (wcag2a/aa + best-practice) | 0 | **0 violations of any impact in 32 checks** (below) | 0 serious/critical ✅ |
+| axe (wcag2a/aa + best-practice) | 0 | **0 violations of any impact in 30 checks** (below) | 0 serious/critical ✅ |
 | Horizontal scroll | none at 360 | **none at 360 / 375** (with all projects and terminal output open) | ✅ |
 | Prerendered content | ~2,250 words | ~1,860 words (duplicates removed) | |
 
 ## axe checks (1440 and 375 px, light and dark, reduced motion)
 
-Each of these states was scanned in all four combinations: page, terminal output (after `help`, `whoami`, `ls projects`, `github`, `contact`), ⌘K command palette open, case-study dialog open, `?` shortcuts dialog open, mobile menu open (375 only), "Show all 15" + "Show all 6 roles" expanded, contact form errors. Result: **0 violations** in all 32 scans. One issue found during Part D (the `⌘K` button's accessible name didn't include its visible label) was fixed before this run.
+Each of these states was scanned in all four combinations: page, terminal output (after `help`, `whoami`, `ls projects`, `github`, `contact`), ⌘K command palette open, case-study dialog open, `?` shortcuts dialog open, mobile menu open (375 only), "Show all 15" + "Show all 6 roles" expanded, contact form errors. Result: **0 violations** in all 30 scans. One issue found during Part D (the `⌘K` button's accessible name didn't include its visible label) was fixed before this run.
 
 Keyboard: Tab order reaches the terminal prompt; Tab with an empty prompt moves on, with text it completes; `3` jumps to Skills; `?` help lists `⌘K`; case-study dialog traps and returns focus (unchanged from v2).
 

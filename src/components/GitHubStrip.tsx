@@ -1,4 +1,3 @@
-import { useLayoutEffect, useRef } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { github, formatDate } from '../lib/github';
 
@@ -30,24 +29,21 @@ if (github.contributions) {
 
 const snapshotDate = formatDate(github.generatedAt);
 
+/** Weeks kept on narrow screens (< 640 px), most recent last. */
+const MOBILE_WEEKS = 26;
+
 /** One strip: contribution calendar + count + snapshot date + profile link. */
 export default function GitHubStrip() {
-  const scroller = useRef<HTMLDivElement>(null);
-
-  // On narrow screens show the most recent weeks first.
-  useLayoutEffect(() => {
-    const el = scroller.current;
-    if (el) el.scrollLeft = el.scrollWidth;
-  }, []);
-
   if (!github.contributions) return null;
   const total = github.contributions.lastYear;
+  const firstRecent = weeks.length - MOBILE_WEEKS;
 
   return (
     <div className="os-window bg-neo-surface p-4 md:p-5 space-y-3">
       <div className="flex flex-wrap items-baseline justify-between gap-2 font-mono text-xs">
         <p className="font-bold text-black">
           {total} contributions in the last year <span className="font-normal text-black/70">· snapshot {snapshotDate}</span>
+          <span className="sm:hidden font-normal text-black/70"> · last {MOBILE_WEEKS} weeks shown</span>
         </p>
         <a
           href={github.profileUrl}
@@ -58,25 +54,24 @@ export default function GitHubStrip() {
           Full profile <ArrowUpRight size={12} aria-hidden="true" />
         </a>
       </div>
+      {/* Cells scale with the container (CSS grid + aspect-ratio): no scrollbar at any width. */}
       <div
-        ref={scroller}
-        className="overflow-x-auto"
+        className="gh-cal"
+        style={{ '--gh-weeks': weeks.length, '--gh-weeks-mobile': MOBILE_WEEKS } as React.CSSProperties}
         role="img"
         aria-label={`GitHub contribution calendar: ${total} contributions in the year to ${snapshotDate}`}
       >
-        <div className="flex gap-[3px] w-max">
-          {weeks.map((week, wi) => (
-            <div key={wi} className="flex flex-col gap-[3px]">
-              {week.map((day, di) =>
-                day ? (
-                  <div key={day.date} title={`${day.date}: ${day.count}`} className={`w-2.5 h-2.5 ${levelClass[Math.min(day.level, 4)]}`} />
-                ) : (
-                  <div key={`e${di}`} className="w-2.5 h-2.5" />
-                )
-              )}
-            </div>
-          ))}
-        </div>
+        {weeks.map((week, wi) => (
+          <div key={wi} className={`gh-week${wi < firstRecent ? ' gh-week-old' : ''}`}>
+            {week.map((day, di) =>
+              day ? (
+                <div key={day.date} title={`${day.date}: ${day.count}`} className={`gh-day ${levelClass[Math.min(day.level, 4)]}`} />
+              ) : (
+                <div key={`e${di}`} className="gh-day" />
+              )
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
