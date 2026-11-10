@@ -87,8 +87,8 @@ export default function Hero() {
                   name="portrait"
                   alt={`Portrait of ${profile.name}`}
                   priority
-                  sizes="(min-width: 768px) 176px, 112px"
-                  className="w-28 h-28 md:w-44 md:h-44 object-cover border border-black"
+                  sizes="(min-width: 1024px) 288px, (min-width: 768px) 240px, (min-width: 640px) 192px, 160px"
+                  className="w-40 h-40 sm:w-48 sm:h-48 md:w-60 md:h-60 lg:w-72 lg:h-72 object-cover border border-black"
                 />
               </div>
             </div>

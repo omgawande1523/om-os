@@ -19,7 +19,7 @@ const KB = 1024;
 
 /** key → source file, output path (without extension, relative to public/), max width, byte budget. */
 const IMAGES = {
-  portrait: { src: 'om-gawande-photo.jpg', out: 'img/om-gawande-portrait', maxWidth: 352, budget: 30 * KB },
+  portrait: { src: 'om-gawande-photo.jpg', out: 'img/om-gawande-portrait', maxWidth: 576, budget: 50 * KB },
   mrsacOverview: { src: 'mrsac-flood-overview.png', out: 'img/mrsac-flood-overview', maxWidth: 1200, budget: 120 * KB },
   // Poster frames of the recorded demo loops (public/video/*), shown until / instead of the video.
   wasteDemoPoster: { src: 'smart-waste-segregation-demo.png', out: 'img/smart-waste-segregation-demo', maxWidth: 960, budget: 60 * KB },
