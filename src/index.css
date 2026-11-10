@@ -159,6 +159,18 @@
   .dark .hover\:text-\[\#FAF6EE\]:hover {
     color: #111111 !important;
   }
+  .dark .hover\:bg-neo-yellow:hover,
+  .dark .hover\:bg-neo-blue:hover,
+  .dark .hover\:bg-neo-pink:hover,
+  .dark .hover\:bg-neo-mint:hover {
+    color: #111111 !important;
+  }
+  .dark .hover\:bg-neo-yellow:hover *,
+  .dark .hover\:bg-neo-blue:hover *,
+  .dark .hover\:bg-neo-pink:hover *,
+  .dark .hover\:bg-neo-mint:hover * {
+    color: #111111 !important;
+  }
   .dark .hover\:bg-neo-bg:hover {
     background-color: var(--neo-bg) !important;
     color: var(--neo-text) !important;
@@ -200,12 +212,7 @@
   .dark .os-window-header,
   .dark .os-window-header-accent,
   .dark .os-window-header-pink,
-  .dark .os-window-header-blue,
-  .dark [class*="bg-neo-mint"],
-  .dark [class*="bg-neo-blue"],
-  .dark [class*="bg-neo-pink"],
-  .dark [class*="bg-neo-orange"],
-  .dark [class*="bg-neo-yellow"] {
+  .dark .os-window-header-blue {
     color: #111111 !important;
     border-color: #000000 !important;
   }
@@ -218,12 +225,7 @@
   .dark .os-window-header *,
   .dark .os-window-header-accent *,
   .dark .os-window-header-pink *,
-  .dark .os-window-header-blue *,
-  .dark [class*="bg-neo-mint"] *,
-  .dark [class*="bg-neo-blue"] *,
-  .dark [class*="bg-neo-pink"] *,
-  .dark [class*="bg-neo-orange"] *,
-  .dark [class*="bg-neo-yellow"] * {
+  .dark .os-window-header-blue * {
     color: #111111 !important;
     border-color: #000000 !important;
   }
@@ -237,12 +239,7 @@
   .dark .os-window-header .text-black,
   .dark .os-window-header-accent .text-black,
   .dark .os-window-header-pink .text-black,
-  .dark .os-window-header-blue .text-black,
-  .dark [class*="bg-neo-mint"] .text-black,
-  .dark [class*="bg-neo-blue"] .text-black,
-  .dark [class*="bg-neo-pink"] .text-black,
-  .dark [class*="bg-neo-orange"] .text-black,
-  .dark [class*="bg-neo-yellow"] .text-black {
+  .dark .os-window-header-blue .text-black {
     color: #111111 !important;
   }
 
@@ -360,15 +357,6 @@
   }
 }
 
-@layer utilities {
-  .custom-cursor {
-    cursor: none;
-  }
-
-  .cursor-none * {
-    cursor: none !important;
-  }
-}
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
@@ -386,4 +374,182 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #333333;
+}
+
+/* Boot overlay: progress bar fills over the overlay's lifetime */
+.boot-bar {
+  width: 0;
+  animation: boot-fill 600ms ease-out forwards;
+}
+@keyframes boot-fill {
+  to {
+    width: 100%;
+  }
+}
+
+dialog::backdrop {
+  background: rgb(0 0 0 / 0.55);
+}
+
+/* Static fallback for the Projects background grid */
+.thread-grid-static {
+  background-image: linear-gradient(to right, rgb(0 0 0 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(0 0 0 / 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.dark .thread-grid-static {
+  background-image: linear-gradient(to right, rgb(255 255 255 / 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+}
+
+/* Scroll reveal (useReveal). Classes are only added by JS, so content is visible without it. */
+.reveal,
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.7s cubic-bezier(0.215, 0.61, 0.355, 1),
+    transform 0.7s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.reveal-stagger > * {
+  transition-delay: calc(var(--reveal-i, 0) * 80ms);
+}
+.reveal.is-visible,
+.reveal-stagger.is-visible > * {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal,
+  .reveal-stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Keyboard focus: thick brutalist ring, visible on every surface in both themes */
+:focus-visible {
+  outline: 3px solid #111111;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px #F5C518;
+}
+.dark :focus-visible {
+  outline-color: #F5C518;
+  box-shadow: 0 0 0 6px #111111;
+}
+input:focus-visible,
+textarea:focus-visible {
+  outline-offset: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2000;
+  padding: 0.5rem 0.75rem;
+  background: #F5C518;
+  color: #111111;
+  border: 2.5px solid #111111;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 0.8rem;
+  transform: translateY(-200%);
+}
+.skip-link:focus {
+  transform: none;
+}
+
+/* Status colours readable on dark surfaces */
+.dark .text-emerald-700 {
+  color: #6ee7b7 !important;
+}
+.dark .text-red-700 {
+  color: #fca5a5 !important;
+}
+
+/* Neo-brutalist press (v3). Tokens and interaction adapted from
+   ekmas/neobrutalism-components (https://github.com/ekmas/neobrutalism-components),
+   MIT License, © 2023 Samuel Breznjak: shadow offset 4px, translate onto the shadow on press. */
+.nb-press,
+.nb-press-lg {
+  transition:
+    transform 100ms ease-out,
+    box-shadow 100ms ease-out;
+}
+/* For elements with the 2px shadow (shadow-neo-sm / shadow-nb-sm) */
+.nb-press:hover,
+.nb-press:focus-visible {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 0 var(--neo-shadow);
+}
+.nb-press:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+/* For cards with the 4px shadow (shadow-nb) */
+.nb-press-lg:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 0 var(--neo-shadow);
+}
+.nb-press-lg:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+/* "All projects": rows after the 6th are hidden until "Show all" (they stay in the HTML). */
+.project-list-collapsed > li:nth-child(n + 7):not(:target) {
+  display: none;
+}
+
+/* View Transitions (case study open/close). Only used when supported and motion is allowed. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 160ms;
+}
+
+/* GitHub contribution calendar: weeks as grid columns, square cells sized by the container. */
+.gh-cal {
+  display: grid;
+  grid-template-columns: repeat(var(--gh-weeks), minmax(0, 1fr));
+  gap: 2px;
+  /* Cap cells at ~14px so the strip doesn't balloon on wide screens. */
+  max-width: calc(var(--gh-weeks) * 16px);
+}
+.gh-week {
+  display: grid;
+  grid-template-rows: repeat(7, auto);
+  gap: 2px;
+}
+.gh-day {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+}
+@media (max-width: 639px) {
+  .gh-cal {
+    grid-template-columns: repeat(var(--gh-weeks-mobile), minmax(0, 1fr));
+    max-width: calc(var(--gh-weeks-mobile) * 16px);
+  }
+  .gh-week-old {
+    display: none;
+  }
+}
+
+.dark .border-black\/30 {
+  border-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Hero name scramble: the real <h1> text is hidden (not removed) while the aria-hidden overlay animates. */
+h1[data-scrambling='true'],
+.dark h1[data-scrambling='true'] {
+  color: transparent !important;
 }

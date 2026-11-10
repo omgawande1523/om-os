@@ -12,7 +12,7 @@ module.exports = {
       colors: {
         'off-white': '#F7F7F5',
         'deep-charcoal': 'var(--neo-text)',
-        'silver': '#C4C4C4',
+        'silver': '#5C5C5C', // ≥ 4.5:1 on all light surfaces (dark mode overrides to #A0A0A0)
         'neo-bg': 'var(--neo-bg)',
         'neo-surface': 'var(--neo-surface)',
         'neo-mint': '#99D2BF',
@@ -77,6 +77,9 @@ module.exports = {
         "neo-hover": "6px 6px 0px var(--neo-shadow)",
         "neo-silver": "4px 4px 0px #C4C4C4",
         "neo-sm": "2px 2px 0px var(--neo-shadow)",
+        // Neo-brutalist tokens adapted from ekmas/neobrutalism-components (MIT, © 2023 Samuel Breznjak)
+        nb: "4px 4px 0px 0px var(--neo-shadow)",
+        "nb-sm": "2px 2px 0px 0px var(--neo-shadow)",
         "neo-md": "4px 4px 0px var(--neo-shadow)",
         "neo-lg": "8px 8px 0px var(--neo-shadow)",
       },
@@ -106,5 +109,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [],
 }

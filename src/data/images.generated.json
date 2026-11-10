@@ -1,0 +1,26 @@
+{
+  "portrait": {
+    "width": 352,
+    "height": 352,
+    "avif": "/img/om-gawande-portrait.avif",
+    "webp": "/img/om-gawande-portrait.webp"
+  },
+  "mrsacOverview": {
+    "width": 1200,
+    "height": 800,
+    "avif": "/img/mrsac-flood-overview.avif",
+    "webp": "/img/mrsac-flood-overview.webp"
+  },
+  "wasteDemoPoster": {
+    "width": 960,
+    "height": 540,
+    "avif": "/img/smart-waste-segregation-demo.avif",
+    "webp": "/img/smart-waste-segregation-demo.webp"
+  },
+  "ragDemoPoster": {
+    "width": 960,
+    "height": 540,
+    "avif": "/img/offline-agentic-rag-demo.avif",
+    "webp": "/img/offline-agentic-rag-demo.webp"
+  }
+}

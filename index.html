@@ -3,22 +3,78 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Om Gawande — AI Engineer & ML Solutions Builder</title>
-    <meta name="description" content="Portfolio of Om Gawande — AI Engineer, Machine Learning Developer, and Full Stack Builder building production-grade AI solutions." />
+    <title>Om Gawande — AI Engineer</title>
+    <meta name="description" content="Om Gawande: B.Tech AI student (SVPCET Nagpur, class of 2027) building computer vision and NLP systems for embedded and offline hardware. Projects, research, experience and contact." />
+    <link rel="canonical" href="https://om-os.vercel.app/" />
+    <meta name="theme-color" content="#FAF6EE" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta property="og:title" content="Om Gawande — AI Engineer & ML Solutions Builder" />
-    <meta property="og:description" content="Explore the portfolio of Om Gawande, featuring production-grade AI solutions, custom ML workflows, and technical leadership." />
-    <meta property="og:image" content="/og-image.png" />
+
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="OM_OS — Om Gawande" />
+    <meta property="og:url" content="https://om-os.vercel.app/" />
+    <meta property="og:title" content="Om Gawande — AI Engineer" />
+    <meta property="og:description" content="Computer vision and NLP systems for embedded and offline hardware: flood nowcasting at MRSAC, an offline agentic RAG, YOLO on Raspberry Pi." />
+    <meta property="og:image" content="https://om-os.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Om Gawande — AI Engineer — om-os.vercel.app" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Om Gawande — AI Engineer" />
+    <meta name="twitter:description" content="Computer vision and NLP systems for embedded and offline hardware: flood nowcasting at MRSAC, an offline agentic RAG, YOLO on Raspberry Pi." />
+    <meta name="twitter:image" content="https://om-os.vercel.app/og-image.png" />
+
+    <!-- Apply the saved / system theme before first paint (no flash). -->
+    <script>
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        if (t === 'dark') document.documentElement.classList.add('dark');
+      } catch (e) {}
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <!-- Only the weights in use: Inter 400/600/700, JetBrains Mono 400/600/700/800. Loaded without blocking render. -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600;700;800&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600;700;800&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600;700;800&display=swap" /></noscript>
+    <!--person-jsonld-->
   </head>
   <body>
-    <div id="root"></div>
+    <!--
+      Decorative boot screen. It sits over the already-rendered page, lasts ≤ 650 ms, shows once
+      per session, is skippable with any key / click / tap, is skipped for prefers-reduced-motion
+      and is hidden from assistive tech.
+    -->
+    <div id="boot" aria-hidden="true" hidden style="position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:var(--neo-bg,#FAF6EE);font-family:'JetBrains Mono',monospace">
+      <div style="text-align:center">
+        <p style="font-size:3rem;font-weight:800;color:var(--neo-text,#111);margin:0 0 1rem">OM<span style="color:#FFC4D0">.</span>OS</p>
+        <p style="font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;opacity:.7;margin:0 0 .5rem;color:var(--neo-text,#111)">Initializing core modules</p>
+        <div style="width:16rem;height:8px;border:1px solid currentColor;padding:2px;margin:0 auto;color:var(--neo-text,#111)"><div class="boot-bar" style="height:100%;background:currentColor"></div></div>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var el = document.getElementById('boot');
+        try {
+          if (matchMedia('(prefers-reduced-motion: reduce)').matches || sessionStorage.getItem('om_os_booted')) return el.remove();
+          sessionStorage.setItem('om_os_booted', '1');
+        } catch (e) {}
+        el.hidden = false;
+        var done = function () {
+          if (el.parentNode) el.remove();
+          removeEventListener('keydown', done);
+          removeEventListener('pointerdown', done);
+        };
+        addEventListener('keydown', done);
+        addEventListener('pointerdown', done);
+        setTimeout(done, 650);
+      })();
+    </script>
+    <div id="root"><!--app-html--></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
